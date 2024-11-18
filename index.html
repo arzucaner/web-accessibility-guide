@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accessibility Guide</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Accessibility Guide</h1>
+      <p>"Making the web accessible for everyone!"</p>
+      <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    </header>
+
+    <nav>
+      <a href="#" onclick="showSection('accessibility')">Accessibility</a>
+      <a href="#" onclick="showSection('screen-readers')">Screen Readers</a>
+      <a href="#" onclick="showSection('contrast')">Contrast & Colors</a>
+      <a href="#" onclick="showSection('keyboard')">Keyboard Navigation</a>
+      <a href="#" onclick="showSection('dynamic-content')">Dynamic Content</a>
+      <a href="#" onclick="showSection('form-validation')">Form Validation</a>
+      <a href="#" onclick="showSection('animations')">Accessible Animations</a>
+    </nav>
+
+    <main>
+      <section id="accessibility">
+        <h2>What is Accessibility?</h2>
+        <p>
+          Accessibility ensures inclusivity by making web content usable for
+          everyone, including people with disabilities.
+        </p>
+        <h3>Why is Accessibility Important?</h3>
+        <ul>
+          <li>Enables equal access to information and services.</li>
+          <li>Improves user experience for everyone.</li>
+          <li>
+            Aligns with legal and ethical standards, such as WCAG and ADA
+            compliance.
+          </li>
+          <li>Enhances SEO and broadens audience reach.</li>
+        </ul>
+      </section>
+
+      <section id="screen-readers" class="hidden">
+        <h2>Screen Reader Optimization</h2>
+        <p>
+          Screen readers help visually impaired users navigate websites.
+          Semantic HTML and ARIA attributes improve compatibility.
+        </p>
+        <h3>ARIA Roles and Labels</h3>
+        <ul>
+          <li>
+            Use ARIA roles to describe elements:
+            <code>&lt;nav role="navigation"&gt;</code>
+          </li>
+          <li>
+            Add <code>aria-label</code> to buttons and links for better
+            descriptions:
+            <code
+              >&lt;button aria-label="Submit
+              Form"&gt;Submit&lt;/button&gt;</code
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section id="contrast" class="hidden">
+        <h2>Contrast & Colors</h2>
+        <p>
+          Ensure text is readable with sufficient contrast ratios. Use WCAG
+          standards for guidance.
+        </p>
+        <h3>Tools for Testing Contrast</h3>
+        <ul>
+          <li>
+            <a href="https://webaim.org/resources/contrastchecker/"
+              >WebAIM Contrast Checker</a
+            >
+          </li>
+          <li>
+            <a href="https://accessible-colors.com/">Accessible Colors Tool</a>
+          </li>
+        </ul>
+        <button onclick="toggleContrast()">Toggle High Contrast</button>
+      </section>
+
+      <section id="keyboard" class="hidden">
+        <h2>Keyboard Navigation</h2>
+        <p>
+          Keyboard accessibility is essential for users who cannot use a mouse.
+          Ensure proper focus management.
+        </p>
+        <h3>Focus Traps</h3>
+        <p>Prevent users from navigating outside modals or overlays.</p>
+      </section>
+
+      <section id="dynamic-content" class="hidden">
+        <h2>Dynamic Content</h2>
+        <p>
+          Use ARIA live regions to announce dynamic changes to screen readers.
+        </p>
+        <div aria-live="polite" id="live-region">Welcome to our site!</div>
+        <button onclick="updateLiveRegion()">Update Message</button>
+      </section>
+
+      <section id="form-validation" class="hidden">
+        <h2>Form Validation</h2>
+        <p>
+          Use accessible error messages for invalid inputs. ARIA attributes help
+          convey errors to screen readers.
+        </p>
+        <form onsubmit="validateEmail(event)">
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            aria-describedby="error-message"
+            placeholder="Enter your email"
+          />
+          <div id="error-message" class="error" aria-live="assertive"></div>
+          <button type="submit">Submit</button>
+        </form>
+      </section>
+
+      <section id="animations" class="hidden">
+        <h2>Accessible Animations</h2>
+        <p>
+          Animations can enhance user experience but should be designed
+          carefully to ensure they do not cause discomfort or confusion,
+          especially for users sensitive to motion.
+        </p>
+        <h3>Example: Motion Reduction</h3>
+        <p>Use media queries to detect user preferences for reduced motion:</p>
+        <div class="code-example">
+          <pre>
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none;
+    transition: none;
+  }
+}
+          </pre>
+        </div>
+        <button onclick="startAnimation()">Start Animation</button>
+        <div id="animated-box" class="box"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 Accessibility Guide. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
