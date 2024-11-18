@@ -1,4 +1,3 @@
-
 # Accessibility Guide
 
 "Making the web accessible for everyone!"
@@ -37,12 +36,10 @@ You can view the live demo of this project here:
 To get started with this project:
 
 1. Clone this repository to your local machine:
+
    ```bash
    git clone https://github.com/arzucaner/web-accessibility-guide.git
    ```
-
-
-
 2. Navigate to the project directory:
 
 ```
@@ -111,8 +108,12 @@ This project is licensed under the MIT License.
 
 ---
 
+
 ## Acknowledgments
 
 This project aims to raise awareness about web accessibility and provide developers with practical examples of how to create more inclusive websites.
+
+If you found this guide helpful and want to support my work, feel free to buy me a coffee:
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-%E2%98%95-lightgrey)](https://buymeacoffee.com/arzuguney?status=1)
 
 I appreciate your support in making the web a better place for everyone. Thank you for contributing!
