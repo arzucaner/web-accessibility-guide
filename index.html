@@ -21,6 +21,7 @@
       <a href="#" onclick="showSection('dynamic-content')">Dynamic Content</a>
       <a href="#" onclick="showSection('form-validation')">Form Validation</a>
       <a href="#" onclick="showSection('animations')">Accessible Animations</a>
+      <a href="#" onclick="showSection('multilingual-support')">Multilingual Support</a>
     </nav>
 
     <main>
@@ -145,6 +146,66 @@
         <button onclick="startAnimation()">Start Animation</button>
         <div id="animated-box" class="box"></div>
       </section>
+<section id="multilingual-support" class="hidden">
+  <h2>Multilingual Support</h2>
+  <p>
+    Providing multilingual support ensures inclusivity for users who speak
+    different languages.
+  </p>
+  <h3>Best Practices for Multilingual Websites</h3>
+  <ul>
+    <li>
+      Use the <code>lang</code> attribute to specify the language of the
+      content:
+    </li>
+    <code>&lt;html lang="en"&gt;</code>
+    <li>Provide a language switcher for easy navigation between languages.</li>
+    <li>Ensure translations are accurate and culturally appropriate.</li>
+  </ul>
+  <h3>Language Detection Example</h3>
+  <p>
+    Detect the user's preferred language and set the page language accordingly.
+  </p>
+  <div class="code-example">
+    <pre>
+navigator.language || navigator.userLanguage;
+    </pre>
+  </div>
+
+  <h3>Display "Hello World" in Multiple Languages</h3>
+  <div id="language-example">
+    <label for="language-select">Choose a language:</label>
+    <select id="language-select" aria-label="Select language">
+      <option value="en" lang="en">English</option>
+      <option value="fr" lang="fr">French</option>
+      <option value="ja" lang="ja">Japanese</option>
+    </select>
+    <p id="hello-world-text" lang="en">Hello World</p>
+  </div>
+  <script>
+    const languageSelect = document.getElementById('language-select');
+    const helloWorldText = document.getElementById('hello-world-text');
+
+    const translations = {
+      en: 'Hello World',
+      fr: 'Bonjour le monde',
+      ja: 'こんにちは世界'
+    };
+
+    languageSelect.addEventListener('change', (event) => {
+      const selectedLang = event.target.value;
+      helloWorldText.lang = selectedLang;
+      helloWorldText.textContent = translations[selectedLang];
+    });
+
+    const userLang = navigator.language || navigator.userLanguage;
+    if (translations[userLang.slice(0, 2)]) {
+      languageSelect.value = userLang.slice(0, 2);
+      languageSelect.dispatchEvent(new Event('change'));
+    }
+  </script>
+</section>
+
     </main>
 
     <footer>
