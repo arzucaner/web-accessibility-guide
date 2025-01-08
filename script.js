@@ -47,3 +47,25 @@ function startAnimation() {
   const box = document.getElementById("animated-box");
   box.style.animation = "move 2s infinite";
 }
+
+
+const languageSelect = document.getElementById('language-select');
+const helloWorldText = document.getElementById('hello-world-text');
+
+const translations = {
+  en: 'Hello World ',
+  fr: 'Bonjour le monde',
+  ja: 'こんにちは世界'
+};
+
+languageSelect.addEventListener('change', (event) => {
+  const selectedLang = event.target.value;
+  helloWorldText.lang = selectedLang;
+  helloWorldText.textContent = translations[selectedLang];
+});
+
+const userLang = navigator.language || navigator.userLanguage;
+if (translations[userLang.slice(0, 2)]) {
+  languageSelect.value = userLang.slice(0, 2);
+  languageSelect.dispatchEvent(new Event('change'));
+}
