@@ -22,6 +22,7 @@
       <a href="#" onclick="showSection('form-validation')">Form Validation</a>
       <a href="#" onclick="showSection('animations')">Accessible Animations</a>
       <a href="#" onclick="showSection('multilingual-support')">Multilingual Support</a>
+      <a href="#" onclick="showSection('dark-mode')">Dark Mode</a>
     </nav>
 
     <main>
@@ -182,30 +183,50 @@ navigator.language || navigator.userLanguage;
     </select>
     <p id="hello-world-text" lang="en">Hello World</p>
   </div>
-  <script>
-    const languageSelect = document.getElementById('language-select');
-    const helloWorldText = document.getElementById('hello-world-text');
-
-    const translations = {
-      en: 'Hello World',
-      fr: 'Bonjour le monde',
-      ja: 'こんにちは世界'
-    };
-
-    languageSelect.addEventListener('change', (event) => {
-      const selectedLang = event.target.value;
-      helloWorldText.lang = selectedLang;
-      helloWorldText.textContent = translations[selectedLang];
-    });
-
-    const userLang = navigator.language || navigator.userLanguage;
-    if (translations[userLang.slice(0, 2)]) {
-      languageSelect.value = userLang.slice(0, 2);
-      languageSelect.dispatchEvent(new Event('change'));
-    }
-  </script>
 </section>
 
+
+<section id="dark-mode" class="hidden">
+  <h2>Dark Mode</h2>
+  <p>
+    Dark mode helps reduce eye strain and provides better readability in low-light environments.
+  </p>
+  <h3>Enable Dark Mode</h3>
+  <button onclick="toggleTheme()">Toggle Dark Mode</button>
+
+  <h3>Code Example</h3>
+  <p>Below is an example of how to implement dark mode using JavaScript and CSS:</p>
+  <div class="code-example">
+    <h4>CSS:</h4>
+    <pre>
+/* General Dark Mode Styles */
+.dark-mode {
+  background-color: #121212;
+  color: #f4f4f4;
+}
+
+.dark-mode header {
+  background-color: #1f1f1f;
+}
+    </pre>
+
+    <h4>JavaScript:</h4>
+    <pre>
+function toggleTheme() {
+  const body = document.body;
+  const isDarkMode = body.classList.toggle("dark-mode");
+  localStorage.setItem("dark-mode", isDarkMode ? "enabled" : "disabled");
+}
+
+// Load user preference on page load
+document.addEventListener("DOMContentLoaded", () => {
+  if (localStorage.getItem("dark-mode") === "enabled") {
+    document.body.classList.add("dark-mode");
+  }
+});
+    </pre>
+  </div>
+</section>
     </main>
 
     <footer>
