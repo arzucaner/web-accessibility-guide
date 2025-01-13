@@ -164,3 +164,50 @@ p#hello-world-text {
   background-color: #121212;
   color: #ffffff;
 }
+
+ /* Styles for Slider */
+ .slider-container {
+  display: flex;
+  align-items: center;
+  margin: 1em 0;
+}
+.slider {
+  width: 200px;
+  margin: 0 1em;
+}
+.slider-label {
+  font-size: 1.2em;
+}
+
+/* Styles for Date Picker */
+.datepicker {
+  position: relative;
+  margin-top: 1em;
+}
+.calendar {
+  display: none;
+  position: absolute;
+  left:5em;
+  top: 2em;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+.calendar.active {
+  display: block;
+}
+.calendar table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.calendar th,
+.calendar td {
+  padding: 0.5em;
+  text-align: center;
+  cursor: pointer;
+}
+.calendar .today {
+  background-color: #007bff;
+  color: white;
+}
