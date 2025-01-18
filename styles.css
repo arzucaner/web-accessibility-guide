@@ -211,3 +211,46 @@ p#hello-world-text {
   background-color: #007bff;
   color: white;
 }
+/* Accessible Notifications */
+.toast-notification {
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  background-color: #0056b3;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  z-index: 1000;
+  opacity: 1;
+  animation: fadeout 4s forwards;
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.btn{
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #007bff;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+  color: white;
+}
