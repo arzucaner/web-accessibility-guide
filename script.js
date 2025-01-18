@@ -148,3 +148,17 @@ function selectDate(day, month, year) {
   toggleCalendar();
 }
 
+/* Add Accessible Notifications */
+
+function showNotification(message) {
+  const notification = document.createElement('div');
+  notification.setAttribute('role', 'alert');
+  notification.setAttribute('aria-live', 'assertive');
+  notification.className = 'toast-notification';
+  notification.textContent = message;
+  document.body.appendChild(notification);
+
+  setTimeout(() => {
+    notification.remove();
+  }, 2000);
+}
