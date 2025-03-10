@@ -2,6 +2,8 @@
 
 "Making the web accessible for everyone!"
 
+![Accessibility Guide Screenshot](images/accessibility_guide.png)
+
 ---
 
 ## Description
@@ -107,7 +109,6 @@ git push origin feature/
 This project is licensed under the MIT License.
 
 ---
-
 
 ## Acknowledgments
 
