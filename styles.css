@@ -254,3 +254,8 @@ p#hello-world-text {
   background-color: #0056b3;
   color: white;
 }
+
+button:focus, a:focus {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+}
