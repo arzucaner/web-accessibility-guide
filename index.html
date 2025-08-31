@@ -21,6 +21,11 @@
       <a href="#" onclick="showSection('dynamic-content')">Dynamic Content</a>
       <a href="#" onclick="showSection('form-validation')">Form Validation</a>
       <a href="#" onclick="showSection('animations')">Accessible Animations</a>
+      <a href="#" onclick="showSection('multilingual-support')">Multilingual Support</a>
+      <a href="#" onclick="showSection('dark-mode')">Dark Mode</a>
+      <a href="#" onclick="showSection('interactive-widgets')">Interactive Widgets</a>
+      <a href="#" onclick="showSection('notifications')">Accessible Notifications</a>
+
     </nav>
 
     <main>
@@ -145,6 +150,169 @@
         <button onclick="startAnimation()">Start Animation</button>
         <div id="animated-box" class="box"></div>
       </section>
+<section id="multilingual-support" class="hidden">
+  <h2>Multilingual Support</h2>
+  <p>
+    Providing multilingual support ensures inclusivity for users who speak
+    different languages.
+  </p>
+  <h3>Best Practices for Multilingual Websites</h3>
+  <ul>
+    <li>
+      Use the <code>lang</code> attribute to specify the language of the
+      content:
+    </li>
+    <code>&lt;html lang="en"&gt;</code>
+    <li>Provide a language switcher for easy navigation between languages.</li>
+    <li>Ensure translations are accurate and culturally appropriate.</li>
+  </ul>
+  <h3>Language Detection Example</h3>
+  <p>
+    Detect the user's preferred language and set the page language accordingly.
+  </p>
+  <div class="code-example">
+    <pre>
+navigator.language || navigator.userLanguage;
+    </pre>
+  </div>
+
+  <h3>Display "Hello World" in Multiple Languages</h3>
+  <div id="language-example">
+    <label for="language-select">Choose a language:</label>
+    <select id="language-select" aria-label="Select language">
+      <option value="en" lang="en">English</option>
+      <option value="fr" lang="fr">French</option>
+      <option value="ja" lang="ja">Japanese</option>
+    </select>
+    <p id="hello-world-text" lang="en">Hello World</p>
+  </div>
+</section>
+
+
+<section id="dark-mode" class="hidden">
+  <h2>Dark Mode</h2>
+  <p>
+    Dark mode helps reduce eye strain and provides better readability in low-light environments.
+  </p>
+  <h3>Enable Dark Mode</h3>
+  <button class="btn" onclick="toggleTheme()">Toggle Dark Mode</button>
+
+  <h3>Code Example</h3>
+  <p>Below is an example of how to implement dark mode using JavaScript and CSS:</p>
+  <div class="code-example">
+    <h4>CSS:</h4>
+    <pre>
+/* General Dark Mode Styles */
+.dark-mode {
+  background-color: #121212;
+  color: #f4f4f4;
+}
+
+.dark-mode header {
+  background-color: #1f1f1f;
+}
+    </pre>
+
+    <h4>JavaScript:</h4>
+    <pre>
+function toggleTheme() {
+  const body = document.body;
+  const isDarkMode = body.classList.toggle("dark-mode");
+  localStorage.setItem("dark-mode", isDarkMode ? "enabled" : "disabled");
+}
+
+// Load user preference on page load
+document.addEventListener("DOMContentLoaded", () => {
+  if (localStorage.getItem("dark-mode") === "enabled") {
+    document.body.classList.add("dark-mode");
+  }
+});
+    </pre>
+  </div>
+</section>
+
+<section id="interactive-widgets" class="hidden">
+  <h2>Interactive Widgets</h2>
+  <p>Accessible sliders, date pickers, and other custom UI components.</p>
+
+  <!-- Accessible Slider -->
+  <div class="slider-container">
+    <label for="slider" class="slider-label">Adjust Volume:</label>
+    <input
+      type="range"
+      id="slider"
+      class="slider"
+      min="0"
+      max="100"
+      value="50"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="50"
+      role="slider"
+      oninput="updateSliderValue(this)"
+      onkeydown="handleSliderKeydown(event, this)"
+    />
+    <span id="slider-value" aria-live="polite">50</span>
+  </div>
+
+  <!-- Accessible Date Picker -->
+  <div class="datepicker">
+    <label for="date-input" class="datepicker-label">Select a Date:</label>
+    <input
+      type="text"
+      id="date-input"
+      aria-haspopup="true"
+      aria-expanded="false"
+      aria-controls="calendar"
+      placeholder="DD-MM-YYYY"
+      readonly
+      onclick="toggleCalendar()"
+    />
+    <div id="calendar" class="calendar" role="dialog" aria-label="Date Picker">
+      <table>
+        <thead>
+          <tr>
+            <th>Su</th>
+            <th>Mo</th>
+            <th>Tu</th>
+            <th>We</th>
+            <th>Th</th>
+            <th>Fr</th>
+            <th>Sa</th>
+          </tr>
+        </thead>
+        <tbody id="calendar-body">
+          <!-- Calendar days will be dynamically generated -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="notifications" class="hidden">
+  <h2>Accessible Notifications</h2>
+  <p>
+    Notifications should be accessible to all users, including those using screen readers. Use ARIA live regions to ensure important updates are announced.
+  </p>
+  <h3>Implementing Screen-Reader Friendly Notifications</h3>
+  <ul>
+    <li>
+      Use <code>role="alert"</code> or <code>aria-live="polite"</code> for inline notifications to announce updates.
+    </li>
+    <li>
+      Ensure notifications have clear and concise messages.
+    </li>
+    <li>
+      Example:
+      <pre><code>
+        &lt;div role="alert" aria-live="assertive" class="toast-notification"&gt;
+          Your changes have been saved successfully!
+        &lt;/div&gt;
+      </code></pre>
+    </li>
+  </ul>
+  <button class="btn" onclick="showNotification('Your changes have been saved successfully!')">Show Notification</button>
+</section>
     </main>
 
     <footer>

@@ -61,6 +61,7 @@ section {
   padding: 20px;
   max-width: 800px;
   background-color: white;
+  color: #121212;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -77,6 +78,12 @@ section {
   font-family: monospace;
   overflow-x: auto;
 }
+
+.code-example h4 {
+  margin-top: 0;
+  font-size: 1.1em;
+}
+
 
 .high-contrast {
   background-color: black;
@@ -132,4 +139,123 @@ footer {
   button {
     width: 100%;
   }
+}
+
+
+#language-example {
+  margin-top: 1em;
+}
+label {
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+select {
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+p#hello-world-text {
+  margin-top: 1em;
+  padding: 4px;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+ /* Styles for Slider */
+ .slider-container {
+  display: flex;
+  align-items: center;
+  margin: 1em 0;
+}
+.slider {
+  width: 200px;
+  margin: 0 1em;
+}
+.slider-label {
+  font-size: 1.2em;
+}
+
+/* Styles for Date Picker */
+.datepicker {
+  position: relative;
+  margin-top: 1em;
+}
+.calendar {
+  display: none;
+  position: absolute;
+  left:5em;
+  top: 2em;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+.calendar.active {
+  display: block;
+}
+.calendar table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.calendar th,
+.calendar td {
+  padding: 0.5em;
+  text-align: center;
+  cursor: pointer;
+}
+.calendar .today {
+  background-color: #007bff;
+  color: white;
+}
+/* Accessible Notifications */
+.toast-notification {
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  background-color: #0056b3;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  z-index: 1000;
+  opacity: 1;
+  animation: fadeout 4s forwards;
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.btn{
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #007bff;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+button:focus, a:focus {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
 }
