@@ -1,3 +1,20 @@
+/* Skip Link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #007bff;
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1001;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
@@ -51,9 +68,53 @@ nav a:hover {
   text-decoration: underline;
 }
 
-main {
+/* Layout */
+.layout {
+  display: flex;
   flex: 1;
+  gap: 20px;
   padding: 20px;
+}
+
+.sidebar {
+  width: 300px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  color: #007bff;
+}
+
+.sidebar h3 {
+  color: #333;
+  margin-top: 20px;
+}
+
+.sidebar ul {
+  padding-left: 20px;
+}
+
+.sidebar li {
+  margin-bottom: 8px;
+}
+
+.sidebar-buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
 }
 
 section {
@@ -131,6 +192,16 @@ footer {
 }
 
 @media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .sidebar {
+    width: auto;
+    position: static;
+  }
+  
   nav a {
     display: block;
     margin: 10px 0;

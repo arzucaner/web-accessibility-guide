@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    
     <header>
       <h1>Accessibility Guide</h1>
       <p>"Making the web accessible for everyone!"</p>
@@ -28,7 +30,27 @@
 
     </nav>
 
-    <main>
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>About This Guide</h2>
+        <p>This comprehensive guide demonstrates essential web accessibility features and best practices for creating inclusive websites.</p>
+        
+        <h3>Key Features</h3>
+        <ul>
+          <li>Screen reader optimization</li>
+          <li>Keyboard navigation</li>
+          <li>High contrast modes</li>
+          <li>Form validation</li>
+          <li>Accessible animations</li>
+        </ul>
+        
+        <div class="sidebar-buttons">
+          <button class="btn" onclick="toggleTheme()">Toggle Dark Mode</button>
+          <button class="btn" onclick="toggleContrast()">High Contrast</button>
+        </div>
+      </aside>
+
+      <main id="main" class="content">
       <section id="accessibility">
         <h2>What is Accessibility?</h2>
         <p>
@@ -313,7 +335,8 @@ document.addEventListener("DOMContentLoaded", () => {
   </ul>
   <button class="btn" onclick="showNotification('Your changes have been saved successfully!')">Show Notification</button>
 </section>
-    </main>
+      </main>
+    </div>
 
     <footer>
       <p>&copy; 2024 Accessibility Guide. All rights reserved.</p>
