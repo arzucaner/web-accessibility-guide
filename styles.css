@@ -3,12 +3,13 @@
   position: absolute;
   top: -40px;
   left: 6px;
-  background: #007bff;
-  color: white;
+  background: #ffcc00;
+  color: #000;
   padding: 8px;
   text-decoration: none;
   border-radius: 4px;
   z-index: 1001;
+  transition: top 0.3s ease;
 }
 
 .skip-link:focus {
@@ -110,6 +111,13 @@ nav a:hover {
 
 .sidebar li {
   margin-bottom: 8px;
+}
+
+.sidebar .actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 .sidebar-buttons {
@@ -215,6 +223,22 @@ footer {
   }
 
   button {
+    width: 100%;
+  }
+  
+  .cta-primary,
+  .cta-secondary {
+    min-width: 44px;
+    min-height: 44px;
+    width: auto;
+  }
+  
+  .sidebar .actions {
+    flex-direction: column;
+  }
+  
+  .sidebar .actions .cta-primary,
+  .sidebar .actions .cta-secondary {
     width: 100%;
   }
 }
@@ -367,4 +391,97 @@ p#hello-world-text {
 button:focus, a:focus {
   outline: 3px solid #ffcc00;
   outline-offset: 3px;
+}
+
+/* Accessible Button Styles */
+.cta-primary,
+.cta-secondary {
+  display: inline-block;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.cta-primary:focus-visible,
+.cta-secondary:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+}
+
+.cta-primary {
+  background: #000;
+  color: #fff;
+}
+
+.cta-primary:hover,
+.cta-primary:focus {
+  background: #333;
+}
+
+.cta-secondary {
+  background: #fff;
+  color: #000;
+  border: 1px solid #000;
+}
+
+.cta-secondary:hover,
+.cta-secondary:focus {
+  background: #000;
+  color: #fff;
+}
+
+/* Dark mode button adjustments */
+.dark-mode .cta-primary {
+  background: #fff;
+  color: #000;
+}
+
+.dark-mode .cta-primary:hover,
+.dark-mode .cta-primary:focus {
+  background: #ccc;
+}
+
+.dark-mode .cta-secondary {
+  background: #000;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+.dark-mode .cta-secondary:hover,
+.dark-mode .cta-secondary:focus {
+  background: #fff;
+  color: #000;
+}
+
+/* High contrast mode button adjustments */
+.high-contrast .cta-primary {
+  background: #000;
+  color: #ffcc00;
+  border: 2px solid #ffcc00;
+}
+
+.high-contrast .cta-primary:hover,
+.high-contrast .cta-primary:focus {
+  background: #ffcc00;
+  color: #000;
+}
+
+.high-contrast .cta-secondary {
+  background: #ffcc00;
+  color: #000;
+  border: 2px solid #000;
+}
+
+.high-contrast .cta-secondary:hover,
+.high-contrast .cta-secondary:focus {
+  background: #000;
+  color: #ffcc00;
 }
