@@ -7,6 +7,24 @@ function showSection(sectionId) {
       section.classList.add("hidden");
     }
   });
+
+  // Update aria-current="page" on navigation links
+  const navLinks = document.querySelectorAll("nav a");
+  navLinks.forEach((link) => {
+    link.removeAttribute("aria-current");
+  });
+  
+  // Find and set aria-current="page" on the active navigation link
+  const activeLink = document.querySelector(`nav a[onclick="showSection('${sectionId}')"]`);
+  if (activeLink) {
+    activeLink.setAttribute("aria-current", "page");
+  }
+
+  // Move focus to main content area
+  const mainElement = document.getElementById('main');
+  if (mainElement) {
+    mainElement.focus();
+  }
 }
 
 function toggleTheme() {
