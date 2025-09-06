@@ -20,9 +20,13 @@ function showSection(sectionId) {
     activeLink.setAttribute("aria-current", "page");
   }
 
-  // Move focus to main content area
+  // Move focus to main content area after toggling visibility
   const mainElement = document.getElementById('main');
   if (mainElement) {
+    // Ensure main element is focusable
+    if (!mainElement.hasAttribute('tabindex')) {
+      mainElement.setAttribute('tabindex', '-1');
+    }
     mainElement.focus();
   }
 }
@@ -180,3 +184,16 @@ function showNotification(message) {
     notification.remove();
   }, 2000);
 }
+
+// Guard against duplicate GitHub buttons script loading
+(function() {
+  // Check if GitHub buttons script is already loaded or being loaded
+  const existingScript = document.querySelector('script[src="https://buttons.github.io/buttons.js"]');
+  if (!existingScript) {
+    const script = document.createElement('script');
+    script.src = 'https://buttons.github.io/buttons.js';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+})();
