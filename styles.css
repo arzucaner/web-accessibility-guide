@@ -485,3 +485,125 @@ button:focus, a:focus {
   background: #000;
   color: #ffcc00;
 }
+
+/* GitHub Corner SVG */
+.github-corner {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  width: 80px;
+  height: 80px;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.github-corner:hover {
+  transform: scale(1.1);
+}
+
+.github-corner svg {
+  width: 80px;
+  height: 80px;
+  fill: #151513;
+  color: #fff;
+}
+
+.github-corner:focus {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+}
+
+/* GitHub Star Button */
+.github-star-container {
+  position: fixed;
+  top: 20px;
+  right: 90px; /* Positioned to the left of the corner */
+  z-index: 1000;
+}
+
+.github-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #24292e;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid #24292e;
+  transition: all 0.3s ease;
+}
+
+.github-button:hover {
+  background-color: #0366d6;
+  border-color: #0366d6;
+  color: #fff;
+  text-decoration: none;
+}
+
+.github-button:focus {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+}
+
+/* Dark mode adjustments for GitHub elements */
+.dark-mode .github-corner svg {
+  fill: #f0f6fc;
+  color: #0d1117;
+}
+
+.dark-mode .github-button {
+  background-color: #21262d;
+  border-color: #30363d;
+  color: #f0f6fc;
+}
+
+.dark-mode .github-button:hover {
+  background-color: #238636;
+  border-color: #238636;
+  color: #f0f6fc;
+}
+
+/* High contrast mode adjustments for GitHub elements */
+.high-contrast .github-corner svg {
+  fill: #000;
+  color: #ffcc00;
+}
+
+.high-contrast .github-button {
+  background-color: #000;
+  border-color: #ffcc00;
+  color: #ffcc00;
+}
+
+.high-contrast .github-button:hover {
+  background-color: #ffcc00;
+  border-color: #000;
+  color: #000;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .github-corner {
+    top: 10px;
+    right: 10px;
+    width: 60px;
+    height: 60px;
+  }
+  
+  .github-corner svg {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .github-star-container {
+    top: 15px;
+    right: 80px; /* Adjusted for smaller corner */
+  }
+  
+  .github-button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
