@@ -10,10 +10,21 @@
   border-radius: 4px;
   z-index: 1001;
   transition: top 0.3s ease;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .skip-link:focus {
   top: 6px;
+}
+
+.skip-link:focus-visible {
+  top: 6px;
+  outline: 3px solid #000;
+  outline-offset: 2px;
+  background: #000;
+  color: #ffcc00;
+  box-shadow: 0 0 0 1px #ffcc00;
 }
 
 body {
@@ -52,6 +63,14 @@ header {
   color: white;
 }
 
+.theme-toggle:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+  background-color: #ffcc00;
+  color: #000;
+  border-color: #000;
+}
+
 nav {
   background-color: #333;
   padding: 10px;
@@ -67,6 +86,16 @@ nav a {
 
 nav a:hover {
   text-decoration: underline;
+}
+
+nav a:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+  background-color: #ffcc00;
+  color: #000;
+  text-decoration: none;
+  border-radius: 3px;
+  padding: 2px 4px;
 }
 
 /* Layout */
@@ -364,6 +393,14 @@ p#hello-world-text {
   color: white;
 }
 
+.btn:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+  background-color: #ffcc00;
+  color: #000;
+  border-color: #000;
+}
+
 .btn-primary {
   background-color: #007bff;
   color: white;
@@ -374,6 +411,13 @@ p#hello-world-text {
 .btn-primary:hover {
   background-color: #0056b3;
   color: white;
+}
+
+.btn-primary:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+  background-color: #ffcc00;
+  color: #000;
 }
 
 .btn-secondary {
@@ -388,7 +432,24 @@ p#hello-world-text {
   color: white;
 }
 
-button:focus, a:focus {
+.btn-secondary:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+  background-color: #ffcc00;
+  color: #000;
+  border-color: #000;
+}
+
+/* Focus styles for buttons and links */
+button:focus-visible, 
+a:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+}
+
+/* Fallback for older browsers */
+button:focus, 
+a:focus {
   outline: 3px solid #ffcc00;
   outline-offset: 3px;
 }
@@ -509,6 +570,11 @@ button:focus, a:focus {
   color: #fff;
 }
 
+.github-corner:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+}
+
 .github-corner:focus {
   outline: 3px solid #ffcc00;
   outline-offset: 3px;
@@ -540,6 +606,14 @@ button:focus, a:focus {
   border-color: #0366d6;
   color: #fff;
   text-decoration: none;
+}
+
+.github-button:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+  background-color: #ffcc00;
+  color: #000;
+  border-color: #000;
 }
 
 .github-button:focus {
