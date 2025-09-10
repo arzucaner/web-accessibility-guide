@@ -583,7 +583,7 @@ a:focus {
 /* GitHub Star Button */
 .github-star-container {
   position: fixed;
-  top: 20px;
+  top: 0;
   right: 90px; /* Positioned to the left of the corner */
   z-index: 1000;
 }
@@ -627,6 +627,11 @@ a:focus {
   color: #0d1117;
 }
 
+.dark-mode .github-corner:hover svg {
+  fill: #ffffff;
+  color: #000000;
+}
+
 .dark-mode .github-button {
   background-color: #21262d;
   border-color: #30363d;
@@ -645,6 +650,11 @@ a:focus {
   color: #ffcc00;
 }
 
+.high-contrast .github-corner:hover svg {
+  fill: #ffcc00;
+  color: #000;
+}
+
 .high-contrast .github-button {
   background-color: #000;
   border-color: #ffcc00;
@@ -660,8 +670,8 @@ a:focus {
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .github-corner {
-    top: 10px;
-    right: 10px;
+    top: 80px; /* Position below header and nav */
+    right: 0;
     width: 60px;
     height: 60px;
   }
@@ -672,8 +682,8 @@ a:focus {
   }
   
   .github-star-container {
-    top: 15px;
-    right: 80px; /* Adjusted for smaller corner */
+    top: 80px; /* Position below header and nav */
+    right: 70px; /* Adjusted for smaller corner */
   }
   
   .github-button {
