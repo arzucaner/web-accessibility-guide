@@ -10,7 +10,6 @@
     <a class="skip-link" href="#main">Skip to main content</a>
     
     <header>
-      <h1>Accessibility Guide</h1>
       <p>"Making the web accessible for everyone!"</p>
       <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
     </header>
@@ -31,7 +30,7 @@
     </nav>
 
     <div class="layout">
-      <aside class="sidebar">
+      <aside class="sidebar" aria-labelledby="site-title">
         <h1 id="site-title">Web Accessibility Guide</h1>
         <p>An open-source guide to help developers build more accessible and inclusive web experiences.</p>
         
@@ -39,7 +38,7 @@
           <a href="#accessibility-overview" class="btn btn-primary" aria-label="Read the Web Accessibility Guide">
             Read the Guide
           </a>
-          <a href="https://github.com/arzucaner/web-accessibility-guide" class="btn btn-secondary" aria-label="View Web Accessibility Guide on GitHub">
+          <a href="https://github.com/arzucaner/web-accessibility-guide" class="btn btn-secondary" aria-label="View Web Accessibility Guide on GitHub" rel="noopener noreferrer">
             View on GitHub
           </a>
         </div>
@@ -96,12 +95,12 @@
         <h3>Tools for Testing Contrast</h3>
         <ul>
           <li>
-            <a href="https://webaim.org/resources/contrastchecker/"
+            <a href="https://webaim.org/resources/contrastchecker/" rel="noopener noreferrer"
               >WebAIM Contrast Checker</a
             >
           </li>
           <li>
-            <a href="https://accessible-colors.com/">Accessible Colors Tool</a>
+            <a href="https://accessible-colors.com/" rel="noopener noreferrer">Accessible Colors Tool</a>
           </li>
         </ul>
         <button onclick="toggleContrast()">Toggle High Contrast</button>
