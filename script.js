@@ -194,6 +194,15 @@ function showNotification(message) {
   }, 2000);
 }
 
+// Wire the "Read the Guide" CTA to the first section
+document.getElementById('read-guide-cta')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  showSection('accessibility-overview');
+  const main = document.getElementById('main');
+  main?.focus();
+  document.getElementById('accessibility-overview')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
 // Guard against duplicate GitHub buttons script loading
 (function() {
   // Check if GitHub buttons script is already loaded or being loaded

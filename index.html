@@ -15,7 +15,7 @@
     </header>
 
     <nav>
-      <a href="#" onclick="showSection('accessibility')">Accessibility</a>
+      <a href="#" onclick="showSection('accessibility-overview')">Accessibility</a>
       <a href="#" onclick="showSection('screen-readers')">Screen Readers</a>
       <a href="#" onclick="showSection('contrast')">Contrast & Colors</a>
       <a href="#" onclick="showSection('keyboard')">Keyboard Navigation</a>
@@ -35,7 +35,7 @@
         <p>An open-source guide to help developers build more accessible and inclusive web experiences.</p>
         
         <div class="sidebar-buttons">
-          <a href="#accessibility-overview" class="btn btn-primary" aria-label="Read the Web Accessibility Guide">
+          <a href="#accessibility-overview" class="btn btn-primary" id="read-guide-cta" aria-label="Read the Web Accessibility Guide">
             Read the Guide
           </a>
           <a href="https://github.com/arzucaner/web-accessibility-guide" class="btn btn-secondary" aria-label="View Web Accessibility Guide on GitHub" rel="noopener noreferrer">
@@ -45,7 +45,7 @@
       </aside>
 
       <main id="main" class="content" tabindex="-1">
-      <section id="accessibility">
+      <section id="accessibility-overview">
         <h2>What is Accessibility?</h2>
         <p>
           Accessibility ensures inclusivity by making web content usable for
