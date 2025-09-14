@@ -20,6 +20,15 @@ function showSection(sectionId) {
     activeLink.setAttribute("aria-current", "page");
   }
 
+  // Update document title with active section's heading text
+  const activeSection = document.getElementById(sectionId);
+  if (activeSection) {
+    const heading = activeSection.querySelector('h2');
+    if (heading) {
+      document.title = `Web Accessibility Guide — ${heading.textContent}`;
+    }
+  }
+
   // Move focus to main content area after toggling visibility
   const mainElement = document.getElementById('main');
   if (mainElement) {
