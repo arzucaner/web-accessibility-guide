@@ -19,6 +19,18 @@ function showSection(sectionId) {
   if (activeLink) {
     activeLink.setAttribute("aria-current", "page");
   }
+  
+  // Update aria-current="page" on TOC links
+  const tocLinks = document.querySelectorAll(".toc-link");
+  tocLinks.forEach((link) => {
+    link.removeAttribute("aria-current");
+  });
+  
+  // Find and set aria-current="page" on the active TOC link
+  const activeTocLink = document.querySelector(`.toc-link[href="#${sectionId}"]`);
+  if (activeTocLink) {
+    activeTocLink.setAttribute("aria-current", "page");
+  }
 
   // Update document title with active section's heading text
   const activeSection = document.getElementById(sectionId);
@@ -201,6 +213,101 @@ document.getElementById('read-guide-cta')?.addEventListener('click', (e) => {
   const main = document.getElementById('main');
   main?.focus();
   document.getElementById('accessibility-overview')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+// Table of Contents functionality
+function generateTableOfContents() {
+  const sections = document.querySelectorAll('main section');
+  const sidebar = document.querySelector('.sidebar');
+  const sidebarButtons = document.querySelector('.sidebar-buttons');
+  
+  if (!sections.length || !sidebar || !sidebarButtons) return;
+  
+  // Create TOC navigation element
+  const tocNav = document.createElement('nav');
+  tocNav.setAttribute('aria-label', 'Table of contents');
+  tocNav.className = 'toc-nav';
+  
+  // Add heading for the TOC
+  const tocHeading = document.createElement('h3');
+  tocHeading.textContent = 'Table of Contents';
+  tocHeading.id = 'toc-heading';
+  tocNav.appendChild(tocHeading);
+  
+  const tocList = document.createElement('ul');
+  tocList.className = 'toc-list';
+  
+  sections.forEach(section => {
+    const h2 = section.querySelector('h2');
+    if (h2 && section.id) {
+      const listItem = document.createElement('li');
+      const link = document.createElement('a');
+      
+      link.href = `#${section.id}`;
+      link.textContent = h2.textContent;
+      link.className = 'toc-link';
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSection(section.id);
+        // Scroll to section smoothly
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      
+      listItem.appendChild(link);
+      tocList.appendChild(listItem);
+    }
+  });
+  
+  tocNav.appendChild(tocList);
+  
+  // Insert TOC after the intro paragraph but before the buttons
+  const introParagraph = sidebar.querySelector('p');
+  if (introParagraph) {
+    introParagraph.insertAdjacentElement('afterend', tocNav);
+  } else {
+    sidebarButtons.insertAdjacentElement('beforebegin', tocNav);
+  }
+  
+  return tocNav;
+}
+
+// IntersectionObserver for updating active TOC item
+function setupTocIntersectionObserver() {
+  const sections = document.querySelectorAll('main section');
+  const tocLinks = document.querySelectorAll('.toc-link');
+  
+  if (!sections.length || !tocLinks.length) return;
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Remove aria-current from all TOC links
+        tocLinks.forEach(link => {
+          link.removeAttribute('aria-current');
+        });
+        
+        // Add aria-current to the corresponding TOC link
+        const activeLink = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+        if (activeLink) {
+          activeLink.setAttribute('aria-current', 'page');
+        }
+      }
+    });
+  }, {
+    rootMargin: '-20% 0px -20% 0px', // Trigger when section is 20% visible
+    threshold: 0.1
+  });
+  
+  // Observe all sections
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+}
+
+// Initialize TOC when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  generateTableOfContents();
+  setupTocIntersectionObserver();
 });
 
 // Guard against duplicate GitHub buttons script loading
