@@ -182,6 +182,85 @@ section {
   border-radius: 5px;
   font-family: monospace;
   overflow-x: auto;
+  position: relative;
+}
+
+.code-example-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.copy-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 44px;
+  min-height: 44px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.copy-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+.copy-button:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+  background-color: #ffcc00;
+  color: #000;
+}
+
+.copy-button:active {
+  transform: translateY(0);
+}
+
+.copy-button.copied {
+  background-color: #28a745;
+}
+
+.copy-button.copied .copy-text::after {
+  content: "ed!";
+}
+
+.copy-icon {
+  font-size: 16px;
+}
+
+.copy-text {
+  font-size: 14px;
+}
+
+.copy-feedback {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #28a745;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.copy-feedback.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .code-example h4 {
@@ -499,10 +578,61 @@ a:focus {
   color: #fff;
 }
 
-/* Dark mode button adjustments */
-.dark-mode .cta-primary {
-  background: #fff;
+/* Dark mode adjustments for copy button */
+.dark-mode .copy-button {
+  background-color: #3182ce;
+  color: #e2e8f0;
+}
+
+.dark-mode .copy-button:hover {
+  background-color: #2c5282;
+}
+
+.dark-mode .copy-button:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+  background-color: #ffcc00;
   color: #000;
+}
+
+.dark-mode .copy-button.copied {
+  background-color: #38a169;
+}
+
+.dark-mode .copy-feedback {
+  background-color: #38a169;
+  color: #e2e8f0;
+}
+
+/* High contrast mode adjustments for copy button */
+.high-contrast .copy-button {
+  background-color: #000;
+  color: #ffcc00;
+  border: 2px solid #ffcc00;
+}
+
+.high-contrast .copy-button:hover {
+  background-color: #ffcc00;
+  color: #000;
+}
+
+.high-contrast .copy-button:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+  background-color: #ffcc00;
+  color: #000;
+}
+
+.high-contrast .copy-button.copied {
+  background-color: #000;
+  color: #00ff00;
+  border-color: #00ff00;
+}
+
+.high-contrast .copy-feedback {
+  background-color: #000;
+  color: #00ff00;
+  border: 2px solid #00ff00;
 }
 
 .dark-mode .cta-primary:hover,

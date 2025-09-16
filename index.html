@@ -154,6 +154,12 @@
         <h3>Example: Motion Reduction</h3>
         <p>Use media queries to detect user preferences for reduced motion:</p>
         <div class="code-example">
+          <div class="code-example-header">
+            <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code to clipboard">
+              <span class="copy-icon">📋</span>
+              <span class="copy-text">Copy</span>
+            </button>
+          </div>
           <pre>
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -187,6 +193,12 @@
     Detect the user's preferred language and set the page language accordingly.
   </p>
   <div class="code-example">
+    <div class="code-example-header">
+      <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code to clipboard">
+        <span class="copy-icon">📋</span>
+        <span class="copy-text">Copy</span>
+      </button>
+    </div>
     <pre>
 navigator.language || navigator.userLanguage;
     </pre>
@@ -216,6 +228,12 @@ navigator.language || navigator.userLanguage;
   <h3>Code Example</h3>
   <p>Below is an example of how to implement dark mode using JavaScript and CSS:</p>
   <div class="code-example">
+    <div class="code-example-header">
+      <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code to clipboard">
+        <span class="copy-icon">📋</span>
+        <span class="copy-text">Copy</span>
+      </button>
+    </div>
     <h4>CSS:</h4>
     <pre>
 /* General Dark Mode Styles */
@@ -335,6 +353,9 @@ document.addEventListener("DOMContentLoaded", () => {
     <footer>
       <p>&copy; 2024 Accessibility Guide. All rights reserved.</p>
     </footer>
+
+    <!-- Live region for copy feedback -->
+    <div id="copy-feedback" aria-live="polite" aria-atomic="true" class="copy-feedback"></div>
 
     <!-- GitHub Corner SVG -->
     <a href="https://github.com/arzucaner/web-accessibility-guide" 

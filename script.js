@@ -310,6 +310,128 @@ document.addEventListener('DOMContentLoaded', () => {
   setupTocIntersectionObserver();
 });
 
+// Copy code functionality
+function copyCode(button) {
+  const codeExample = button.closest('.code-example');
+  const preElements = codeExample.querySelectorAll('pre');
+  
+  // Combine all pre elements' text content
+  let codeText = '';
+  preElements.forEach((pre, index) => {
+    if (index > 0) codeText += '\n\n';
+    codeText += pre.textContent;
+  });
+  
+  // Copy to clipboard using modern Clipboard API
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(codeText).then(() => {
+      showCopySuccess(button);
+    }).catch((err) => {
+      console.error('Failed to copy text: ', err);
+      fallbackCopyTextToClipboard(codeText, button);
+    });
+  } else {
+    // Fallback for older browsers or non-secure contexts
+    fallbackCopyTextToClipboard(codeText, button);
+  }
+}
+
+// Fallback copy method for older browsers
+function fallbackCopyTextToClipboard(text, button) {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  
+  // Avoid scrolling to bottom
+  textArea.style.top = '0';
+  textArea.style.left = '0';
+  textArea.style.position = 'fixed';
+  textArea.style.opacity = '0';
+  
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  
+  try {
+    const successful = document.execCommand('copy');
+    if (successful) {
+      showCopySuccess(button);
+    } else {
+      showCopyError(button);
+    }
+  } catch (err) {
+    console.error('Fallback: Oops, unable to copy', err);
+    showCopyError(button);
+  }
+  
+  document.body.removeChild(textArea);
+}
+
+// Show copy success feedback
+function showCopySuccess(button) {
+  const copyText = button.querySelector('.copy-text');
+  const originalText = copyText.textContent;
+  
+  // Visual feedback on button
+  button.classList.add('copied');
+  button.setAttribute('aria-label', 'Code copied to clipboard');
+  
+  // Reset button after 2 seconds
+  setTimeout(() => {
+    button.classList.remove('copied');
+    button.setAttribute('aria-label', 'Copy code to clipboard');
+  }, 2000);
+  
+  // Show toast notification
+  const feedback = document.getElementById('copy-feedback');
+  feedback.textContent = 'Copied!';
+  feedback.classList.add('show');
+  
+  // Hide toast after 3 seconds
+  setTimeout(() => {
+    feedback.classList.remove('show');
+  }, 3000);
+  
+  // Announce to screen readers
+  announceToScreenReader('Code copied to clipboard');
+}
+
+// Show copy error feedback
+function showCopyError(button) {
+  const feedback = document.getElementById('copy-feedback');
+  feedback.textContent = 'Failed to copy';
+  feedback.style.backgroundColor = '#dc3545';
+  feedback.classList.add('show');
+  
+  // Hide toast after 3 seconds
+  setTimeout(() => {
+    feedback.classList.remove('show');
+    feedback.style.backgroundColor = '#28a745'; // Reset color
+  }, 3000);
+  
+  // Announce to screen readers
+  announceToScreenReader('Failed to copy code');
+}
+
+// Announce message to screen readers
+function announceToScreenReader(message) {
+  const announcement = document.createElement('div');
+  announcement.setAttribute('aria-live', 'polite');
+  announcement.setAttribute('aria-atomic', 'true');
+  announcement.style.position = 'absolute';
+  announcement.style.left = '-10000px';
+  announcement.style.width = '1px';
+  announcement.style.height = '1px';
+  announcement.style.overflow = 'hidden';
+  announcement.textContent = message;
+  
+  document.body.appendChild(announcement);
+  
+  // Remove after announcement
+  setTimeout(() => {
+    document.body.removeChild(announcement);
+  }, 1000);
+}
+
 // Guard against duplicate GitHub buttons script loading
 (function() {
   // Check if GitHub buttons script is already loaded or being loaded
