@@ -304,11 +304,6 @@ function setupTocIntersectionObserver() {
   });
 }
 
-// Initialize TOC when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  generateTableOfContents();
-  setupTocIntersectionObserver();
-});
 
 // Copy code functionality
 function copyCode(button) {
@@ -431,6 +426,93 @@ function announceToScreenReader(message) {
     document.body.removeChild(announcement);
   }, 1000);
 }
+
+// Back to Top Button Functionality
+function initBackToTopButton() {
+  const backToTopButton = document.getElementById('back-to-top');
+  if (!backToTopButton) return;
+
+  // Show/hide button based on scroll position
+  function toggleBackToTopButton() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const windowHeight = window.innerHeight;
+    
+    if (scrollTop > windowHeight) {
+      backToTopButton.classList.add('visible');
+    } else {
+      backToTopButton.classList.remove('visible');
+    }
+  }
+
+  // Smooth scroll to top and focus main element
+  function scrollToTop() {
+    const mainElement = document.getElementById('main');
+    
+    // Smooth scroll to top
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    
+    // Focus main element after scroll completes
+    setTimeout(() => {
+      if (mainElement) {
+        mainElement.focus();
+      }
+    }, 500); // Wait for smooth scroll to complete
+  }
+
+  // Add event listeners
+  window.addEventListener('scroll', toggleBackToTopButton);
+  backToTopButton.addEventListener('click', scrollToTop);
+  
+  // Handle keyboard navigation
+  backToTopButton.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      scrollToTop();
+    }
+  });
+}
+
+// Smooth scrolling for section permalinks
+function initSmoothScrolling() {
+  // Add smooth scrolling behavior to all section links
+  const sectionLinks = document.querySelectorAll('.section-link');
+  
+  sectionLinks.forEach(link => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      
+      const targetId = link.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
+      
+      if (targetElement) {
+        // Smooth scroll to the section
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+        
+        // Focus the heading after scroll completes
+        setTimeout(() => {
+          const heading = targetElement.querySelector('h2');
+          if (heading) {
+            heading.focus();
+          }
+        }, 500);
+      }
+    });
+  });
+}
+
+// Initialize all functionality when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  generateTableOfContents();
+  setupTocIntersectionObserver();
+  initBackToTopButton();
+  initSmoothScrolling();
+});
 
 // Guard against duplicate GitHub buttons script loading
 (function() {
