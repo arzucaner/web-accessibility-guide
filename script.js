@@ -506,12 +506,109 @@ function initSmoothScrolling() {
   });
 }
 
+// Contrast Checker Functionality
+function initContrastChecker() {
+  const foregroundInput = document.getElementById('foreground-color');
+  const backgroundInput = document.getElementById('background-color');
+  
+  if (!foregroundInput || !backgroundInput) return;
+  
+  // Calculate contrast ratio and update results
+  function updateContrastResults() {
+    const foregroundColor = foregroundInput.value;
+    const backgroundColor = backgroundInput.value;
+    
+    const ratio = calculateContrastRatio(foregroundColor, backgroundColor);
+    const aaCompliant = ratio >= 4.5; // WCAG AA for normal text
+    const aaaCompliant = ratio >= 7; // WCAG AAA for normal text
+    
+    // Update ratio display
+    const ratioElement = document.getElementById('ratio-value');
+    if (ratioElement) {
+      ratioElement.textContent = ratio.toFixed(2);
+    }
+    
+    // Update WCAG compliance status
+    updateComplianceStatus('aa-status', aaCompliant);
+    updateComplianceStatus('aaa-status', aaaCompliant);
+    
+    // Announce results to screen readers
+    announceContrastResults(ratio, aaCompliant, aaaCompliant);
+  }
+  
+  // Calculate contrast ratio between two colors
+  function calculateContrastRatio(color1, color2) {
+    const luminance1 = getLuminance(color1);
+    const luminance2 = getLuminance(color2);
+    
+    const lighter = Math.max(luminance1, luminance2);
+    const darker = Math.min(luminance1, luminance2);
+    
+    return (lighter + 0.05) / (darker + 0.05);
+  }
+  
+  // Get relative luminance of a color
+  function getLuminance(color) {
+    const rgb = hexToRgb(color);
+    if (!rgb) return 0;
+    
+    const { r, g, b } = rgb;
+    
+    // Convert to relative luminance
+    const rsRGB = r / 255;
+    const gsRGB = g / 255;
+    const bsRGB = b / 255;
+    
+    const rLinear = rsRGB <= 0.03928 ? rsRGB / 12.92 : Math.pow((rsRGB + 0.055) / 1.055, 2.4);
+    const gLinear = gsRGB <= 0.03928 ? gsRGB / 12.92 : Math.pow((gsRGB + 0.055) / 1.055, 2.4);
+    const bLinear = bsRGB <= 0.03928 ? bsRGB / 12.92 : Math.pow((bsRGB + 0.055) / 1.055, 2.4);
+    
+    return 0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear;
+  }
+  
+  // Convert hex color to RGB
+  function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+  
+  // Update compliance status display
+  function updateComplianceStatus(elementId, isCompliant) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+    
+    element.className = `compliance-status ${isCompliant ? 'pass' : 'fail'}`;
+    element.textContent = isCompliant ? '✓ Pass' : '✗ Fail';
+  }
+  
+  // Announce contrast results to screen readers
+  function announceContrastResults(ratio, aaCompliant, aaaCompliant) {
+    const aaText = aaCompliant ? 'passes' : 'fails';
+    const aaaText = aaaCompliant ? 'passes' : 'fails';
+    const message = `Contrast ratio ${ratio.toFixed(2)}. WCAG AA ${aaText}, WCAG AAA ${aaaText}.`;
+    
+    announceToScreenReader(message);
+  }
+  
+  // Add event listeners
+  foregroundInput.addEventListener('input', updateContrastResults);
+  backgroundInput.addEventListener('input', updateContrastResults);
+  
+  // Initial calculation
+  updateContrastResults();
+}
+
 // Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   generateTableOfContents();
   setupTocIntersectionObserver();
   initBackToTopButton();
   initSmoothScrolling();
+  initContrastChecker();
 });
 
 // Guard against duplicate GitHub buttons script loading

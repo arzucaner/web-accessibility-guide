@@ -104,6 +104,33 @@
           </li>
         </ul>
         <button onclick="toggleContrast()">Toggle High Contrast</button>
+        
+        <h3>Contrast Checker</h3>
+        <div class="contrast-checker">
+          <div class="contrast-inputs">
+            <div class="color-input-group">
+              <label for="foreground-color">Foreground Color:</label>
+              <input type="color" id="foreground-color" value="#000000" aria-describedby="contrast-results">
+            </div>
+            <div class="color-input-group">
+              <label for="background-color">Background Color:</label>
+              <input type="color" id="background-color" value="#ffffff" aria-describedby="contrast-results">
+            </div>
+          </div>
+          <div id="contrast-results" class="contrast-results" aria-live="polite" aria-atomic="true">
+            <div class="contrast-ratio">Contrast Ratio: <span id="ratio-value">21.00</span></div>
+            <div class="wcag-compliance">
+              <div class="compliance-item">
+                <span class="compliance-label">WCAG AA:</span>
+                <span id="aa-status" class="compliance-status pass">✓ Pass</span>
+              </div>
+              <div class="compliance-item">
+                <span class="compliance-label">WCAG AAA:</span>
+                <span id="aaa-status" class="compliance-status pass">✓ Pass</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section id="keyboard" class="hidden">
