@@ -620,11 +620,19 @@ document.addEventListener("DOMContentLoaded", () => {
     </li>
     <li>
       Example:
-      <pre><code>
-        &lt;div role="alert" aria-live="assertive" class="toast-notification"&gt;
-          Your changes have been saved successfully!
-        &lt;/div&gt;
-      </code></pre>
+      <div class="code-example">
+        <div class="code-example-header">
+          <button class="copy-button" onclick="copyCode(this)" aria-label="Copy code to clipboard">
+            <span class="copy-icon">📋</span>
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+        <pre>
+&lt;div role="alert" aria-live="assertive" class="toast-notification"&gt;
+  Your changes have been saved successfully!
+&lt;/div&gt;
+        </pre>
+      </div>
     </li>
   </ul>
   <button class="btn" onclick="showNotification('Your changes have been saved successfully!')">Show Notification</button>
