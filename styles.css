@@ -946,8 +946,8 @@ a:focus {
   transition: opacity 0.2s ease, color 0.2s ease;
   padding: 2px 4px;
   border-radius: 3px;
-  min-width: 20px;
-  min-height: 20px;
+  min-width: 44px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;

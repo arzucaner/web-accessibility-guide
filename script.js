@@ -488,6 +488,12 @@ function initSmoothScrolling() {
       const targetElement = document.getElementById(targetId);
       
       if (targetElement) {
+        // Update URL hash
+        window.location.hash = targetId;
+        
+        // Show the correct section
+        showSection(targetId);
+        
         // Smooth scroll to the section
         targetElement.scrollIntoView({
           behavior: 'smooth',
@@ -609,7 +615,25 @@ document.addEventListener('DOMContentLoaded', () => {
   initBackToTopButton();
   initSmoothScrolling();
   initContrastChecker();
+  initHashHandling();
 });
+
+// Handle hash changes and initial hash
+function initHashHandling() {
+  // Handle initial hash if present
+  if (window.location.hash) {
+    const sectionId = window.location.hash.substring(1);
+    showSection(sectionId);
+  }
+  
+  // Handle hash changes
+  window.addEventListener('hashchange', (event) => {
+    const sectionId = event.newURL.split('#')[1];
+    if (sectionId) {
+      showSection(sectionId);
+    }
+  });
+}
 
 // Guard against duplicate GitHub buttons script loading
 (function() {
