@@ -514,7 +514,7 @@ function initSmoothScrolling() {
 
 // Contrast Checker Functionality
 function initContrastChecker() {
-  const foregroundInput = document.getElementById('foreground-color');
+  const foregroundInput = document.getElementById('text-color');
   const backgroundInput = document.getElementById('background-color');
   
   if (!foregroundInput || !backgroundInput) return;
