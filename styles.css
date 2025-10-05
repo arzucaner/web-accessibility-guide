@@ -1316,23 +1316,345 @@ h2:focus-within .section-link,
   border-color: #ff0000;
 }
 
-/* Mobile adjustments for contrast checker */
-@media (max-width: 768px) {
-  .contrast-inputs {
-    flex-direction: column;
-    gap: 15px;
+/* Print Stylesheet */
+@media print {
+  /* Reset and base styles for print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
   
-  .color-input-group {
-    min-width: auto;
+  body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 12pt;
+    line-height: 1.6;
+    color: #000;
+    background: #fff;
+    margin: 0;
+    padding: 0;
   }
   
-  .wcag-compliance {
-    flex-direction: column;
-    gap: 15px;
+  /* Single column layout */
+  .layout {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    gap: 0 !important;
+    padding: 0 !important;
   }
   
-  .compliance-item {
-    min-width: auto;
+  .sidebar {
+    display: none !important;
+  }
+  
+  .content {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: none !important;
+    min-width: auto !important;
+  }
+  
+  /* Hide decorative UI elements */
+  .github-corner,
+  .github-star-container,
+  .back-to-top,
+  .theme-toggle,
+  .skip-link,
+  .copy-button,
+  .copy-feedback,
+  .toast-notification {
+    display: none !important;
+  }
+  
+  /* Navigation styling */
+  nav {
+    display: none !important;
+  }
+  
+  /* Header styling */
+  header {
+    border-bottom: 2px solid #000;
+    margin-bottom: 20pt;
+    padding-bottom: 10pt;
+    background: #fff !important;
+    color: #000 !important;
+  }
+  
+  header p {
+    font-size: 14pt;
+    font-weight: bold;
+    margin: 0;
+    color: #000 !important;
+  }
+  
+  /* Show all sections (remove hidden class) */
+  section.hidden {
+    display: block !important;
+  }
+  
+  section {
+    margin: 20pt 0;
+    padding: 0;
+    background: #fff !important;
+    color: #000 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+  
+  /* Typography for print */
+  h1 {
+    font-size: 18pt;
+    font-weight: bold;
+    margin: 20pt 0 10pt 0;
+    page-break-after: avoid;
+    color: #000 !important;
+  }
+  
+  h2 {
+    font-size: 16pt;
+    font-weight: bold;
+    margin: 18pt 0 8pt 0;
+    page-break-after: avoid;
+    border-bottom: 1px solid #000;
+    padding-bottom: 4pt;
+    color: #000 !important;
+  }
+  
+  h3 {
+    font-size: 14pt;
+    font-weight: bold;
+    margin: 14pt 0 6pt 0;
+    page-break-after: avoid;
+    color: #000 !important;
+  }
+  
+  h4 {
+    font-size: 12pt;
+    font-weight: bold;
+    margin: 12pt 0 4pt 0;
+    page-break-after: avoid;
+    color: #000 !important;
+  }
+  
+  p {
+    margin: 6pt 0;
+    text-align: justify;
+    color: #000 !important;
+  }
+  
+  /* Lists */
+  ul, ol {
+    margin: 6pt 0;
+    padding-left: 20pt;
+  }
+  
+  li {
+    margin: 3pt 0;
+    page-break-inside: avoid;
+    color: #000 !important;
+  }
+  
+  /* Code styling */
+  code {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 10pt;
+    background: #f5f5f5;
+    padding: 2pt 4pt;
+    border: 1px solid #ccc;
+    border-radius: 2pt;
+    color: #000 !important;
+    word-break: break-word;
+  }
+  
+  pre {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 10pt;
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 8pt;
+    margin: 8pt 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+    page-break-inside: avoid;
+    color: #000 !important;
+  }
+  
+  .code-example {
+    border: 1px solid #ccc;
+    margin: 8pt 0;
+    padding: 8pt;
+    background: #f5f5f5;
+    page-break-inside: avoid;
+  }
+  
+  .code-example-header {
+    display: none !important;
+  }
+  
+  /* Links - show URLs after anchor text */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+    color: #666;
+    text-decoration: none;
+  }
+  
+  /* Don't show URLs for internal links */
+  a[href^="#"]:after {
+    content: "";
+  }
+  
+  /* Don't show URLs for mailto links */
+  a[href^="mailto:"]:after {
+    content: "";
+  }
+  
+  /* Don't show URLs for javascript: links */
+  a[href^="javascript:"]:after {
+    content: "";
+  }
+  
+  /* Buttons and interactive elements */
+  button,
+  input[type="color"],
+  input[type="email"],
+  input[type="range"],
+  input[type="text"],
+  select {
+    display: none !important;
+  }
+  
+  /* Form labels should be visible */
+  label {
+    font-weight: bold;
+    color: #000 !important;
+  }
+  
+  /* Tables */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 8pt 0;
+    page-break-inside: avoid;
+  }
+  
+  th, td {
+    border: 1px solid #000;
+    padding: 4pt;
+    text-align: left;
+    color: #000 !important;
+  }
+  
+  th {
+    background: #f0f0f0;
+    font-weight: bold;
+  }
+  
+  /* Footer */
+  footer {
+    border-top: 1px solid #000;
+    margin-top: 30pt;
+    padding-top: 10pt;
+    text-align: center;
+    font-size: 10pt;
+    background: #fff !important;
+    color: #000 !important;
+  }
+  
+  /* Page breaks */
+  h1, h2 {
+    page-break-before: auto;
+  }
+  
+  /* Avoid breaking these elements */
+  .contrast-checker,
+  .slider-container,
+  .datepicker,
+  .calendar,
+  .language-example {
+    display: none !important;
+  }
+  
+  /* Live regions and feedback */
+  [aria-live],
+  .copy-feedback {
+    display: none !important;
+  }
+  
+  /* Ensure proper spacing */
+  .section-link {
+    display: none !important;
+  }
+  
+  /* Images */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid;
+  }
+  
+  /* Ensure high contrast remains readable */
+  .high-contrast,
+  .dark-mode {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  
+  .high-contrast *,
+  .dark-mode * {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  
+  /* Remove any remaining shadows and backgrounds */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  /* Ensure proper spacing for readability */
+  .btn,
+  .cta-primary,
+  .cta-secondary {
+    display: none !important;
+  }
+  
+  /* Hide interactive widgets */
+  .slider,
+  .calendar,
+  .datepicker,
+  .contrast-checker,
+  .toast-notification {
+    display: none !important;
+  }
+  
+  /* Show form labels but hide inputs */
+  .color-input-group label,
+  .slider-label,
+  .datepicker-label {
+    display: block !important;
+    font-weight: bold;
+    margin-bottom: 4pt;
+  }
+  
+  /* Ensure proper page breaks for sections */
+  section {
+    page-break-inside: avoid;
+  }
+  
+  /* Avoid breaking code blocks */
+  pre,
+  .code-example {
+    page-break-inside: avoid;
+  }
+  
+  /* Ensure links are readable */
+  a {
+    color: #000 !important;
+    text-decoration: underline;
   }
 }
