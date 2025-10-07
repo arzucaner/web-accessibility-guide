@@ -635,6 +635,224 @@ function initHashHandling() {
   });
 }
 
+// Live Playground Functionality
+const playgroundSnippets = {
+  'pg-code-keyboard': `<div class="modal" role="dialog" aria-labelledby="modal-title">
+  <h2 id="modal-title">Keyboard Navigation Demo</h2>
+  <p>Use Tab to navigate, Enter to activate, Escape to close.</p>
+  <button onclick="alert('Button 1 clicked')">Button 1</button>
+  <button onclick="alert('Button 2 clicked')">Button 2</button>
+  <button onclick="alert('Close modal')">Close</button>
+</div>
+<style>
+.modal { 
+  border: 2px solid #007bff; 
+  padding: 20px; 
+  margin: 10px; 
+  background: #f8f9fa; 
+}
+button { 
+  margin: 5px; 
+  padding: 10px 15px; 
+  background: #007bff; 
+  color: white; 
+  border: none; 
+  border-radius: 4px; 
+}
+button:focus { 
+  outline: 3px solid #ffcc00; 
+  outline-offset: 2px; 
+}
+</style>`,
+  'pg-code-aria': `<div>
+  <h3>ARIA Live Region Demo</h3>
+  <p>Click buttons to see live announcements:</p>
+  <button onclick="updateLiveRegion('pg-live-demo', 'Message updated!')">Update Message</button>
+  <button onclick="updateLiveRegion('pg-live-demo', 'New content loaded!')">Load Content</button>
+  <div id="pg-live-demo" aria-live="polite">Initial message</div>
+</div>
+<style>
+button { 
+  margin: 5px; 
+  padding: 10px 15px; 
+  background: #28a745; 
+  color: white; 
+  border: none; 
+  border-radius: 4px; 
+}
+button:focus { 
+  outline: 3px solid #ffcc00; 
+  outline-offset: 2px; 
+}
+#pg-live-demo { 
+  margin: 10px 0; 
+  padding: 10px; 
+  background: #e9ecef; 
+  border-radius: 4px; 
+}
+</style>
+<script>
+function updateLiveRegion(id, message) {
+  document.getElementById(id).textContent = message;
+}
+</script>`,
+  'pg-code-form': `<form onsubmit="validateForm(event)">
+  <h3>Accessible Form Demo</h3>
+  <div>
+    <label for="pg-name">Name (required):</label>
+    <input type="text" id="pg-name" aria-describedby="pg-name-error" required>
+    <div id="pg-name-error" aria-live="polite"></div>
+  </div>
+  <div>
+    <label for="pg-email">Email:</label>
+    <input type="email" id="pg-email" aria-describedby="pg-email-error">
+    <div id="pg-email-error" aria-live="polite"></div>
+  </div>
+  <button type="submit">Submit</button>
+</form>
+<style>
+label { display: block; margin: 10px 0 5px 0; font-weight: bold; }
+input { 
+  width: 100%; 
+  padding: 8px; 
+  border: 2px solid #ddd; 
+  border-radius: 4px; 
+  margin-bottom: 5px; 
+}
+input:focus { 
+  outline: none; 
+  border-color: #007bff; 
+}
+input:invalid { 
+  border-color: #dc3545; 
+}
+button { 
+  padding: 10px 20px; 
+  background: #007bff; 
+  color: white; 
+  border: none; 
+  border-radius: 4px; 
+  margin-top: 10px; 
+}
+button:focus { 
+  outline: 3px solid #ffcc00; 
+  outline-offset: 2px; 
+}
+.error { 
+  color: #dc3545; 
+  font-size: 14px; 
+  margin-top: 5px; 
+}
+</style>
+<script>
+function validateForm(event) {
+  event.preventDefault();
+  const name = document.getElementById('pg-name');
+  const email = document.getElementById('pg-email');
+  const nameError = document.getElementById('pg-name-error');
+  const emailError = document.getElementById('pg-email-error');
+  
+  nameError.textContent = '';
+  emailError.textContent = '';
+  
+  if (!name.value.trim()) {
+    nameError.textContent = 'Name is required';
+    name.focus();
+    return;
+  }
+  
+  if (email.value && !email.value.includes('@')) {
+    emailError.textContent = 'Please enter a valid email address';
+    email.focus();
+    return;
+  }
+  
+  alert('Form submitted successfully!');
+}
+</script>`
+};
+
+function runPlayground(textareaId, iframeId) {
+  const textarea = document.getElementById(textareaId);
+  const iframe = document.getElementById(iframeId);
+  const statusId = textareaId.replace('pg-code-', 'pg-status-');
+  const statusElement = document.getElementById(statusId);
+  
+  if (!textarea || !iframe) return;
+  
+  try {
+    const htmlContent = textarea.value;
+    
+    // Create a complete HTML document with basic styling
+    const fullHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playground Output</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 0; 
+      padding: 20px; 
+      background: #fff; 
+      color: #333; 
+      line-height: 1.6; 
+    }
+    * { 
+      box-sizing: border-box; 
+    }
+  </style>
+</head>
+<body>
+  ${htmlContent}
+</body>
+</html>`;
+    
+    // Write content to iframe
+    iframe.srcdoc = fullHtml;
+    
+    // Update status
+    if (statusElement) {
+      statusElement.textContent = 'Updated preview';
+    }
+    
+    // Announce to screen readers
+    announceToScreenReader('Playground updated');
+    
+  } catch (error) {
+    console.error('Error running playground:', error);
+    if (statusElement) {
+      statusElement.textContent = 'Error: Invalid HTML';
+    }
+  }
+}
+
+function resetPlayground(textareaId, iframeId) {
+  const textarea = document.getElementById(textareaId);
+  const iframe = document.getElementById(iframeId);
+  const statusId = textareaId.replace('pg-code-', 'pg-status-');
+  const statusElement = document.getElementById(statusId);
+  
+  if (!textarea || !iframe) return;
+  
+  // Reset to original snippet
+  if (playgroundSnippets[textareaId]) {
+    textarea.value = playgroundSnippets[textareaId];
+  }
+  
+  // Clear iframe
+  iframe.srcdoc = '';
+  
+  // Update status
+  if (statusElement) {
+    statusElement.textContent = 'Reset to original';
+  }
+  
+  // Announce to screen readers
+  announceToScreenReader('Playground reset');
+}
+
 // Guard against duplicate GitHub buttons script loading
 (function() {
   // Check if GitHub buttons script is already loaded or being loaded

@@ -157,6 +157,46 @@
         </p>
         <h3>Focus Traps</h3>
         <p>Prevent users from navigating outside modals or overlays.</p>
+        
+        <details class="playground">
+          <summary>Live Playground</summary>
+          <div class="pg-controls">
+            <label for="pg-code-keyboard">Edit HTML:</label>
+            <textarea id="pg-code-keyboard" rows="8" spellcheck="false">&lt;div class="modal" role="dialog" aria-labelledby="modal-title"&gt;
+  &lt;h2 id="modal-title"&gt;Keyboard Navigation Demo&lt;/h2&gt;
+  &lt;p&gt;Use Tab to navigate, Enter to activate, Escape to close.&lt;/p&gt;
+  &lt;button onclick="alert('Button 1 clicked')"&gt;Button 1&lt;/button&gt;
+  &lt;button onclick="alert('Button 2 clicked')"&gt;Button 2&lt;/button&gt;
+  &lt;button onclick="alert('Close modal')"&gt;Close&lt;/button&gt;
+&lt;/div&gt;
+&lt;style&gt;
+.modal { 
+  border: 2px solid #007bff; 
+  padding: 20px; 
+  margin: 10px; 
+  background: #f8f9fa; 
+}
+button { 
+  margin: 5px; 
+  padding: 10px 15px; 
+  background: #007bff; 
+  color: white; 
+  border: none; 
+  border-radius: 4px; 
+}
+button:focus { 
+  outline: 3px solid #ffcc00; 
+  outline-offset: 2px; 
+}
+&lt;/style&gt;</textarea>
+            <div class="pg-actions">
+              <button type="button" class="pg-run" onclick="runPlayground('pg-code-keyboard', 'pg-output-keyboard')">Run</button>
+              <button type="button" class="pg-reset" onclick="resetPlayground('pg-code-keyboard', 'pg-output-keyboard')">Reset</button>
+            </div>
+          </div>
+          <iframe class="pg-output" id="pg-output-keyboard" title="Playground output" sandbox="allow-scripts"></iframe>
+          <div class="pg-status" aria-live="polite" id="pg-status-keyboard"></div>
+        </details>
       </section>
 
       <section id="dynamic-content" class="hidden">
@@ -166,6 +206,51 @@
         </p>
         <div aria-live="polite" id="live-region">Welcome to our site!</div>
         <button onclick="updateLiveRegion()">Update Message</button>
+        
+        <details class="playground">
+          <summary>Live Playground</summary>
+          <div class="pg-controls">
+            <label for="pg-code-aria">Edit HTML:</label>
+            <textarea id="pg-code-aria" rows="8" spellcheck="false">&lt;div&gt;
+  &lt;h3&gt;ARIA Live Region Demo&lt;/h3&gt;
+  &lt;p&gt;Click buttons to see live announcements:&lt;/p&gt;
+  &lt;button onclick="updateLiveRegion('pg-live-demo', 'Message updated!')"&gt;Update Message&lt;/button&gt;
+  &lt;button onclick="updateLiveRegion('pg-live-demo', 'New content loaded!')"&gt;Load Content&lt;/button&gt;
+  &lt;div id="pg-live-demo" aria-live="polite"&gt;Initial message&lt;/div&gt;
+&lt;/div&gt;
+&lt;style&gt;
+button { 
+  margin: 5px; 
+  padding: 10px 15px; 
+  background: #28a745; 
+  color: white; 
+  border: none; 
+  border-radius: 4px; 
+}
+button:focus { 
+  outline: 3px solid #ffcc00; 
+  outline-offset: 2px; 
+}
+#pg-live-demo { 
+  margin: 10px 0; 
+  padding: 10px; 
+  background: #e9ecef; 
+  border-radius: 4px; 
+}
+&lt;/style&gt;
+&lt;script&gt;
+function updateLiveRegion(id, message) {
+  document.getElementById(id).textContent = message;
+}
+&lt;/script&gt;</textarea>
+            <div class="pg-actions">
+              <button type="button" class="pg-run" onclick="runPlayground('pg-code-aria', 'pg-output-aria')">Run</button>
+              <button type="button" class="pg-reset" onclick="resetPlayground('pg-code-aria', 'pg-output-aria')">Reset</button>
+            </div>
+          </div>
+          <iframe class="pg-output" id="pg-output-aria" title="Playground output" sandbox="allow-scripts"></iframe>
+          <div class="pg-status" aria-live="polite" id="pg-status-aria"></div>
+        </details>
       </section>
 
       <section id="form-validation" class="hidden">
@@ -185,6 +270,93 @@
           <div id="error-message" class="error" aria-live="assertive"></div>
           <button type="submit">Submit</button>
         </form>
+        
+        <details class="playground">
+          <summary>Live Playground</summary>
+          <div class="pg-controls">
+            <label for="pg-code-form">Edit HTML:</label>
+            <textarea id="pg-code-form" rows="8" spellcheck="false">&lt;form onsubmit="validateForm(event)"&gt;
+  &lt;h3&gt;Accessible Form Demo&lt;/h3&gt;
+  &lt;div&gt;
+    &lt;label for="pg-name"&gt;Name (required):&lt;/label&gt;
+    &lt;input type="text" id="pg-name" aria-describedby="pg-name-error" required&gt;
+    &lt;div id="pg-name-error" aria-live="polite"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;label for="pg-email"&gt;Email:&lt;/label&gt;
+    &lt;input type="email" id="pg-email" aria-describedby="pg-email-error"&gt;
+    &lt;div id="pg-email-error" aria-live="polite"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+&lt;style&gt;
+label { display: block; margin: 10px 0 5px 0; font-weight: bold; }
+input { 
+  width: 100%; 
+  padding: 8px; 
+  border: 2px solid #ddd; 
+  border-radius: 4px; 
+  margin-bottom: 5px; 
+}
+input:focus { 
+  outline: none; 
+  border-color: #007bff; 
+}
+input:invalid { 
+  border-color: #dc3545; 
+}
+button { 
+  padding: 10px 20px; 
+  background: #007bff; 
+  color: white; 
+  border: none; 
+  border-radius: 4px; 
+  margin-top: 10px; 
+}
+button:focus { 
+  outline: 3px solid #ffcc00; 
+  outline-offset: 2px; 
+}
+.error { 
+  color: #dc3545; 
+  font-size: 14px; 
+  margin-top: 5px; 
+}
+&lt;/style&gt;
+&lt;script&gt;
+function validateForm(event) {
+  event.preventDefault();
+  const name = document.getElementById('pg-name');
+  const email = document.getElementById('pg-email');
+  const nameError = document.getElementById('pg-name-error');
+  const emailError = document.getElementById('pg-email-error');
+  
+  nameError.textContent = '';
+  emailError.textContent = '';
+  
+  if (!name.value.trim()) {
+    nameError.textContent = 'Name is required';
+    name.focus();
+    return;
+  }
+  
+  if (email.value && !email.value.includes('@')) {
+    emailError.textContent = 'Please enter a valid email address';
+    email.focus();
+    return;
+  }
+  
+  alert('Form submitted successfully!');
+}
+&lt;/script&gt;</textarea>
+            <div class="pg-actions">
+              <button type="button" class="pg-run" onclick="runPlayground('pg-code-form', 'pg-output-form')">Run</button>
+              <button type="button" class="pg-reset" onclick="resetPlayground('pg-code-form', 'pg-output-form')">Reset</button>
+            </div>
+          </div>
+          <iframe class="pg-output" id="pg-output-form" title="Playground output" sandbox="allow-scripts"></iframe>
+          <div class="pg-status" aria-live="polite" id="pg-status-form"></div>
+        </details>
       </section>
 
       <section id="animations" class="hidden">
