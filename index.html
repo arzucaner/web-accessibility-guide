@@ -50,6 +50,13 @@
         <h1 id="site-title">Web Accessibility Guide</h1>
         <p>An open-source guide to help developers build more accessible and inclusive web experiences.</p>
         
+        <!-- Search Input -->
+        <div class="search-container">
+          <label for="guide-search" class="visually-hidden">Search the guide</label>
+          <input type="search" id="guide-search" placeholder="Search..." aria-label="Search the guide" />
+          <div id="search-results-announcement" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
+        </div>
+
         <div class="sidebar-buttons">
           <a href="#accessibility-overview" class="btn btn-primary" id="read-guide-cta" aria-label="Read the Web Accessibility Guide">
             Read the Guide

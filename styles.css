@@ -1966,3 +1966,107 @@ h2:focus-within .section-link,
     height: 250px;
   }
 }
+
+/* Search Input Styles */
+.search-container {
+  margin: 20px 0;
+  position: relative;
+}
+
+#guide-search {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: inherit;
+  background-color: white;
+  color: #333;
+  transition: all 0.2s ease;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+#guide-search:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+#guide-search:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+  border-color: #007bff;
+}
+
+#guide-search::placeholder {
+  color: #666;
+  opacity: 1;
+}
+
+/* Visually hidden class for screen readers */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Dark mode adjustments for search */
+.dark-mode #guide-search {
+  background-color: #2d3748;
+  color: #e2e8f0;
+  border-color: #4a5568;
+}
+
+.dark-mode #guide-search:focus {
+  border-color: #63b3ed;
+  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.1);
+}
+
+.dark-mode #guide-search:focus-visible {
+  border-color: #63b3ed;
+}
+
+.dark-mode #guide-search::placeholder {
+  color: #a0aec0;
+}
+
+/* High contrast mode adjustments for search */
+.high-contrast #guide-search {
+  background-color: #000;
+  color: #ffcc00;
+  border-color: #ffcc00;
+}
+
+.high-contrast #guide-search:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+.high-contrast #guide-search:focus-visible {
+  border-color: #ffffff;
+  outline: 3px solid #ffffff;
+}
+
+.high-contrast #guide-search::placeholder {
+  color: #ffcc00;
+  opacity: 0.7;
+}
+
+/* Mobile adjustments for search */
+@media (max-width: 768px) {
+  .search-container {
+    margin: 15px 0;
+  }
+  
+  #guide-search {
+    padding: 15px 16px;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}

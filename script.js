@@ -616,6 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScrolling();
   initContrastChecker();
   initHashHandling();
+  initSearch();
 });
 
 // Handle hash changes and initial hash
@@ -851,6 +852,107 @@ function resetPlayground(textareaId, iframeId) {
   
   // Announce to screen readers
   announceToScreenReader('Playground reset');
+}
+
+// Search Functionality
+function initSearch() {
+  const searchInput = document.getElementById('guide-search');
+  const searchResultsAnnouncement = document.getElementById('search-results-announcement');
+  
+  if (!searchInput || !searchResultsAnnouncement) return;
+  
+  let searchTimeout;
+  
+  // Debounced search function
+  function performSearch(searchTerm) {
+    const sections = document.querySelectorAll('main section');
+    const tocLinks = document.querySelectorAll('.toc-link');
+    let visibleCount = 0;
+    
+    if (!searchTerm.trim()) {
+      // Show all sections and TOC items
+      sections.forEach(section => {
+        section.classList.remove('hidden');
+      });
+      tocLinks.forEach(link => {
+        link.closest('li').style.display = '';
+      });
+      announceSearchResults(sections.length, 'All sections visible');
+      return;
+    }
+    
+    const searchTermLower = searchTerm.toLowerCase();
+    
+    sections.forEach(section => {
+      const heading = section.querySelector('h2');
+      const content = section.textContent.toLowerCase();
+      
+      // Check if search term matches heading or content
+      const matchesHeading = heading && heading.textContent.toLowerCase().includes(searchTermLower);
+      const matchesContent = content.includes(searchTermLower);
+      
+      if (matchesHeading || matchesContent) {
+        section.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        section.classList.add('hidden');
+      }
+    });
+    
+    // Filter TOC items based on visible sections
+    tocLinks.forEach(link => {
+      const sectionId = link.getAttribute('href').substring(1);
+      const correspondingSection = document.getElementById(sectionId);
+      
+      if (correspondingSection && !correspondingSection.classList.contains('hidden')) {
+        link.closest('li').style.display = '';
+      } else {
+        link.closest('li').style.display = 'none';
+      }
+    });
+    
+    // Announce results to screen readers
+    const resultText = visibleCount === 1 ? '1 section found' : `${visibleCount} sections found`;
+    announceSearchResults(visibleCount, resultText);
+  }
+  
+  // Announce search results to screen readers
+  function announceSearchResults(count, message) {
+    if (searchResultsAnnouncement) {
+      searchResultsAnnouncement.textContent = message;
+    }
+  }
+  
+  // Handle search input
+  searchInput.addEventListener('input', (event) => {
+    const searchTerm = event.target.value;
+    
+    // Clear previous timeout
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+    }
+    
+    // Debounce search by 200ms
+    searchTimeout = setTimeout(() => {
+      performSearch(searchTerm);
+    }, 200);
+  });
+  
+  // Handle search input focus
+  searchInput.addEventListener('focus', () => {
+    // Ensure search input is accessible
+    searchInput.setAttribute('aria-describedby', 'search-results-announcement');
+  });
+  
+  // Handle keyboard navigation
+  searchInput.addEventListener('keydown', (event) => {
+    // Allow Escape to clear search
+    if (event.key === 'Escape') {
+      searchInput.value = '';
+      performSearch('');
+      searchInput.blur();
+    }
+  });
 }
 
 // Guard against duplicate GitHub buttons script loading
