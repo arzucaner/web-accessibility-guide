@@ -608,6 +608,72 @@ function initContrastChecker() {
   updateContrastResults();
 }
 
+// Reading Progress Bar Functionality
+function initReadingProgress() {
+  const progressBar = document.getElementById('read-progress');
+  const mainElement = document.getElementById('main');
+  
+  if (!progressBar || !mainElement) return;
+  
+  function updateProgress() {
+    const mainRect = mainElement.getBoundingClientRect();
+    const mainTop = mainRect.top;
+    const mainHeight = mainRect.height;
+    const viewportHeight = window.innerHeight;
+    
+    // Calculate the total scrollable height of the main content
+    const mainScrollHeight = mainHeight - viewportHeight + mainTop;
+    
+    if (mainScrollHeight <= 0) {
+      // Content is shorter than viewport, show 100%
+      progressBar.style.width = '100%';
+      progressBar.setAttribute('aria-valuenow', '100');
+      return;
+    }
+    
+    // Calculate progress based on how much of the main content has been scrolled past
+    const viewportBottom = viewportHeight;
+    const scrolledPast = Math.max(0, viewportBottom - mainTop);
+    const progress = Math.min(100, Math.max(0, (scrolledPast / mainScrollHeight) * 100));
+    
+    // Update progress bar
+    progressBar.style.width = `${progress}%`;
+    progressBar.setAttribute('aria-valuenow', Math.round(progress));
+  }
+  
+  // Update progress on scroll and resize
+  let ticking = false;
+  function requestUpdate() {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        updateProgress();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+  
+  window.addEventListener('scroll', requestUpdate);
+  window.addEventListener('resize', requestUpdate);
+  
+  // Initial update
+  updateProgress();
+  
+  // Update immediately if user jumps via hash/permalink
+  window.addEventListener('hashchange', () => {
+    setTimeout(updateProgress, 100);
+  });
+  
+  // Update when sections are shown/hidden
+  const originalShowSection = window.showSection;
+  if (originalShowSection) {
+    window.showSection = function(sectionId) {
+      originalShowSection(sectionId);
+      setTimeout(updateProgress, 100);
+    };
+  }
+}
+
 // Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   generateTableOfContents();
@@ -617,6 +683,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initContrastChecker();
   initHashHandling();
   initSearch();
+  initReadingProgress();
 });
 
 // Handle hash changes and initial hash

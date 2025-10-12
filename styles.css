@@ -1,3 +1,33 @@
+/* Reading Progress Bar */
+#read-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 0%;
+  background-color: currentColor;
+  z-index: 1002;
+  transition: width 0.1s ease-out;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  #read-progress {
+    transition: none;
+  }
+}
+
+/* Dark mode adjustments for progress bar */
+.dark-mode #read-progress {
+  background-color: #63b3ed;
+}
+
+/* High contrast mode adjustments for progress bar */
+.high-contrast #read-progress {
+  background-color: #ffcc00;
+  height: 6px;
+}
+
 /* Skip Link */
 .skip-link {
   position: absolute;
@@ -680,7 +710,7 @@ a:focus {
 /* GitHub Corner SVG */
 .github-corner {
   position: fixed;
-  top: 0;
+  top: 4px; /* Small offset to clear progress bar */
   right: 0;
   z-index: 1000;
   width: 80px;
@@ -713,7 +743,7 @@ a:focus {
 /* GitHub Star Button */
 .github-star-container {
   position: fixed;
-  top: 0;
+  top: 4px; /* Small offset to clear progress bar */
   right: 90px; /* Positioned to the left of the corner */
   z-index: 1000;
 }
