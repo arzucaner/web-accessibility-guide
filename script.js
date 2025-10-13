@@ -684,6 +684,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHashHandling();
   initSearch();
   initReadingProgress();
+  initFontSizeControls();
 });
 
 // Handle hash changes and initial hash
@@ -1034,3 +1035,47 @@ function initSearch() {
     document.head.appendChild(script);
   }
 })();
+
+// Font Size Controls
+function initFontSizeControls() {
+  const slider = document.getElementById('font-size-slider');
+  const resetBtn = document.getElementById('font-size-reset');
+  const status = document.getElementById('text-size-status');
+
+  if (!slider || !resetBtn || !status) return;
+
+  const storageKey = 'a11y-font-size';
+  const applySize = (percent) => {
+    const clamped = Math.min(130, Math.max(90, Number(percent) || 100));
+    document.documentElement.style.setProperty('--base-font-size', clamped + '%');
+    slider.setAttribute('aria-valuenow', String(clamped));
+    slider.value = String(clamped);
+    status.textContent = `Text size set to ${clamped}%`;
+  };
+
+  // Load saved preference
+  const saved = localStorage.getItem(storageKey);
+  if (saved) {
+    applySize(saved);
+  } else {
+    applySize(slider.value || 100);
+  }
+
+  // Update on input
+  slider.addEventListener('input', (e) => {
+    const val = (e.target || slider).value;
+    applySize(val);
+    localStorage.setItem(storageKey, String(val));
+  });
+
+  // Keyboard interaction is handled by native range, but keep ARIA and storage in sync on change
+  slider.addEventListener('change', () => {
+    localStorage.setItem(storageKey, String(slider.value));
+  });
+
+  // Reset button
+  resetBtn.addEventListener('click', () => {
+    applySize(100);
+    localStorage.removeItem(storageKey);
+  });
+}

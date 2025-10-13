@@ -66,6 +66,16 @@
             View on GitHub
           </a>
         </div>
+
+        <!-- Text Size Controls -->
+        <div class="text-size-controls" aria-describedby="text-size-status">
+          <label for="font-size-slider">Text size</label>
+          <div class="text-size-row">
+            <input type="range" id="font-size-slider" min="90" max="130" step="5" value="100" aria-valuemin="90" aria-valuemax="130" aria-valuenow="100" aria-label="Adjust text size (percent)" />
+            <button type="button" id="font-size-reset" class="btn" aria-label="Reset text size to 100 percent">Reset</button>
+          </div>
+          <div id="text-size-status" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+        </div>
       </aside>
 
       <main id="main" class="content" tabindex="-1">

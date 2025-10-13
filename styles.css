@@ -57,6 +57,10 @@
   box-shadow: 0 0 0 1px #ffcc00;
 }
 
+:root {
+  --base-font-size: 100%;
+}
+
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
@@ -68,6 +72,7 @@ body {
   background-color: var(--background-color, #f4f4f4);
   color: var(--text-color, #333);
   transition: background-color 0.3s, color 0.3s;
+  font-size: var(--base-font-size);
 }
 
 header {
@@ -2099,4 +2104,40 @@ h2:focus-within .section-link,
     padding: 15px 16px;
     font-size: 16px; /* Prevent zoom on iOS */
   }
+}
+
+/* Text size controls */
+.text-size-controls {
+  margin-top: 20px;
+}
+
+.text-size-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#font-size-slider {
+  width: 100%;
+  min-height: 44px;
+}
+
+#font-size-slider:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+}
+
+#font-size-reset {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Dark mode support for text size controls */
+.dark-mode .text-size-controls label {
+  color: #e2e8f0;
+}
+
+/* High contrast mode support for text size controls */
+.high-contrast .text-size-controls label {
+  color: #ffcc00;
 }
