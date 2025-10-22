@@ -48,18 +48,15 @@ Optional longer description explaining what and why.
 **Types:**
 - `feat`: New features or examples
 - `fix`: Bug fixes
-- `docs`: Documentation changes
-- `style`: Code formatting, no logic changes
-- `refactor`: Code restructuring without changing functionality
-- `test`: Adding or updating tests
 - `chore`: Maintenance tasks, dependency updates
+- `docs`: Documentation changes
 
 **Examples:**
 ```
 feat(examples): add accessible modal dialog example
 fix(contrast): correct WCAG AAA calculation threshold
 docs(readme): update installation instructions
-style(css): improve button focus indicators
+chore(deps): update accessibility testing tools
 ```
 
 ### 6. Push and Create Pull Request
@@ -114,15 +111,42 @@ The easiest way to test this project is to open it directly in your browser:
 4. Test keyboard navigation (Tab, Enter, Escape, arrow keys)
 5. Try with browser accessibility tools or screen readers
 
+### Accessibility Testing Tips
+
+**Screen Reader Testing:**
+- Test with NVDA (Windows, free)
+- Test with JAWS (Windows, paid)
+- Test with VoiceOver (macOS, built-in)
+- Test with Orca (Linux, free)
+
+**Keyboard-Only Testing:**
+- Navigate using only Tab, Shift+Tab, Enter, Space, and arrow keys
+- Ensure all interactive elements are reachable
+- Verify focus indicators are visible
+- Test escape key functionality for modals/overlays
+
+**Color and Contrast Testing:**
+- Use the built-in contrast checker
+- Test with Windows High Contrast mode
+- Test with browser zoom up to 200%
+- Verify color is not the only way to convey information
+
 **Browser Testing:**
-- Chrome/Chromium
-- Firefox
-- Safari
-- Edge
+- Chrome/Chromium (with Lighthouse accessibility audit)
+- Firefox (with accessibility inspector)
+- Safari (with Web Inspector accessibility tab)
+- Edge (with accessibility insights)
+
+**Mobile Testing:**
+- Test on actual mobile devices
+- Verify touch targets are at least 44px
+- Test with mobile screen readers (TalkBack, VoiceOver)
 
 ## Good First Issues
 
-Looking for ideas? Here are some great ways to contribute:
+Looking for ideas? Check out our [Good First Issues](https://github.com/arzucaner/web-accessibility-guide/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) for beginner-friendly tasks!
+
+Here are some great ways to contribute:
 
 ### 🆕 New Examples
 - Add a new accessibility pattern (e.g., accessible tabs, accordions)
