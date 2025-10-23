@@ -1,5 +1,12 @@
 # Accessibility Guide
 
+[![GitHub stars](https://img.shields.io/github/stars/arzucaner/web-accessibility-guide?style=social)](https://github.com/arzucaner/web-accessibility-guide/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/arzucaner/web-accessibility-guide?style=social)](https://github.com/arzucaner/web-accessibility-guide/network/members)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub issues](https://img.shields.io/github/issues/arzucaner/web-accessibility-guide)](https://github.com/arzucaner/web-accessibility-guide/issues)
+[![GitHub last commit](https://img.shields.io/github/last-commit/arzucaner/web-accessibility-guide)](https://github.com/arzucaner/web-accessibility-guide/commits/main)
+[![GitHub contributors](https://img.shields.io/github/contributors/arzucaner/web-accessibility-guide)](https://github.com/arzucaner/web-accessibility-guide/graphs/contributors)
+
 "Making the web accessible for everyone!"
 
 ![Accessibility Guide Screenshot](images/accessibility_guide.png)
