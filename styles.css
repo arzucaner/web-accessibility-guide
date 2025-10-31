@@ -82,8 +82,38 @@ header {
   padding: 20px;
 }
 
-.theme-toggle {
+.header-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
   margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+#language-switcher {
+  padding: 8px 15px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #007bff;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: inherit;
+  min-width: 150px;
+}
+
+#language-switcher:hover {
+  background-color: #f0f0f0;
+}
+
+#language-switcher:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #007bff;
+}
+
+.theme-toggle {
   padding: 10px 20px;
   font-size: 14px;
   background-color: #fff;

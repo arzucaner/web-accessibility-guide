@@ -24,55 +24,69 @@
   </head>
   <body>
     <div id="read-progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
-    <a class="skip-link" href="#main">Skip to main content</a>
+    <a class="skip-link" href="#main" data-i18n="accessibility.skipToContent">Skip to main content</a>
+    
+    <!-- Language change announcement -->
+    <div id="language-announcement" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
     
     <header>
-      <p>"Making the web accessible for everyone!"</p>
-      <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+      <p data-i18n="header.tagline">"Making the web accessible for everyone!"</p>
+      <div class="header-controls">
+        <label for="language-switcher" class="visually-hidden" data-i18n="language.label">Language</label>
+        <select id="language-switcher" aria-label="Language" data-i18n-aria-label="language.label">
+          <option value="en" lang="en">English (EN)</option>
+          <option value="tr" lang="tr">Türkçe (TR)</option>
+          <option value="es" lang="es">Español (ES)</option>
+          <option value="fr" lang="fr">Français (FR)</option>
+          <option value="de" lang="de">Deutsch (DE)</option>
+          <option value="ja" lang="ja">日本語 (JA)</option>
+        </select>
+        <button class="theme-toggle" onclick="toggleTheme()" data-i18n="header.toggleTheme">Toggle Theme</button>
+      </div>
     </header>
 
     <nav>
-      <a href="#" onclick="showSection('accessibility-overview')">Accessibility</a>
-      <a href="#" onclick="showSection('screen-readers')">Screen Readers</a>
-      <a href="#" onclick="showSection('contrast')">Contrast & Colors</a>
-      <a href="#" onclick="showSection('keyboard')">Keyboard Navigation</a>
-      <a href="#" onclick="showSection('dynamic-content')">Dynamic Content</a>
-      <a href="#" onclick="showSection('form-validation')">Form Validation</a>
-      <a href="#" onclick="showSection('animations')">Accessible Animations</a>
-      <a href="#" onclick="showSection('multilingual-support')">Multilingual Support</a>
-      <a href="#" onclick="showSection('dark-mode')">Dark Mode</a>
-      <a href="#" onclick="showSection('interactive-widgets')">Interactive Widgets</a>
-      <a href="#" onclick="showSection('notifications')">Accessible Notifications</a>
+      <a href="#" onclick="showSection('accessibility-overview')" data-i18n="nav.accessibility">Accessibility</a>
+      <a href="#" onclick="showSection('screen-readers')" data-i18n="nav.screenReaders">Screen Readers</a>
+      <a href="#" onclick="showSection('contrast')" data-i18n="nav.contrast">Contrast & Colors</a>
+      <a href="#" onclick="showSection('keyboard')" data-i18n="nav.keyboard">Keyboard Navigation</a>
+      <a href="#" onclick="showSection('dynamic-content')" data-i18n="nav.dynamicContent">Dynamic Content</a>
+      <a href="#" onclick="showSection('form-validation')" data-i18n="nav.formValidation">Form Validation</a>
+      <a href="#" onclick="showSection('animations')" data-i18n="nav.animations">Accessible Animations</a>
+      <a href="#" onclick="showSection('multilingual-support')" data-i18n="nav.multilingualSupport">Multilingual Support</a>
+      <a href="#" onclick="showSection('dark-mode')" data-i18n="nav.darkMode">Dark Mode</a>
+      <a href="#" onclick="showSection('interactive-widgets')" data-i18n="nav.interactiveWidgets">Interactive Widgets</a>
+      <a href="#" onclick="showSection('notifications')" data-i18n="nav.notifications">Accessible Notifications</a>
 
     </nav>
 
     <div class="layout">
       <aside class="sidebar" aria-labelledby="site-title">
-        <h1 id="site-title">Web Accessibility Guide</h1>
-        <p>An open-source guide to help developers build more accessible and inclusive web experiences.</p>
+        <h1 id="site-title" data-i18n="sidebar.title">Web Accessibility Guide</h1>
+        <p data-i18n="sidebar.description">An open-source guide to help developers build more accessible and inclusive web experiences.</p>
         
         <!-- Search Input -->
         <div class="search-container">
-          <label for="guide-search" class="visually-hidden">Search the guide</label>
-          <input type="search" id="guide-search" placeholder="Search..." aria-label="Search the guide" />
+          <label for="guide-search" class="visually-hidden" data-i18n="sidebar.searchLabel">Search the guide</label>
+          <input type="search" id="guide-search" data-i18n-placeholder="sidebar.searchPlaceholder" placeholder="Search..." aria-label="Search the guide" />
           <div id="search-results-announcement" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
         </div>
 
         <div class="sidebar-buttons">
-          <a href="#accessibility-overview" class="btn btn-primary" id="read-guide-cta" aria-label="Read the Web Accessibility Guide">
+          <a href="#accessibility-overview" class="btn btn-primary" id="read-guide-cta" data-i18n="sidebar.readGuide" aria-label="Read the Web Accessibility Guide">
             Read the Guide
           </a>
-          <a href="https://github.com/arzucaner/web-accessibility-guide" class="btn btn-secondary" aria-label="View Web Accessibility Guide on GitHub" rel="noopener noreferrer">
+          <a href="https://github.com/arzucaner/web-accessibility-guide" class="btn btn-secondary" data-i18n="sidebar.viewOnGitHub" aria-label="View Web Accessibility Guide on GitHub" rel="noopener noreferrer">
             View on GitHub
           </a>
         </div>
 
         <!-- Text Size Controls -->
         <div class="text-size-controls" aria-describedby="text-size-status">
-          <label for="font-size-slider">Text size</label>
+          <label for="font-size-slider" data-i18n="sidebar.textSize">Text size</label>
           <div class="text-size-row">
             <input type="range" id="font-size-slider" min="90" max="130" step="5" value="100" aria-valuemin="90" aria-valuemax="130" aria-valuenow="100" aria-label="Adjust text size (percent)" />
-            <button type="button" id="font-size-reset" class="btn" aria-label="Reset text size to 100 percent">Reset</button>
+            <button type="button" id="font-size-reset" class="btn" data-i18n="sidebar.reset" aria-label="Reset text size to 100 percent">Reset</button>
           </div>
           <div id="text-size-status" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
         </div>
@@ -592,7 +606,7 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
 
     <footer>
-      <p>&copy; 2024 Accessibility Guide. All rights reserved.</p>
+      <p data-i18n="footer.copyright">&copy; 2024 Accessibility Guide. All rights reserved.</p>
     </footer>
 
     <!-- Live region for copy feedback -->
@@ -601,6 +615,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <!-- GitHub Corner SVG -->
     <a href="https://github.com/arzucaner/web-accessibility-guide" 
        class="github-corner" 
+       data-i18n-aria-label="accessibility.viewSource"
        aria-label="View source on GitHub"
        target="_blank"
        rel="noopener noreferrer">
@@ -618,6 +633,7 @@ document.addEventListener("DOMContentLoaded", () => {
          data-icon="octicon-star" 
          data-size="large" 
          data-show-count="true" 
+         data-i18n-aria-label="accessibility.starProject"
          aria-label="Star this project on GitHub"
          target="_blank"
          rel="noopener noreferrer">
@@ -626,7 +642,7 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
 
     <!-- Back to top button -->
-    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top">
+    <button id="back-to-top" class="back-to-top" data-i18n-aria-label="accessibility.backToTop" data-i18n-title="accessibility.backToTop" aria-label="Back to top" title="Back to top">
       <span aria-hidden="true">↑</span>
     </button>
 

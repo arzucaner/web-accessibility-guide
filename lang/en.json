@@ -1,0 +1,52 @@
+{
+  "header": {
+    "tagline": "Making the web accessible for everyone!",
+    "toggleTheme": "Toggle Theme"
+  },
+  "nav": {
+    "accessibility": "Accessibility",
+    "screenReaders": "Screen Readers",
+    "contrast": "Contrast & Colors",
+    "keyboard": "Keyboard Navigation",
+    "dynamicContent": "Dynamic Content",
+    "formValidation": "Form Validation",
+    "animations": "Accessible Animations",
+    "multilingualSupport": "Multilingual Support",
+    "darkMode": "Dark Mode",
+    "interactiveWidgets": "Interactive Widgets",
+    "notifications": "Accessible Notifications"
+  },
+  "sidebar": {
+    "title": "Web Accessibility Guide",
+    "description": "An open-source guide to help developers build more accessible and inclusive web experiences.",
+    "searchLabel": "Search the guide",
+    "searchPlaceholder": "Search...",
+    "readGuide": "Read the Guide",
+    "viewOnGitHub": "View on GitHub",
+    "textSize": "Text size",
+    "reset": "Reset",
+    "tableOfContents": "Table of Contents"
+  },
+  "footer": {
+    "copyright": "© 2024 Accessibility Guide. All rights reserved."
+  },
+  "language": {
+    "label": "Language",
+    "english": "English (EN)",
+    "turkish": "Türkçe (TR)",
+    "spanish": "Español (ES)",
+    "french": "Français (FR)",
+    "german": "Deutsch (DE)",
+    "japanese": "日本語 (JA)",
+    "changed": "Language changed to {lang}"
+  },
+  "accessibility": {
+    "skipToContent": "Skip to main content",
+    "codeCopied": "Code copied to clipboard",
+    "copyFailed": "Failed to copy code",
+    "copied": "Copied!",
+    "backToTop": "Back to top",
+    "viewSource": "View source on GitHub",
+    "starProject": "Star this project on GitHub"
+  }
+}

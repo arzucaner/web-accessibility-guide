@@ -1,0 +1,52 @@
+{
+  "header": {
+    "tagline": "Das Web für alle zugänglich machen!",
+    "toggleTheme": "Design wechseln"
+  },
+  "nav": {
+    "accessibility": "Barrierefreiheit",
+    "screenReaders": "Bildschirmleser",
+    "contrast": "Kontrast & Farben",
+    "keyboard": "Tastaturnavigation",
+    "dynamicContent": "Dynamischer Inhalt",
+    "formValidation": "Formularvalidierung",
+    "animations": "Barrierefreie Animationen",
+    "multilingualSupport": "Mehrsprachige Unterstützung",
+    "darkMode": "Dunkler Modus",
+    "interactiveWidgets": "Interaktive Widgets",
+    "notifications": "Barrierefreie Benachrichtigungen"
+  },
+  "sidebar": {
+    "title": "Web-Barrierefreiheitsleitfaden",
+    "description": "Ein Open-Source-Leitfaden, der Entwicklern hilft, barrierefreie und inklusive Web-Erlebnisse zu erstellen.",
+    "searchLabel": "Im Leitfaden suchen",
+    "searchPlaceholder": "Suchen...",
+    "readGuide": "Leitfaden lesen",
+    "viewOnGitHub": "Auf GitHub anzeigen",
+    "textSize": "Schriftgröße",
+    "reset": "Zurücksetzen",
+    "tableOfContents": "Inhaltsverzeichnis"
+  },
+  "footer": {
+    "copyright": "© 2024 Barrierefreiheitsleitfaden. Alle Rechte vorbehalten."
+  },
+  "language": {
+    "label": "Sprache",
+    "english": "English (EN)",
+    "turkish": "Türkçe (TR)",
+    "spanish": "Español (ES)",
+    "french": "Français (FR)",
+    "german": "Deutsch (DE)",
+    "japanese": "日本語 (JA)",
+    "changed": "Sprache zu {lang} geändert"
+  },
+  "accessibility": {
+    "skipToContent": "Zum Hauptinhalt springen",
+    "codeCopied": "Code in Zwischenablage kopiert",
+    "copyFailed": "Code konnte nicht kopiert werden",
+    "copied": "Kopiert!",
+    "backToTop": "Nach oben",
+    "viewSource": "Quellcode auf GitHub anzeigen",
+    "starProject": "Dieses Projekt auf GitHub markieren"
+  }
+}

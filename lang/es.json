@@ -1,0 +1,52 @@
+{
+  "header": {
+    "tagline": "¡Haciendo la web accesible para todos!",
+    "toggleTheme": "Cambiar Tema"
+  },
+  "nav": {
+    "accessibility": "Accesibilidad",
+    "screenReaders": "Lectores de Pantalla",
+    "contrast": "Contraste y Colores",
+    "keyboard": "Navegación por Teclado",
+    "dynamicContent": "Contenido Dinámico",
+    "formValidation": "Validación de Formularios",
+    "animations": "Animaciones Accesibles",
+    "multilingualSupport": "Soporte Multilingüe",
+    "darkMode": "Modo Oscuro",
+    "interactiveWidgets": "Widgets Interactivos",
+    "notifications": "Notificaciones Accesibles"
+  },
+  "sidebar": {
+    "title": "Guía de Accesibilidad Web",
+    "description": "Una guía de código abierto para ayudar a los desarrolladores a crear experiencias web más accesibles e inclusivas.",
+    "searchLabel": "Buscar en la guía",
+    "searchPlaceholder": "Buscar...",
+    "readGuide": "Leer la Guía",
+    "viewOnGitHub": "Ver en GitHub",
+    "textSize": "Tamaño del texto",
+    "reset": "Restablecer",
+    "tableOfContents": "Tabla de Contenidos"
+  },
+  "footer": {
+    "copyright": "© 2024 Guía de Accesibilidad. Todos los derechos reservados."
+  },
+  "language": {
+    "label": "Idioma",
+    "english": "English (EN)",
+    "turkish": "Türkçe (TR)",
+    "spanish": "Español (ES)",
+    "french": "Français (FR)",
+    "german": "Deutsch (DE)",
+    "japanese": "日本語 (JA)",
+    "changed": "Idioma cambiado a {lang}"
+  },
+  "accessibility": {
+    "skipToContent": "Saltar al contenido principal",
+    "codeCopied": "Código copiado al portapapeles",
+    "copyFailed": "Error al copiar código",
+    "copied": "¡Copiado!",
+    "backToTop": "Volver arriba",
+    "viewSource": "Ver código fuente en GitHub",
+    "starProject": "Dar estrella a este proyecto en GitHub"
+  }
+}

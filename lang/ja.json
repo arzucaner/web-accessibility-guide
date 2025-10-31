@@ -1,0 +1,52 @@
+{
+  "header": {
+    "tagline": "すべての人にアクセシブルなWebを実現！",
+    "toggleTheme": "テーマを切り替え"
+  },
+  "nav": {
+    "accessibility": "アクセシビリティ",
+    "screenReaders": "スクリーンリーダー",
+    "contrast": "コントラストと色",
+    "keyboard": "キーボード操作",
+    "dynamicContent": "動的コンテンツ",
+    "formValidation": "フォーム検証",
+    "animations": "アクセシブルなアニメーション",
+    "multilingualSupport": "多言語対応",
+    "darkMode": "ダークモード",
+    "interactiveWidgets": "インタラクティブウィジェット",
+    "notifications": "アクセシブルな通知"
+  },
+  "sidebar": {
+    "title": "Webアクセシビリティガイド",
+    "description": "開発者がよりアクセシブルで包括的なWeb体験を構築するためのオープンソースガイド。",
+    "searchLabel": "ガイドを検索",
+    "searchPlaceholder": "検索...",
+    "readGuide": "ガイドを読む",
+    "viewOnGitHub": "GitHubで表示",
+    "textSize": "文字サイズ",
+    "reset": "リセット",
+    "tableOfContents": "目次"
+  },
+  "footer": {
+    "copyright": "© 2024 アクセシビリティガイド。全著作権所有。"
+  },
+  "language": {
+    "label": "言語",
+    "english": "English (EN)",
+    "turkish": "Türkçe (TR)",
+    "spanish": "Español (ES)",
+    "french": "Français (FR)",
+    "german": "Deutsch (DE)",
+    "japanese": "日本語 (JA)",
+    "changed": "言語が{lang}に変更されました"
+  },
+  "accessibility": {
+    "skipToContent": "メインコンテンツにスキップ",
+    "codeCopied": "コードをクリップボードにコピーしました",
+    "copyFailed": "コードのコピーに失敗しました",
+    "copied": "コピーしました！",
+    "backToTop": "トップに戻る",
+    "viewSource": "GitHubでソースを表示",
+    "starProject": "このプロジェクトをGitHubでスター"
+  }
+}

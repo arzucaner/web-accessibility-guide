@@ -225,12 +225,13 @@ function generateTableOfContents() {
   
   // Create TOC navigation element
   const tocNav = document.createElement('nav');
-  tocNav.setAttribute('aria-label', 'Table of contents');
+  const tocAriaLabel = getTranslation('sidebar.tableOfContents') || 'Table of contents';
+  tocNav.setAttribute('aria-label', tocAriaLabel);
   tocNav.className = 'toc-nav';
   
   // Add heading for the TOC
   const tocHeading = document.createElement('h3');
-  tocHeading.textContent = 'Table of Contents';
+  tocHeading.textContent = getTranslation('sidebar.tableOfContents') || 'Table of Contents';
   tocHeading.id = 'toc-heading';
   tocNav.appendChild(tocHeading);
   
@@ -378,7 +379,7 @@ function showCopySuccess(button) {
   
   // Show toast notification
   const feedback = document.getElementById('copy-feedback');
-  feedback.textContent = 'Copied!';
+  feedback.textContent = getTranslation('accessibility.copied') || 'Copied!';
   feedback.classList.add('show');
   
   // Hide toast after 3 seconds
@@ -387,7 +388,7 @@ function showCopySuccess(button) {
   }, 3000);
   
   // Announce to screen readers
-  announceToScreenReader('Code copied to clipboard');
+  announceToScreenReader(getTranslation('accessibility.codeCopied') || 'Code copied to clipboard');
 }
 
 // Show copy error feedback
@@ -404,7 +405,7 @@ function showCopyError(button) {
   }, 3000);
   
   // Announce to screen readers
-  announceToScreenReader('Failed to copy code');
+  announceToScreenReader(getTranslation('accessibility.copyFailed') || 'Failed to copy code');
 }
 
 // Announce message to screen readers
@@ -674,8 +675,224 @@ function initReadingProgress() {
   }
 }
 
+// i18n Translation System
+let currentTranslations = {};
+let currentLanguage = 'en';
+
+// Load translations from JSON file
+async function loadTranslations(lang) {
+  try {
+    const response = await fetch(`lang/${lang}.json`);
+    if (!response.ok) {
+      throw new Error(`Translation file not found for ${lang}`);
+    }
+    const translations = await response.json();
+    
+    // Fallback to English if key is missing
+    if (lang !== 'en') {
+      try {
+        const enResponse = await fetch('lang/en.json');
+        const enTranslations = await enResponse.json();
+        currentTranslations = mergeTranslations(translations, enTranslations);
+      } catch (e) {
+        currentTranslations = translations;
+      }
+    } else {
+      currentTranslations = translations;
+    }
+    
+    applyTranslations();
+    return translations;
+  } catch (error) {
+    console.warn(`Failed to load translations for ${lang}, falling back to English:`, error);
+    // Fallback to English
+    if (lang !== 'en') {
+      return loadTranslations('en');
+    }
+    return {};
+  }
+}
+
+// Merge translations with English fallback
+function mergeTranslations(translations, enTranslations) {
+  const merged = JSON.parse(JSON.stringify(enTranslations));
+  
+  function deepMerge(target, source) {
+    for (const key in source) {
+      if (typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        if (!target[key]) target[key] = {};
+        deepMerge(target[key], source[key]);
+      } else {
+        target[key] = source[key];
+      }
+    }
+  }
+  
+  deepMerge(merged, translations);
+  return merged;
+}
+
+// Get nested translation value (helper function)
+function getTranslation(key) {
+  const keys = key.split('.');
+  let value = currentTranslations;
+  for (const k of keys) {
+    if (value && typeof value === 'object') {
+      value = value[k];
+    } else {
+      return null;
+    }
+  }
+  return value;
+}
+
+// Apply translations to elements with data-i18n attributes
+function applyTranslations() {
+  // Apply text content translations
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    const key = element.getAttribute('data-i18n');
+    const translation = getTranslation(key);
+    if (translation) {
+      element.textContent = translation;
+    }
+  });
+  
+  // Apply placeholder translations
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+    const key = element.getAttribute('data-i18n-placeholder');
+    const translation = getTranslation(key);
+    if (translation) {
+      element.setAttribute('placeholder', translation);
+    }
+  });
+  
+  // Apply aria-label translations
+  document.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
+    const key = element.getAttribute('data-i18n-aria-label');
+    const translation = getTranslation(key);
+    if (translation) {
+      element.setAttribute('aria-label', translation);
+    }
+  });
+  
+  // Apply title translations
+  document.querySelectorAll('[data-i18n-title]').forEach(element => {
+    const key = element.getAttribute('data-i18n-title');
+    const translation = getTranslation(key);
+    if (translation) {
+      element.setAttribute('title', translation);
+    }
+  });
+  
+  // Update language switcher aria-label
+  const languageSwitcher = document.getElementById('language-switcher');
+  const languageLabel = getTranslation('language.label');
+  if (languageSwitcher && languageLabel) {
+    languageSwitcher.setAttribute('aria-label', languageLabel);
+  }
+  
+  // Update search input aria-label
+  const searchInput = document.getElementById('guide-search');
+  const searchLabel = getTranslation('sidebar.searchLabel');
+  if (searchInput && searchLabel) {
+    searchInput.setAttribute('aria-label', searchLabel);
+  }
+  
+  // Update sidebar button aria-labels
+  const readGuideBtn = document.getElementById('read-guide-cta');
+  const readGuideText = getTranslation('sidebar.readGuide');
+  if (readGuideBtn && readGuideText) {
+    readGuideBtn.setAttribute('aria-label', readGuideText);
+  }
+  
+  const viewGitHubBtn = document.querySelector('a[href*="github.com"].btn-secondary');
+  const viewGitHubText = getTranslation('sidebar.viewOnGitHub');
+  if (viewGitHubBtn && viewGitHubText) {
+    viewGitHubBtn.setAttribute('aria-label', viewGitHubText);
+  }
+  
+  // Update font size reset button aria-label
+  const fontResetBtn = document.getElementById('font-size-reset');
+  const resetText = getTranslation('sidebar.reset');
+  if (fontResetBtn && resetText) {
+    fontResetBtn.setAttribute('aria-label', `Reset text size to 100 percent`);
+  }
+  
+  // Update Table of Contents heading if it exists
+  const tocHeading = document.getElementById('toc-heading');
+  const tocText = getTranslation('sidebar.tableOfContents');
+  if (tocHeading && tocText) {
+    tocHeading.textContent = tocText;
+  }
+  
+  // Update document lang attribute
+  document.documentElement.setAttribute('lang', currentLanguage);
+}
+
+// Handle language change
+async function changeLanguage(lang) {
+  currentLanguage = lang;
+  localStorage.setItem('lang', lang);
+  
+  await loadTranslations(lang);
+  
+  // Announce language change to screen readers
+  const announcement = document.getElementById('language-announcement');
+  const langNames = {
+    'en': 'English',
+    'tr': 'Türkçe',
+    'es': 'Español',
+    'fr': 'Français',
+    'de': 'Deutsch',
+    'ja': '日本語'
+  };
+  const langName = langNames[lang] || lang;
+  const changeMessage = getTranslation('language.changed')?.replace('{lang}', langName) || `Language changed to ${langName}`;
+  
+  if (announcement) {
+    announcement.textContent = changeMessage;
+    // Clear after announcement
+    setTimeout(() => {
+      announcement.textContent = '';
+    }, 1000);
+  }
+}
+
+// Initialize language on page load
+async function initLanguage() {
+  // Get saved language preference or detect from browser
+  const savedLang = localStorage.getItem('lang');
+  const browserLang = (navigator.language || navigator.userLanguage || 'en').slice(0, 2);
+  
+  // Supported languages
+  const supportedLangs = ['en', 'tr', 'es', 'fr', 'de', 'ja'];
+  
+  // Determine initial language
+  let initialLang = 'en';
+  if (savedLang && supportedLangs.includes(savedLang)) {
+    initialLang = savedLang;
+  } else if (supportedLangs.includes(browserLang)) {
+    initialLang = browserLang;
+  }
+  
+  // Set language switcher value
+  const languageSwitcher = document.getElementById('language-switcher');
+  if (languageSwitcher) {
+    languageSwitcher.value = initialLang;
+    
+    // Add event listener for language changes
+    languageSwitcher.addEventListener('change', (event) => {
+      changeLanguage(event.target.value);
+    });
+  }
+  
+  // Load translations
+  await loadTranslations(initialLang);
+}
+
 // Initialize all functionality when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await initLanguage();
   generateTableOfContents();
   setupTocIntersectionObserver();
   initBackToTopButton();

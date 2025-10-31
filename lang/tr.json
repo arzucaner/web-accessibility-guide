@@ -1,0 +1,52 @@
+{
+  "header": {
+    "tagline": "Web'i herkes için erişilebilir yapmak!",
+    "toggleTheme": "Temayı Değiştir"
+  },
+  "nav": {
+    "accessibility": "Erişilebilirlik",
+    "screenReaders": "Ekran Okuyucular",
+    "contrast": "Kontrast ve Renkler",
+    "keyboard": "Klavye Navigasyonu",
+    "dynamicContent": "Dinamik İçerik",
+    "formValidation": "Form Doğrulama",
+    "animations": "Erişilebilir Animasyonlar",
+    "multilingualSupport": "Çoklu Dil Desteği",
+    "darkMode": "Karanlık Mod",
+    "interactiveWidgets": "İnteraktif Widget'lar",
+    "notifications": "Erişilebilir Bildirimler"
+  },
+  "sidebar": {
+    "title": "Web Erişilebilirlik Kılavuzu",
+    "description": "Geliştiricilere daha erişilebilir ve kapsayıcı web deneyimleri oluşturmalarına yardımcı olmak için açık kaynak bir kılavuz.",
+    "searchLabel": "Kılavuzu ara",
+    "searchPlaceholder": "Ara...",
+    "readGuide": "Kılavuzu Oku",
+    "viewOnGitHub": "GitHub'da Görüntüle",
+    "textSize": "Metin boyutu",
+    "reset": "Sıfırla",
+    "tableOfContents": "İçindekiler"
+  },
+  "footer": {
+    "copyright": "© 2024 Erişilebilirlik Kılavuzu. Tüm hakları saklıdır."
+  },
+  "language": {
+    "label": "Dil",
+    "english": "English (EN)",
+    "turkish": "Türkçe (TR)",
+    "spanish": "Español (ES)",
+    "french": "Français (FR)",
+    "german": "Deutsch (DE)",
+    "japanese": "日本語 (JA)",
+    "changed": "Dil {lang} olarak değiştirildi"
+  },
+  "accessibility": {
+    "skipToContent": "Ana içeriğe geç",
+    "codeCopied": "Kod panoya kopyalandı",
+    "copyFailed": "Kod kopyalanamadı",
+    "copied": "Kopyalandı!",
+    "backToTop": "Yukarı dön",
+    "viewSource": "GitHub'da kaynağı görüntüle",
+    "starProject": "Bu projeyi GitHub'da yıldızla"
+  }
+}
