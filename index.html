@@ -646,6 +646,42 @@ document.addEventListener("DOMContentLoaded", () => {
       <span aria-hidden="true">↑</span>
     </button>
 
+    <!-- Feedback Widget -->
+    <button id="feedback-toggle" class="feedback-btn" aria-expanded="false" aria-controls="feedback-panel" aria-label="Open feedback panel">💬</button>
+    
+    <section id="feedback-panel" class="feedback-panel hidden" role="dialog" aria-modal="false" aria-labelledby="feedback-title">
+      <h2 id="feedback-title">Send feedback</h2>
+      
+      <p>How can we improve the guide?</p>
+      
+      <div class="feedback-actions">
+        <a class="btn" href="https://github.com/arzucaner/web-accessibility-guide/issues/new/choose" target="_blank" rel="noopener">Open a GitHub issue</a>
+        <a class="btn" href="mailto:arzuguneycaner@gmail.com?subject=Accessibility%20Guide%20Feedback">Email</a>
+      </div>
+      
+      <form id="feedback-form" novalidate>
+        <label for="fb-message">Message</label>
+        <textarea id="fb-message" rows="4" required aria-describedby="fb-help"></textarea>
+        <div id="fb-help" class="hint">Please avoid sharing sensitive information.</div>
+        
+        <div class="row">
+          <label for="fb-type">Type</label>
+          <select id="fb-type">
+            <option value="idea">Idea</option>
+            <option value="bug">Bug</option>
+            <option value="content">Content</option>
+          </select>
+        </div>
+        
+        <div class="row">
+          <button type="submit" class="btn primary">Send</button>
+          <button type="button" id="feedback-close" class="btn">Close</button>
+        </div>
+        
+        <div id="fb-status" class="sr-only" aria-live="polite"></div>
+      </form>
+    </section>
+
     <script src="script.js"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>

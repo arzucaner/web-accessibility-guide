@@ -902,6 +902,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initSearch();
   initReadingProgress();
   initFontSizeControls();
+  initFeedbackWidget();
 });
 
 // Handle hash changes and initial hash
@@ -1294,5 +1295,149 @@ function initFontSizeControls() {
   resetBtn.addEventListener('click', () => {
     applySize(100);
     localStorage.removeItem(storageKey);
+  });
+}
+
+// Feedback Widget Functionality
+function initFeedbackWidget() {
+  const toggleBtn = document.getElementById('feedback-toggle');
+  const panel = document.getElementById('feedback-panel');
+  const closeBtn = document.getElementById('feedback-close');
+  const form = document.getElementById('feedback-form');
+  const messageTextarea = document.getElementById('fb-message');
+  const statusDiv = document.getElementById('fb-status');
+  
+  if (!toggleBtn || !panel || !closeBtn || !form) return;
+  
+  let previouslyFocusedElement = null;
+  let focusableElements = null;
+  
+  // Get all focusable elements within the panel
+  function getFocusableElements() {
+    const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    return Array.from(panel.querySelectorAll(focusableSelectors))
+      .filter(el => !el.disabled && el.offsetParent !== null);
+  }
+  
+  // Trap focus within the panel
+  function trapFocus(event) {
+    if (!panel.classList.contains('hidden')) {
+      focusableElements = getFocusableElements();
+      if (focusableElements.length === 0) return;
+      
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      
+      if (event.key === 'Tab') {
+        if (event.shiftKey) {
+          // Shift + Tab
+          if (document.activeElement === firstElement) {
+            event.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          // Tab
+          if (document.activeElement === lastElement) {
+            event.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    }
+  }
+  
+  // Open panel
+  function openPanel() {
+    panel.classList.remove('hidden');
+    toggleBtn.setAttribute('aria-expanded', 'true');
+    toggleBtn.setAttribute('aria-label', 'Close feedback panel');
+    
+    // Store previously focused element
+    previouslyFocusedElement = document.activeElement;
+    
+    // Focus the panel title
+    const title = document.getElementById('feedback-title');
+    if (title) {
+      title.setAttribute('tabindex', '-1');
+      title.focus();
+    }
+    
+    // Add focus trap listener
+    panel.addEventListener('keydown', trapFocus);
+  }
+  
+  // Close panel
+  function closePanel() {
+    panel.classList.add('hidden');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    toggleBtn.setAttribute('aria-label', 'Open feedback panel');
+    
+    // Remove focus trap listener
+    panel.removeEventListener('keydown', trapFocus);
+    
+    // Return focus to toggle button
+    if (previouslyFocusedElement) {
+      toggleBtn.focus();
+      previouslyFocusedElement = null;
+    }
+  }
+  
+  // Handle escape key
+  function handleEscape(event) {
+    if (event.key === 'Escape' && !panel.classList.contains('hidden')) {
+      closePanel();
+    }
+  }
+  
+  // Toggle panel
+  toggleBtn.addEventListener('click', () => {
+    if (panel.classList.contains('hidden')) {
+      openPanel();
+    } else {
+      closePanel();
+    }
+  });
+  
+  // Close button
+  closeBtn.addEventListener('click', closePanel);
+  
+  // Escape key handler
+  document.addEventListener('keydown', handleEscape);
+  
+  // Form submission
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    
+    // Validate required textarea
+    const messageValue = messageTextarea.value.trim();
+    
+    if (!messageValue) {
+      // Show validation error
+      messageTextarea.setAttribute('aria-invalid', 'true');
+      messageTextarea.focus();
+      statusDiv.textContent = 'Please enter a message.';
+      statusDiv.classList.remove('sr-only');
+      setTimeout(() => {
+        statusDiv.classList.add('sr-only');
+      }, 3000);
+      return;
+    }
+    
+    // Clear any previous errors
+    messageTextarea.setAttribute('aria-invalid', 'false');
+    
+    // Show success message
+    statusDiv.textContent = 'Thanks for your feedback!';
+    statusDiv.classList.remove('sr-only');
+    
+    // Clear the form
+    form.reset();
+    messageTextarea.removeAttribute('aria-invalid');
+    
+    // Hide status message after a delay (but keep it accessible for screen readers)
+    setTimeout(() => {
+      statusDiv.textContent = '';
+      statusDiv.classList.add('sr-only');
+    }, 5000);
   });
 }

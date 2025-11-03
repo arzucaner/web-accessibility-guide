@@ -2171,3 +2171,427 @@ h2:focus-within .section-link,
 .high-contrast .text-size-controls label {
   color: #ffcc00;
 }
+
+/* Feedback Widget Styles */
+.feedback-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 90px;
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.feedback-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+}
+
+.feedback-btn:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+  background-color: #ffcc00;
+  color: #000;
+}
+
+.feedback-btn:active {
+  transform: translateY(0);
+}
+
+/* Safe spacing for mobile browser bars */
+@media (max-width: 768px) {
+  .feedback-btn {
+    bottom: max(20px, env(safe-area-inset-bottom, 20px));
+    right: max(85px, calc(env(safe-area-inset-right, 0px) + 85px));
+  }
+}
+
+.feedback-panel {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  max-width: 360px;
+  width: 100%;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 998;
+  color: #333;
+}
+
+.feedback-panel.hidden {
+  display: none;
+}
+
+.feedback-panel h2 {
+  margin: 0 0 12px 0;
+  font-size: 1.25em;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.feedback-panel p {
+  margin: 0 0 16px 0;
+  color: #666;
+}
+
+.feedback-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.feedback-actions .btn {
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+}
+
+.feedback-form {
+  margin-top: 16px;
+}
+
+.feedback-panel label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 14px;
+}
+
+.feedback-panel textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  min-height: 100px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.feedback-panel textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.feedback-panel textarea:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+  border-color: #007bff;
+}
+
+.feedback-panel textarea[aria-invalid="true"] {
+  border-color: #dc3545;
+}
+
+.feedback-panel .hint {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+  margin-bottom: 16px;
+}
+
+.feedback-panel .row {
+  margin-bottom: 16px;
+}
+
+.feedback-panel select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  background-color: white;
+  color: #333;
+  min-height: 44px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.feedback-panel select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.feedback-panel select:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+  border-color: #007bff;
+}
+
+.feedback-panel .row:last-of-type {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.feedback-panel .row:last-of-type .btn {
+  flex: 1;
+  min-width: 80px;
+}
+
+.feedback-panel .btn.primary {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.feedback-panel .btn.primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.feedback-panel .btn.primary:focus-visible {
+  background-color: #ffcc00;
+  color: #000;
+  border-color: #000;
+}
+
+/* Screen reader only class */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .feedback-btn,
+  .feedback-panel {
+    transition: none;
+  }
+}
+
+/* Responsive styles for feedback panel */
+@media (max-width: 768px) {
+  .feedback-panel {
+    max-width: 95%;
+    width: 95%;
+    bottom: 90px;
+    right: 2.5%;
+    left: 2.5%;
+    padding: 16px;
+  }
+  
+  .feedback-btn {
+    right: max(85px, calc(env(safe-area-inset-right, 0px) + 85px));
+  }
+}
+
+/* Dark mode adjustments for feedback widget */
+.dark-mode .feedback-btn {
+  background-color: #3182ce;
+  color: #e2e8f0;
+  box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
+}
+
+.dark-mode .feedback-btn:hover {
+  background-color: #2c5282;
+  box-shadow: 0 6px 16px rgba(49, 130, 206, 0.4);
+}
+
+.dark-mode .feedback-btn:focus-visible {
+  background-color: #ffcc00;
+  color: #000;
+}
+
+.dark-mode .feedback-panel {
+  background-color: #2d3748;
+  border-color: #4a5568;
+  color: #e2e8f0;
+}
+
+.dark-mode .feedback-panel h2 {
+  color: #63b3ed;
+}
+
+.dark-mode .feedback-panel p {
+  color: #a0aec0;
+}
+
+.dark-mode .feedback-panel label {
+  color: #e2e8f0;
+}
+
+.dark-mode .feedback-panel textarea {
+  background-color: #1a202c;
+  border-color: #4a5568;
+  color: #e2e8f0;
+}
+
+.dark-mode .feedback-panel textarea:focus {
+  border-color: #63b3ed;
+  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.1);
+}
+
+.dark-mode .feedback-panel textarea:focus-visible {
+  border-color: #63b3ed;
+}
+
+.dark-mode .feedback-panel .hint {
+  color: #a0aec0;
+}
+
+.dark-mode .feedback-panel select {
+  background-color: #1a202c;
+  border-color: #4a5568;
+  color: #e2e8f0;
+}
+
+.dark-mode .feedback-panel select:focus {
+  border-color: #63b3ed;
+  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.1);
+}
+
+.dark-mode .feedback-panel select:focus-visible {
+  border-color: #63b3ed;
+}
+
+.dark-mode .feedback-panel .btn.primary {
+  background-color: #3182ce;
+  border-color: #3182ce;
+}
+
+.dark-mode .feedback-panel .btn.primary:hover {
+  background-color: #2c5282;
+  border-color: #2c5282;
+}
+
+/* High contrast mode adjustments for feedback widget */
+.high-contrast .feedback-btn {
+  background-color: #000;
+  color: #ffcc00;
+  border: 2px solid #ffcc00;
+  box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
+}
+
+.high-contrast .feedback-btn:hover {
+  background-color: #ffcc00;
+  color: #000;
+  box-shadow: 0 6px 16px rgba(255, 204, 0, 0.4);
+}
+
+.high-contrast .feedback-btn:focus-visible {
+  background-color: #ffcc00;
+  color: #000;
+  outline: 3px solid #000;
+}
+
+.high-contrast .feedback-panel {
+  background-color: #000;
+  border: 2px solid #ffcc00;
+  color: #ffcc00;
+}
+
+.high-contrast .feedback-panel h2 {
+  color: #ffcc00;
+}
+
+.high-contrast .feedback-panel p {
+  color: #ffffff;
+}
+
+.high-contrast .feedback-panel label {
+  color: #ffcc00;
+}
+
+.high-contrast .feedback-panel textarea {
+  background-color: #000;
+  border: 2px solid #ffcc00;
+  color: #ffcc00;
+}
+
+.high-contrast .feedback-panel textarea:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+.high-contrast .feedback-panel textarea:focus-visible {
+  border-color: #ffffff;
+  outline: 3px solid #ffffff;
+}
+
+.high-contrast .feedback-panel textarea[aria-invalid="true"] {
+  border-color: #ff0000;
+}
+
+.high-contrast .feedback-panel .hint {
+  color: #ffffff;
+}
+
+.high-contrast .feedback-panel select {
+  background-color: #000;
+  border: 2px solid #ffcc00;
+  color: #ffcc00;
+}
+
+.high-contrast .feedback-panel select:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+.high-contrast .feedback-panel select:focus-visible {
+  border-color: #ffffff;
+  outline: 3px solid #ffffff;
+}
+
+.high-contrast .feedback-panel .btn {
+  border: 2px solid #ffcc00;
+  color: #ffcc00;
+  background-color: #000;
+}
+
+.high-contrast .feedback-panel .btn:hover {
+  background-color: #ffcc00;
+  color: #000;
+  border-color: #000;
+}
+
+.high-contrast .feedback-panel .btn.primary {
+  background-color: #000;
+  color: #00ff00;
+  border-color: #00ff00;
+}
+
+.high-contrast .feedback-panel .btn.primary:hover {
+  background-color: #00ff00;
+  color: #000;
+  border-color: #000;
+}
+
+.high-contrast .feedback-panel .btn.primary:focus-visible {
+  background-color: #ffcc00;
+  color: #000;
+  border-color: #000;
+  outline: 3px solid #000;
+}
