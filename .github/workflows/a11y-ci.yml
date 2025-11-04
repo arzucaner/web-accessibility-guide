@@ -1,0 +1,34 @@
+name: Accessibility & Link Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  a11y-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Start static server
+        run: npx http-server -p 8080 -c-1 . &
+        env:
+          FORCE_COLOR: 0
+
+      - name: Wait for server to start
+        run: sleep 3
+
+      - name: Run accessibility checks (pa11y-ci)
+        run: npx pa11y-ci http://127.0.0.1:8080/index.html
+
+      - name: Check links (linkinator)
+        run: npx linkinator http://127.0.0.1:8080 --recurse --silent --timeout=10000
+

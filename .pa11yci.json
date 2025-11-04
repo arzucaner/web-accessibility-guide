@@ -1,0 +1,14 @@
+{
+  "defaults": {
+    "standard": "WCAG2AA",
+    "wait": 500,
+    "timeout": 60000,
+    "screenCapture": false,
+    "includeWarnings": true,
+    "viewport": { "width": 1280, "height": 800 }
+  },
+  "urls": [
+    "http://127.0.0.1:8080/index.html"
+  ]
+}
+
