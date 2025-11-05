@@ -1,0 +1,15 @@
+name: Add Contributor
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  add-contributor:
+    if: contains(github.event.comment.body, '@all-contributors please add')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: all-contributors/all-contributors-action@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
