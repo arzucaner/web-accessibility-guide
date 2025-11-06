@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate PWA Icons</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      margin: 10px;
+      display: block;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Generate PWA Icons</h1>
+  <p>Click the buttons below to generate and download the placeholder icons.</p>
+  
+  <div>
+    <canvas id="icon192" width="192" height="192"></canvas>
+    <button onclick="downloadIcon('icon192', 'icon-192x192.png')">Download 192x192</button>
+  </div>
+  
+  <div>
+    <canvas id="icon512" width="512" height="512"></canvas>
+    <button onclick="downloadIcon('icon512', 'icon-512x512.png')">Download 512x512</button>
+  </div>
+
+  <script>
+    function drawIcon(canvasId, size) {
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext('2d');
+      
+      // Background
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, size, size);
+      
+      // White "A" letter in center
+      ctx.fillStyle = '#ffffff';
+      ctx.font = `bold ${size * 0.6}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('A', size / 2, size / 2);
+    }
+    
+    function downloadIcon(canvasId, filename) {
+      const canvas = document.getElementById(canvasId);
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+    
+    // Draw icons on load
+    window.addEventListener('load', () => {
+      drawIcon('icon192', 192);
+      drawIcon('icon512', 512);
+    });
+  </script>
+</body>
+</html>
+

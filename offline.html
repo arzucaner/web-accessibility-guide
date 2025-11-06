@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - Web Accessibility Guide</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    
+    .offline-container {
+      max-width: 600px;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #000000;
+    }
+    
+    p {
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+      color: #333333;
+    }
+    
+    .retry-button {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #000000;
+      color: #ffffff;
+      text-decoration: none;
+      border: 2px solid #000000;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    
+    .retry-button:hover,
+    .retry-button:focus {
+      background-color: #333333;
+      outline: 3px solid #ffcc00;
+      outline-offset: 2px;
+    }
+    
+    .retry-button:active {
+      background-color: #000000;
+    }
+    
+    /* High contrast support */
+    @media (prefers-contrast: high) {
+      body {
+        background-color: #ffffff;
+        color: #000000;
+      }
+      
+      .retry-button {
+        border-width: 3px;
+      }
+    }
+    
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #121212;
+        color: #f4f4f4;
+      }
+      
+      h1 {
+        color: #f4f4f4;
+      }
+      
+      p {
+        color: #e0e0e0;
+      }
+      
+      .retry-button {
+        background-color: #ffffff;
+        color: #000000;
+        border-color: #ffffff;
+      }
+      
+      .retry-button:hover,
+      .retry-button:focus {
+        background-color: #e0e0e0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main role="main" class="offline-container">
+    <h1 id="offline-heading">You're Offline</h1>
+    <p>It looks like you're not connected to the internet. Please check your connection and try again.</p>
+    <button class="retry-button" onclick="window.location.reload()" aria-describedby="offline-heading">
+      Retry
+    </button>
+  </main>
+</body>
+</html>
+
