@@ -1441,3 +1441,272 @@ function initFeedbackWidget() {
     }, 5000);
   });
 }
+
+// Accessibility Checker
+function initAccessibilityChecker() {
+  const codeTextarea = document.getElementById('ac-code');
+  const runButton = document.getElementById('ac-run');
+  const clearButton = document.getElementById('ac-clear');
+  const resultsDiv = document.getElementById('ac-results');
+
+  if (!codeTextarea || !runButton || !clearButton || !resultsDiv) {
+    return;
+  }
+
+  // Clear button handler
+  clearButton.addEventListener('click', () => {
+    codeTextarea.value = '';
+    resultsDiv.innerHTML = '';
+    resultsDiv.setAttribute('aria-label', 'Analysis results');
+    codeTextarea.focus();
+  });
+
+  // Analyze button handler
+  runButton.addEventListener('click', () => {
+    const htmlCode = codeTextarea.value.trim();
+    
+    if (!htmlCode) {
+      resultsDiv.innerHTML = '<p class="ac-message ac-info">Please paste some HTML to analyze.</p>';
+      resultsDiv.setAttribute('aria-label', 'Analysis results: Please paste some HTML to analyze.');
+      return;
+    }
+
+    const issues = analyzeAccessibility(htmlCode);
+    renderResults(issues, resultsDiv);
+  });
+
+  // Allow Enter+Ctrl/Cmd to analyze
+  codeTextarea.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      runButton.click();
+    }
+  });
+}
+
+function analyzeAccessibility(htmlCode) {
+  const issues = [];
+  const parser = new DOMParser();
+  
+  // Parse HTML into a detached document
+  const doc = parser.parseFromString(htmlCode, 'text/html');
+  
+  // Check 1: Missing or empty/useless img alt
+  const images = doc.querySelectorAll('img');
+  images.forEach((img) => {
+    const alt = img.getAttribute('alt');
+    if (alt === null) {
+      issues.push({
+        type: 'error',
+        message: 'Image missing alt text.',
+        element: img,
+        tag: 'img'
+      });
+    } else if (alt === '' || /^(image|picture|photo|img)$/i.test(alt.trim())) {
+      issues.push({
+        type: 'warning',
+        message: `Image has empty or generic alt text: "${alt}". Provide a descriptive alt text.`,
+        element: img,
+        tag: 'img'
+      });
+    }
+  });
+
+  // Check 2: Links without discernible text
+  const links = doc.querySelectorAll('a');
+  links.forEach((link) => {
+    const text = link.textContent.trim();
+    const ariaLabel = link.getAttribute('aria-label');
+    const ariaLabelledBy = link.getAttribute('aria-labelledby');
+    const title = link.getAttribute('title');
+    const hasImageWithAlt = link.querySelector('img[alt]');
+    
+    if (!text && !ariaLabel && !ariaLabelledBy && !title && !hasImageWithAlt) {
+      issues.push({
+        type: 'error',
+        message: 'Link without discernible text. Add text content, aria-label, aria-labelledby, or title.',
+        element: link,
+        tag: 'a'
+      });
+    }
+  });
+
+  // Check 3: Form controls without associated label
+  const formControls = doc.querySelectorAll('input, textarea, select');
+  formControls.forEach((control) => {
+    const id = control.getAttribute('id');
+    const ariaLabel = control.getAttribute('aria-label');
+    const ariaLabelledBy = control.getAttribute('aria-labelledby');
+    const type = control.getAttribute('type');
+    
+    // Skip hidden inputs
+    if (type === 'hidden') {
+      return;
+    }
+    
+    let hasLabel = false;
+    if (id) {
+      const label = doc.querySelector(`label[for="${id}"]`);
+      if (label) {
+        hasLabel = true;
+      }
+    }
+    
+    // Check if label wraps the control
+    const parentLabel = control.closest('label');
+    if (parentLabel) {
+      hasLabel = true;
+    }
+    
+    if (!hasLabel && !ariaLabel && !ariaLabelledBy) {
+      issues.push({
+        type: 'error',
+        message: 'Form control without associated label. Add a <label>, aria-label, or aria-labelledby.',
+        element: control,
+        tag: control.tagName.toLowerCase()
+      });
+    }
+  });
+
+  // Check 4: Buttons/links with role but no name
+  const interactiveElements = doc.querySelectorAll('[role="button"], [role="link"]');
+  interactiveElements.forEach((el) => {
+    const text = el.textContent.trim();
+    const ariaLabel = el.getAttribute('aria-label');
+    const ariaLabelledBy = el.getAttribute('aria-labelledby');
+    const title = el.getAttribute('title');
+    
+    if (!text && !ariaLabel && !ariaLabelledBy && !title) {
+      issues.push({
+        type: 'error',
+        message: `Element with role="${el.getAttribute('role')}" has no accessible name. Add text, aria-label, aria-labelledby, or title.`,
+        element: el,
+        tag: el.tagName.toLowerCase()
+      });
+    }
+  });
+
+  // Check 5: Heading level skipping
+  const headings = Array.from(doc.querySelectorAll('h1, h2, h3, h4, h5, h6'));
+  if (headings.length > 0) {
+    let previousLevel = 0;
+    headings.forEach((heading) => {
+      const level = parseInt(heading.tagName.charAt(1));
+      if (previousLevel > 0 && level > previousLevel + 1) {
+        issues.push({
+          type: 'warning',
+          message: `Heading level skipped: previous was h${previousLevel}, found h${level}. Headings should not skip levels.`,
+          element: heading,
+          tag: heading.tagName.toLowerCase()
+        });
+      }
+      previousLevel = level;
+    });
+  }
+
+  // Check 6: Positive tabindex
+  const positiveTabindex = doc.querySelectorAll('[tabindex]');
+  positiveTabindex.forEach((el) => {
+    const tabindex = parseInt(el.getAttribute('tabindex'));
+    if (tabindex > 0) {
+      issues.push({
+        type: 'warning',
+        message: `Element has positive tabindex="${tabindex}". Avoid positive tabindex values as they can disrupt natural tab order.`,
+        element: el,
+        tag: el.tagName.toLowerCase()
+      });
+    }
+  });
+
+  // Check 7: Inline style contrast note
+  const styledElements = doc.querySelectorAll('[style*="color"], [style*="background-color"]');
+  if (styledElements.length > 0) {
+    issues.push({
+      type: 'info',
+      message: 'Elements with inline color/background-color styles detected. Use the Contrast Checker tool above to verify contrast ratios.',
+      element: styledElements[0],
+      tag: styledElements[0].tagName.toLowerCase()
+    });
+  }
+
+  return issues;
+}
+
+function renderResults(issues, resultsDiv) {
+  if (issues.length === 0) {
+    resultsDiv.innerHTML = '<p class="ac-message ac-success">✓ No accessibility issues found!</p>';
+    resultsDiv.setAttribute('aria-label', 'Analysis results: No accessibility issues found.');
+    return;
+  }
+
+  const errorCount = issues.filter(i => i.type === 'error').length;
+  const warningCount = issues.filter(i => i.type === 'warning').length;
+  const infoCount = issues.filter(i => i.type === 'info').length;
+
+  let summary = '';
+  if (errorCount > 0) {
+    summary += `${errorCount} error${errorCount !== 1 ? 's' : ''}`;
+  }
+  if (warningCount > 0) {
+    if (summary) summary += ', ';
+    summary += `${warningCount} warning${warningCount !== 1 ? 's' : ''}`;
+  }
+  if (infoCount > 0) {
+    if (summary) summary += ', ';
+    summary += `${infoCount} note${infoCount !== 1 ? 's' : ''}`;
+  }
+
+  let html = `<div class="ac-summary" role="status" aria-live="polite">${summary} found.</div>`;
+  html += '<ul class="ac-issues-list">';
+
+  issues.forEach((issue, index) => {
+    const badgeClass = `ac-badge ac-badge-${issue.type}`;
+    const badgeText = issue.type === 'error' ? 'Error' : issue.type === 'warning' ? 'Warning' : 'Info';
+    
+    // Get element snippet (truncate if too long)
+    let snippet = '';
+    if (issue.element) {
+      const outerHTML = issue.element.outerHTML || `<${issue.tag}>`;
+      snippet = outerHTML.length > 100 
+        ? outerHTML.substring(0, 100) + '...' 
+        : outerHTML;
+    } else {
+      snippet = `<${issue.tag}>`;
+    }
+
+    html += `
+      <li class="ac-issue-item" tabindex="0" id="ac-issue-${index}">
+        <div class="ac-issue-header">
+          <span class="${badgeClass}">${badgeText}</span>
+        </div>
+        <div class="ac-issue-message">${escapeHtml(issue.message)}</div>
+        <div class="ac-issue-snippet">
+          <code>${escapeHtml(snippet)}</code>
+        </div>
+      </li>
+    `;
+  });
+
+  html += '</ul>';
+  resultsDiv.innerHTML = html;
+  resultsDiv.setAttribute('aria-label', `Analysis results: ${summary} found.`);
+  
+  // Focus first issue for keyboard users
+  const firstIssue = resultsDiv.querySelector('.ac-issue-item');
+  if (firstIssue) {
+    setTimeout(() => firstIssue.focus(), 100);
+  }
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// Initialize accessibility checker when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAccessibilityChecker);
+} else {
+  initAccessibilityChecker();
+}

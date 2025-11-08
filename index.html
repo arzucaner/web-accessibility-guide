@@ -183,6 +183,17 @@
             </div>
           </div>
         </div>
+
+        <section id="accessibility-checker">
+          <h2>Accessibility Checker</h2>
+          <label for="ac-code">Paste HTML to analyze</label>
+          <textarea id="ac-code" rows="10" spellcheck="false" placeholder="<img src='...'>"></textarea>
+          <div class="row">
+            <button type="button" id="ac-run" class="btn primary">Analyze</button>
+            <button type="button" id="ac-clear" class="btn">Clear</button>
+          </div>
+          <div id="ac-results" role="region" aria-live="polite" aria-label="Analysis results"></div>
+        </section>
       </section>
 
       <section id="keyboard" class="hidden">
