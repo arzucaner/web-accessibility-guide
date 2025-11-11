@@ -91,6 +91,195 @@ function startAnimation() {
   box.style.animation = "move 2s infinite";
 }
 
+const quizData = {
+  'screen-readers': {
+    question: 'Which practice helps screen reader users understand page structure?',
+    options: [
+      { text: 'Use semantic HTML tags for headings and landmarks.', isCorrect: true },
+      { text: 'Hide headings so the page sounds shorter.', isCorrect: false },
+      { text: 'Replace meaningful text with icon-only buttons.', isCorrect: false }
+    ]
+  },
+  'contrast': {
+    question: 'What is the best way to verify readable color contrast?',
+    options: [
+      { text: 'Check that the colors look different to you.', isCorrect: false },
+      { text: 'Use a contrast checker and meet WCAG ratios.', isCorrect: true },
+      { text: 'Rely on users to adjust their device brightness.', isCorrect: false }
+    ]
+  },
+  'keyboard': {
+    question: 'How do you keep modal dialogs keyboard accessible?',
+    options: [
+      { text: 'Trap focus inside the modal and provide a clear close action.', isCorrect: true },
+      { text: 'Let focus move anywhere on the page.', isCorrect: false },
+      { text: 'Require users to use a mouse to exit the modal.', isCorrect: false }
+    ]
+  },
+  'dynamic-content': {
+    question: 'How should important dynamic updates be announced?',
+    options: [
+      { text: 'Use an ARIA live region with the right politeness setting.', isCorrect: true },
+      { text: 'Rely on color changes to signal new content.', isCorrect: false },
+      { text: 'Require users to press Refresh to hear updates.', isCorrect: false }
+    ]
+  },
+  'form-validation': {
+    question: 'What makes form validation errors accessible?',
+    options: [
+      { text: 'Tie error messages to fields with aria-describedby and plain language.', isCorrect: true },
+      { text: 'Change the border color without any text.', isCorrect: false },
+      { text: 'Show errors only after users leave the page.', isCorrect: false }
+    ]
+  },
+  'animations': {
+    question: 'How can you respect users sensitive to motion?',
+    options: [
+      { text: 'Disable animations when prefers-reduced-motion is enabled.', isCorrect: true },
+      { text: 'Speed up animations so they finish quickly.', isCorrect: false },
+      { text: 'Hide all animated elements from view.', isCorrect: false }
+    ]
+  },
+  'multilingual-support': {
+    question: 'Which attribute helps screen readers switch pronunciation for localized content?',
+    options: [
+      { text: 'Add lang attributes that match the content language.', isCorrect: true },
+      { text: 'Use bold text to show the language change.', isCorrect: false },
+      { text: 'Place translations in images instead of text.', isCorrect: false }
+    ]
+  },
+  'dark-mode': {
+    question: 'What keeps dark mode accessible?',
+    options: [
+      { text: 'Maintain sufficient contrast in both light and dark themes.', isCorrect: true },
+      { text: 'Use dark gray text on black backgrounds.', isCorrect: false },
+      { text: 'Only change background colors and ignore text contrast.', isCorrect: false }
+    ]
+  },
+  'interactive-widgets': {
+    question: 'What should custom widgets expose for assistive technology?',
+    options: [
+      { text: 'ARIA roles, states, and keyboard support that mirror native controls.', isCorrect: true },
+      { text: 'Only mouse interactions since they are most common.', isCorrect: false },
+      { text: 'Animations that show how the widget works.', isCorrect: false }
+    ]
+  },
+  'notifications': {
+    question: 'How do you ensure inline notifications reach screen reader users?',
+    options: [
+      { text: 'Render them in an aria-live region or use role="alert".', isCorrect: true },
+      { text: 'Display them visually without any ARIA support.', isCorrect: false },
+      { text: 'Play an audio clip without on-screen text.', isCorrect: false }
+    ]
+  }
+};
+
+function initQuizzes() {
+  const quizElements = document.querySelectorAll('[data-quiz]');
+  if (!quizElements.length) return;
+
+  quizElements.forEach((quizEl) => {
+    if (quizEl.dataset.quizInit === 'true') {
+      return;
+    }
+
+    const quizId = quizEl.getAttribute('data-quiz-id');
+    const data = quizData[quizId];
+    const questionEl = quizEl.querySelector('.quiz-question');
+    const optionsContainer = quizEl.querySelector('.quiz-options');
+    const feedbackEl = quizEl.querySelector('.quiz-feedback');
+
+    if (feedbackEl) {
+      if (!feedbackEl.hasAttribute('aria-live')) {
+        feedbackEl.setAttribute('aria-live', 'polite');
+      }
+      if (!feedbackEl.hasAttribute('aria-atomic')) {
+        feedbackEl.setAttribute('aria-atomic', 'true');
+      }
+    }
+
+    if (questionEl && data?.question) {
+      questionEl.textContent = data.question;
+    }
+
+    if (!optionsContainer) {
+      quizEl.dataset.quizInit = 'true';
+      return;
+    }
+
+    let buttons = Array.from(optionsContainer.querySelectorAll('.quiz-option'));
+
+    if (data?.options?.length) {
+      data.options.forEach((option, index) => {
+        let button = buttons[index];
+        if (!button) {
+          button = document.createElement('button');
+          button.className = 'quiz-option';
+          optionsContainer.appendChild(button);
+          buttons.push(button);
+        }
+        button.textContent = option.text;
+        button.setAttribute('data-answer', option.isCorrect ? 'correct' : 'wrong');
+      });
+
+      if (buttons.length > data.options.length) {
+        const extras = buttons.slice(data.options.length);
+        extras.forEach((btn) => btn.remove());
+        buttons = buttons.slice(0, data.options.length);
+      }
+    }
+
+    buttons.forEach((button) => {
+      button.type = 'button';
+      button.setAttribute('aria-pressed', 'false');
+      button.setAttribute('aria-disabled', 'false');
+      button.disabled = false;
+      button.classList.remove('correct', 'incorrect', 'quiz-option-disabled');
+      button.addEventListener('click', () => {
+        handleQuizSelection(quizEl, button, feedbackEl);
+      });
+    });
+
+    quizEl.dataset.quizInit = 'true';
+  });
+}
+
+function handleQuizSelection(quizEl, selectedButton, feedbackEl) {
+  if (quizEl.getAttribute('data-quiz-complete') === 'true') {
+    return;
+  }
+
+  const buttons = Array.from(quizEl.querySelectorAll('.quiz-option'));
+  const isCorrect = selectedButton.getAttribute('data-answer') === 'correct';
+
+  buttons.forEach((button) => {
+    const buttonIsCorrect = button.getAttribute('data-answer') === 'correct';
+    button.disabled = true;
+    button.setAttribute('aria-disabled', 'true');
+    button.setAttribute('aria-pressed', button === selectedButton ? 'true' : 'false');
+    button.classList.add('quiz-option-disabled');
+
+    if (buttonIsCorrect) {
+      button.classList.add('correct');
+    } else {
+      button.classList.remove('correct');
+    }
+  });
+
+  if (!isCorrect) {
+    selectedButton.classList.add('incorrect');
+  }
+
+  const message = isCorrect ? '✅ Correct!' : '❌ Not quite — try reviewing the section.';
+  if (feedbackEl) {
+    feedbackEl.textContent = message;
+  }
+
+  announceToScreenReader(isCorrect ? 'Correct answer selected.' : 'Incorrect answer selected. Review the section for guidance.');
+
+  quizEl.setAttribute('data-quiz-complete', 'true');
+}
+
 
 const languageSelect = document.getElementById('language-select');
 const helloWorldText = document.getElementById('hello-world-text');
@@ -903,6 +1092,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initReadingProgress();
   initFontSizeControls();
   initFeedbackWidget();
+  initQuizzes();
 });
 
 // Handle hash changes and initial hash

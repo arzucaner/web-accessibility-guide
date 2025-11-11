@@ -136,6 +136,16 @@
             >
           </li>
         </ul>
+        <div class="quiz" data-quiz data-quiz-id="screen-readers">
+          <h3>Knowledge Check</h3>
+          <p class="quiz-question" role="heading" aria-level="3">Loading question…</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-answer="wrong">Option A</button>
+            <button class="quiz-option" type="button" data-answer="wrong">Option B</button>
+            <button class="quiz-option" type="button" data-answer="correct">Option C</button>
+          </div>
+          <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
+        </div>
       </section>
 
       <section id="contrast" class="hidden">
@@ -182,6 +192,17 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="quiz" data-quiz data-quiz-id="contrast">
+          <h3>Knowledge Check</h3>
+          <p class="quiz-question" role="heading" aria-level="3">Loading question…</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-answer="wrong">Option A</button>
+            <button class="quiz-option" type="button" data-answer="wrong">Option B</button>
+            <button class="quiz-option" type="button" data-answer="correct">Option C</button>
+          </div>
+          <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
         </div>
 
         <section id="accessibility-checker">
@@ -244,6 +265,16 @@ button:focus {
           <iframe class="pg-output" id="pg-output-keyboard" title="Playground output" sandbox="allow-scripts"></iframe>
           <div class="pg-status" aria-live="polite" id="pg-status-keyboard"></div>
         </details>
+        <div class="quiz" data-quiz data-quiz-id="keyboard">
+          <h3>Knowledge Check</h3>
+          <p class="quiz-question" role="heading" aria-level="3">Loading question…</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-answer="wrong">Option A</button>
+            <button class="quiz-option" type="button" data-answer="wrong">Option B</button>
+            <button class="quiz-option" type="button" data-answer="correct">Option C</button>
+          </div>
+          <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
+        </div>
       </section>
 
       <section id="dynamic-content" class="hidden">
@@ -298,6 +329,16 @@ function updateLiveRegion(id, message) {
           <iframe class="pg-output" id="pg-output-aria" title="Playground output" sandbox="allow-scripts"></iframe>
           <div class="pg-status" aria-live="polite" id="pg-status-aria"></div>
         </details>
+        <div class="quiz" data-quiz data-quiz-id="dynamic-content">
+          <h3>Knowledge Check</h3>
+          <p class="quiz-question" role="heading" aria-level="3">Loading question…</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-answer="wrong">Option A</button>
+            <button class="quiz-option" type="button" data-answer="wrong">Option B</button>
+            <button class="quiz-option" type="button" data-answer="correct">Option C</button>
+          </div>
+          <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
+        </div>
       </section>
 
       <section id="form-validation" class="hidden">
@@ -404,6 +445,16 @@ function validateForm(event) {
           <iframe class="pg-output" id="pg-output-form" title="Playground output" sandbox="allow-scripts"></iframe>
           <div class="pg-status" aria-live="polite" id="pg-status-form"></div>
         </details>
+        <div class="quiz" data-quiz data-quiz-id="form-validation">
+          <h3>Knowledge Check</h3>
+          <p class="quiz-question" role="heading" aria-level="3">Loading question…</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-answer="wrong">Option A</button>
+            <button class="quiz-option" type="button" data-answer="wrong">Option B</button>
+            <button class="quiz-option" type="button" data-answer="correct">Option C</button>
+          </div>
+          <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
+        </div>
       </section>
 
       <section id="animations" class="hidden">
@@ -433,6 +484,16 @@ function validateForm(event) {
         </div>
         <button onclick="startAnimation()">Start Animation</button>
         <div id="animated-box" class="box"></div>
+        <div class="quiz" data-quiz data-quiz-id="animations">
+          <h3>Knowledge Check</h3>
+          <p class="quiz-question" role="heading" aria-level="3">Loading question…</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-answer="wrong">Option A</button>
+            <button class="quiz-option" type="button" data-answer="wrong">Option B</button>
+            <button class="quiz-option" type="button" data-answer="correct">Option C</button>
+          </div>
+          <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
+        </div>
       </section>
 <section id="multilingual-support" class="hidden">
   <h2>Multilingual Support <a href="#multilingual-support" class="section-link" aria-label="Copy link to Multilingual Support">#</a></h2>
@@ -475,6 +536,26 @@ navigator.language || navigator.userLanguage;
       <option value="ja" lang="ja">Japanese</option>
     </select>
     <p id="hello-world-text" lang="en">Hello World</p>
+  </div>
+  <div class="quiz" data-quiz data-quiz-id="multilingual-support">
+    <h3>Knowledge Check</h3>
+    <p class="quiz-question" role="heading" aria-level="3">Loading question…</p>
+    <div class="quiz-options">
+      <button class="quiz-option" type="button" data-answer="wrong">Option A</button>
+      <button class="quiz-option" type="button" data-answer="wrong">Option B</button>
+      <button class="quiz-option" type="button" data-answer="correct">Option C</button>
+    </div>
+    <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
+  </div>
+  <div class="quiz" data-quiz data-quiz-id="interactive-widgets">
+    <h3>Knowledge Check</h3>
+    <p class="quiz-question" role="heading" aria-level="3">Loading question…</p>
+    <div class="quiz-options">
+      <button class="quiz-option" type="button" data-answer="wrong">Option A</button>
+      <button class="quiz-option" type="button" data-answer="wrong">Option B</button>
+      <button class="quiz-option" type="button" data-answer="correct">Option C</button>
+    </div>
+    <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
   </div>
 </section>
 
@@ -524,6 +605,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
     </pre>
+  </div>
+  <div class="quiz" data-quiz data-quiz-id="dark-mode">
+    <h3>Knowledge Check</h3>
+    <p class="quiz-question" role="heading" aria-level="3">Loading question…</p>
+    <div class="quiz-options">
+      <button class="quiz-option" type="button" data-answer="wrong">Option A</button>
+      <button class="quiz-option" type="button" data-answer="wrong">Option B</button>
+      <button class="quiz-option" type="button" data-answer="correct">Option C</button>
+    </div>
+    <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
   </div>
 </section>
 
@@ -616,6 +707,16 @@ document.addEventListener("DOMContentLoaded", () => {
     </li>
   </ul>
   <button class="btn" onclick="showNotification('Your changes have been saved successfully!')">Show Notification</button>
+  <div class="quiz" data-quiz data-quiz-id="notifications">
+    <h3>Knowledge Check</h3>
+    <p class="quiz-question" role="heading" aria-level="3">Loading question…</p>
+    <div class="quiz-options">
+      <button class="quiz-option" type="button" data-answer="wrong">Option A</button>
+      <button class="quiz-option" type="button" data-answer="wrong">Option B</button>
+      <button class="quiz-option" type="button" data-answer="correct">Option C</button>
+    </div>
+    <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
+  </div>
 </section>
       </main>
     </div>
