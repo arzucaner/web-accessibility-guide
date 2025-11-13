@@ -194,17 +194,6 @@
           </div>
         </div>
 
-        <div class="quiz" data-quiz data-quiz-id="contrast">
-          <h3>Knowledge Check</h3>
-          <p class="quiz-question" role="heading" aria-level="3">Loading question…</p>
-          <div class="quiz-options">
-            <button class="quiz-option" type="button" data-answer="wrong">Option A</button>
-            <button class="quiz-option" type="button" data-answer="wrong">Option B</button>
-            <button class="quiz-option" type="button" data-answer="correct">Option C</button>
-          </div>
-          <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
-        </div>
-
         <section id="accessibility-checker">
           <h2>Accessibility Checker</h2>
           <label for="ac-code">Paste HTML to analyze</label>
@@ -214,6 +203,23 @@
             <button type="button" id="ac-clear" class="btn">Clear</button>
           </div>
           <div id="ac-results" role="region" aria-live="polite" aria-label="Analysis results"></div>
+        </section>
+
+        <section class="quiz" aria-labelledby="contrast-quick-check">
+          <h3 id="contrast-quick-check">Quick Check</h3>
+          <p class="quiz-question">Which of the following ensures sufficient color contrast?</p>
+          <ul class="quiz-options" role="list">
+            <li>
+              <button type="button" class="quiz-option">Using colors you like</button>
+            </li>
+            <li>
+              <button type="button" class="quiz-option" data-correct="true">Ensuring contrast ratio meets WCAG AA</button>
+            </li>
+            <li>
+              <button type="button" class="quiz-option">Avoiding blue entirely</button>
+            </li>
+          </ul>
+          <p id="contrast-quiz-feedback" class="quiz-feedback" aria-live="polite"></p>
         </section>
       </section>
 
@@ -265,16 +271,22 @@ button:focus {
           <iframe class="pg-output" id="pg-output-keyboard" title="Playground output" sandbox="allow-scripts"></iframe>
           <div class="pg-status" aria-live="polite" id="pg-status-keyboard"></div>
         </details>
-        <div class="quiz" data-quiz data-quiz-id="keyboard">
-          <h3>Knowledge Check</h3>
-          <p class="quiz-question" role="heading" aria-level="3">Loading question…</p>
-          <div class="quiz-options">
-            <button class="quiz-option" type="button" data-answer="wrong">Option A</button>
-            <button class="quiz-option" type="button" data-answer="wrong">Option B</button>
-            <button class="quiz-option" type="button" data-answer="correct">Option C</button>
-          </div>
-          <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
-        </div>
+        <section class="quiz" aria-labelledby="keyboard-quick-check">
+          <h3 id="keyboard-quick-check">Quick Check</h3>
+          <p class="quiz-question">What keeps a modal keyboard-friendly for everyone?</p>
+          <ul class="quiz-options" role="list">
+            <li>
+              <button type="button" class="quiz-option">Let focus move anywhere on the page</button>
+            </li>
+            <li>
+              <button type="button" class="quiz-option" data-correct="true">Trap focus inside the modal and include a clear close action</button>
+            </li>
+            <li>
+              <button type="button" class="quiz-option">Require a mouse to dismiss the modal</button>
+            </li>
+          </ul>
+          <p id="keyboard-quiz-feedback" class="quiz-feedback" aria-live="polite"></p>
+        </section>
       </section>
 
       <section id="dynamic-content" class="hidden">
@@ -329,16 +341,22 @@ function updateLiveRegion(id, message) {
           <iframe class="pg-output" id="pg-output-aria" title="Playground output" sandbox="allow-scripts"></iframe>
           <div class="pg-status" aria-live="polite" id="pg-status-aria"></div>
         </details>
-        <div class="quiz" data-quiz data-quiz-id="dynamic-content">
-          <h3>Knowledge Check</h3>
-          <p class="quiz-question" role="heading" aria-level="3">Loading question…</p>
-          <div class="quiz-options">
-            <button class="quiz-option" type="button" data-answer="wrong">Option A</button>
-            <button class="quiz-option" type="button" data-answer="wrong">Option B</button>
-            <button class="quiz-option" type="button" data-answer="correct">Option C</button>
-          </div>
-          <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
-        </div>
+        <section class="quiz" aria-labelledby="dynamic-content-quick-check">
+          <h3 id="dynamic-content-quick-check">Quick Check</h3>
+          <p class="quiz-question">How can you make sure important dynamic updates are announced?</p>
+          <ul class="quiz-options" role="list">
+            <li>
+              <button type="button" class="quiz-option">Change only the background color of the page</button>
+            </li>
+            <li>
+              <button type="button" class="quiz-option">Ask users to reload the page manually</button>
+            </li>
+            <li>
+              <button type="button" class="quiz-option" data-correct="true">Use an ARIA live region with the right politeness level</button>
+            </li>
+          </ul>
+          <p id="dynamic-content-quiz-feedback" class="quiz-feedback" aria-live="polite"></p>
+        </section>
       </section>
 
       <section id="form-validation" class="hidden">
@@ -445,16 +463,22 @@ function validateForm(event) {
           <iframe class="pg-output" id="pg-output-form" title="Playground output" sandbox="allow-scripts"></iframe>
           <div class="pg-status" aria-live="polite" id="pg-status-form"></div>
         </details>
-        <div class="quiz" data-quiz data-quiz-id="form-validation">
-          <h3>Knowledge Check</h3>
-          <p class="quiz-question" role="heading" aria-level="3">Loading question…</p>
-          <div class="quiz-options">
-            <button class="quiz-option" type="button" data-answer="wrong">Option A</button>
-            <button class="quiz-option" type="button" data-answer="wrong">Option B</button>
-            <button class="quiz-option" type="button" data-answer="correct">Option C</button>
-          </div>
-          <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
-        </div>
+        <section class="quiz" aria-labelledby="forms-quick-check">
+          <h3 id="forms-quick-check">Quick Check</h3>
+          <p class="quiz-question">Which practice keeps form error messages accessible?</p>
+          <ul class="quiz-options" role="list">
+            <li>
+              <button type="button" class="quiz-option" data-correct="true">Link errors to fields with clear text via aria-describedby</button>
+            </li>
+            <li>
+              <button type="button" class="quiz-option">Show only a red border without text guidance</button>
+            </li>
+            <li>
+              <button type="button" class="quiz-option">Delay all errors until users leave the page</button>
+            </li>
+          </ul>
+          <p id="forms-quiz-feedback" class="quiz-feedback" aria-live="polite"></p>
+        </section>
       </section>
 
       <section id="animations" class="hidden">
