@@ -253,6 +253,7 @@ section {
 .code-example-header {
   display: flex;
   justify-content: flex-end;
+  gap: 8px;
   margin-bottom: 10px;
 }
 
@@ -304,6 +305,98 @@ section {
 
 .copy-text {
   font-size: 14px;
+}
+
+.codepen-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background-color: #1da1f2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 44px;
+  min-height: 44px;
+  transition: all 0.2s ease;
+  position: relative;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.codepen-button:hover:not(:disabled) {
+  background-color: #0d8bd9;
+  transform: translateY(-1px);
+}
+
+.codepen-button:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+  background-color: #ffcc00;
+  color: #000;
+}
+
+.codepen-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.codepen-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #6c757d;
+}
+
+.codepen-icon {
+  font-size: 16px;
+}
+
+.codepen-text {
+  font-size: 14px;
+}
+
+/* Dark mode support for CodePen button */
+.dark-mode .codepen-button {
+  background-color: #1da1f2;
+  color: white;
+}
+
+.dark-mode .codepen-button:hover:not(:disabled) {
+  background-color: #0d8bd9;
+}
+
+.dark-mode .codepen-button:focus-visible {
+  background-color: #ffcc00;
+  color: #000;
+}
+
+/* High contrast mode support */
+.high-contrast .codepen-button {
+  background-color: #000;
+  color: #ffcc00;
+  border: 2px solid #ffcc00;
+}
+
+.high-contrast .codepen-button:hover:not(:disabled) {
+  background-color: #ffcc00;
+  color: #000;
+}
+
+.high-contrast .codepen-button:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 3px;
+  background-color: #ffcc00;
+  color: #000;
+}
+
+.codepen-announcement {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 .copy-feedback {

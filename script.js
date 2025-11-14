@@ -1791,3 +1791,258 @@ if (document.readyState === 'loading') {
 } else {
   initAccessibilityChecker();
 }
+
+// CodePen Export Functionality
+/**
+ * Extracts HTML, CSS, and JS from a code-example block
+ * @param {HTMLElement} codeExample - The .code-example element
+ * @returns {Object} Object with html, css, and js properties
+ */
+function extractCodeFromExample(codeExample) {
+  let html = '';
+  let css = '';
+  let js = '';
+
+  // Look for actual HTML elements (not code snippets) in the example
+  // Check if there are any rendered elements besides the header
+  const allElements = codeExample.querySelectorAll('*');
+  const hasRenderedContent = Array.from(allElements).some(el => {
+    const tagName = el.tagName.toLowerCase();
+    return tagName !== 'pre' && 
+           tagName !== 'style' && 
+           tagName !== 'script' && 
+           !el.classList.contains('code-example-header') &&
+           !el.closest('.code-example-header');
+  });
+
+  if (hasRenderedContent) {
+    // Clone and collect innerHTML of example (excluding header and code blocks)
+    const clone = codeExample.cloneNode(true);
+    const header = clone.querySelector('.code-example-header');
+    const preElements = clone.querySelectorAll('pre');
+    const styleElements = clone.querySelectorAll('style');
+    const scriptElements = clone.querySelectorAll('script');
+    
+    if (header) header.remove();
+    preElements.forEach(pre => pre.remove());
+    styleElements.forEach(style => style.remove());
+    scriptElements.forEach(script => script.remove());
+    
+    const renderedHtml = clone.innerHTML.trim();
+    if (renderedHtml) {
+      html = renderedHtml;
+    }
+  }
+
+  // Extract from <pre> elements - use headings to determine type if available
+  const preElements = codeExample.querySelectorAll('pre');
+  preElements.forEach((pre, index) => {
+    const text = pre.textContent.trim();
+    if (!text) return;
+
+    // Check for heading before this pre element to determine type
+    let codeType = null;
+    let prevElement = pre.previousElementSibling;
+    while (prevElement && !codeType) {
+      if (prevElement.tagName === 'H4' || prevElement.tagName === 'H3') {
+        const headingText = prevElement.textContent.toLowerCase();
+        if (headingText.includes('css') || headingText.includes('style')) {
+          codeType = 'css';
+        } else if (headingText.includes('javascript') || headingText.includes('js') || headingText.includes('script')) {
+          codeType = 'js';
+        } else if (headingText.includes('html')) {
+          codeType = 'html';
+        }
+        break;
+      }
+      prevElement = prevElement.previousElementSibling;
+    }
+
+    // If no heading found, detect by content
+    if (!codeType) {
+      // Check if it looks like CSS (contains selectors, properties, etc.)
+      if (text.includes('{') && (text.includes('color:') || text.includes('background') || text.includes('padding') || text.includes('margin') || text.includes('@media') || text.includes('@keyframes') || text.includes('border'))) {
+        codeType = 'css';
+      }
+      // Check if it looks like JavaScript (contains function, const, let, var, etc.)
+      else if (text.includes('function') || text.includes('const ') || text.includes('let ') || text.includes('var ') || text.includes('=>') || text.includes('addEventListener') || text.includes('document.') || text.includes('navigator.')) {
+        codeType = 'js';
+      }
+      // Check if it looks like HTML (contains tags)
+      else if (text.includes('<') && text.includes('>')) {
+        codeType = 'html';
+      }
+      // Default: if it's the first pre and we don't have HTML yet, treat as HTML
+      else if (index === 0 && !html) {
+        codeType = 'html';
+      }
+    }
+
+    // Assign to appropriate variable
+    if (codeType === 'css') {
+      css += (css ? '\n\n' : '') + text;
+    } else if (codeType === 'js') {
+      js += (js ? '\n\n' : '') + text;
+    } else if (codeType === 'html') {
+      html += (html ? '\n\n' : '') + text;
+    } else if (!html && !css && !js) {
+      // Fallback: if we can't determine, use as HTML
+      html = text;
+    }
+  });
+
+  // Look for sibling <style> or <script> elements (outside the code-example)
+  const codeExampleParent = codeExample.parentElement;
+  if (codeExampleParent) {
+    let nextSibling = codeExample.nextElementSibling;
+    while (nextSibling && (nextSibling.tagName === 'STYLE' || nextSibling.tagName === 'SCRIPT')) {
+      if (nextSibling.tagName === 'STYLE') {
+        css += (css ? '\n\n' : '') + nextSibling.textContent.trim();
+      } else if (nextSibling.tagName === 'SCRIPT') {
+        js += (js ? '\n\n' : '') + nextSibling.textContent.trim();
+      }
+      nextSibling = nextSibling.nextElementSibling;
+    }
+  }
+
+  // If we still don't have HTML but have code in pre, use the first pre as HTML
+  if (!html && preElements.length > 0 && !css && !js) {
+    html = preElements[0].textContent.trim();
+  }
+
+  return {
+    html: html || '',
+    css: css || '',
+    js: js || ''
+  };
+}
+
+/**
+ * Opens code in CodePen
+ * @param {HTMLElement} button - The CodePen button that was clicked
+ */
+function openInCodePen(button) {
+  const codeExample = button.closest('.code-example');
+  if (!codeExample) {
+    console.error('CodePen: Could not find code-example container');
+    return;
+  }
+
+  // Announce to screen readers
+  const announcement = document.getElementById('codepen-announcement');
+  if (announcement) {
+    announcement.textContent = 'Opening on CodePen…';
+  }
+
+  try {
+    const code = extractCodeFromExample(codeExample);
+    
+    // Validate that we have at least some code
+    if (!code.html && !code.css && !code.js) {
+      throw new Error('No code found in example');
+    }
+
+    // Get title from the section or use default
+    const section = codeExample.closest('section');
+    const sectionTitle = section ? section.querySelector('h2, h3, h4')?.textContent || 'Code Example' : 'Code Example';
+    const title = `${sectionTitle} - Web Accessibility Guide`;
+
+    // Build CodePen data payload
+    const codepenData = {
+      title: title,
+      html: code.html,
+      css: code.css,
+      js: code.js,
+      editors: '101' // HTML, CSS, JS all visible
+    };
+
+    // Create form to submit to CodePen
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://codepen.io/pen/define';
+    form.target = '_blank';
+    form.style.display = 'none';
+
+    // Create hidden input with JSON data
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'data';
+    input.value = JSON.stringify(codepenData);
+
+    form.appendChild(input);
+    document.body.appendChild(form);
+
+    // Submit form
+    form.submit();
+
+    // Clean up form after a short delay
+    setTimeout(() => {
+      document.body.removeChild(form);
+    }, 1000);
+
+  } catch (error) {
+    console.error('CodePen export failed:', error);
+    
+    // Disable button and show tooltip
+    button.disabled = true;
+    button.setAttribute('aria-label', 'Code not available');
+    button.title = 'Code not available';
+    
+    // Update announcement
+    if (announcement) {
+      announcement.textContent = 'Code not available';
+    }
+  }
+}
+
+/**
+ * Initializes CodePen buttons for all code-example blocks
+ */
+function initCodePenButtons() {
+  const codeExamples = document.querySelectorAll('.code-example');
+  
+  codeExamples.forEach(codeExample => {
+    const header = codeExample.querySelector('.code-example-header');
+    if (!header) return;
+
+    // Check if button already exists
+    if (header.querySelector('.codepen-button')) return;
+
+    // Create CodePen button
+    const codepenButton = document.createElement('button');
+    codepenButton.className = 'codepen-button';
+    codepenButton.setAttribute('aria-label', 'Open this example on CodePen');
+    codepenButton.type = 'button';
+    codepenButton.onclick = function() { openInCodePen(this); };
+
+    const icon = document.createElement('span');
+    icon.className = 'codepen-icon';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.textContent = '✏️'; // Pen icon
+
+    const text = document.createElement('span');
+    text.className = 'codepen-text';
+    text.textContent = 'Open in CodePen';
+    
+    // Add title attribute for tooltip
+    codepenButton.title = 'Open this example on CodePen';
+
+    codepenButton.appendChild(icon);
+    codepenButton.appendChild(text);
+
+    // Insert before the copy button (so CodePen appears first)
+    const copyButton = header.querySelector('.copy-button');
+    if (copyButton) {
+      header.insertBefore(codepenButton, copyButton);
+    } else {
+      header.appendChild(codepenButton);
+    }
+  });
+}
+
+// Initialize CodePen buttons when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCodePenButtons);
+} else {
+  initCodePenButtons();
+}
