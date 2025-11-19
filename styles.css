@@ -307,88 +307,81 @@ section {
   font-size: 14px;
 }
 
-.codepen-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  background-color: #1da1f2;
-  color: white;
+/* CodePen Export Button */
+.codepen-btn {
+  margin-top: 0.5em;
+  background: #000;
+  color: #fff;
   border: none;
-  border-radius: 4px;
+  padding: 0.5em 1em;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
+  font-family: inherit;
+  font-size: 1em;
   min-width: 44px;
   min-height: 44px;
-  transition: all 0.2s ease;
-  position: relative;
-  font-family: inherit;
-  white-space: nowrap;
+  transition: background-color 0.2s ease;
 }
 
-.codepen-button:hover:not(:disabled) {
-  background-color: #0d8bd9;
-  transform: translateY(-1px);
+.codepen-btn:hover,
+.codepen-btn:focus {
+  background: #222;
 }
 
-.codepen-button:focus-visible {
+.codepen-btn:focus-visible {
   outline: 3px solid #ffcc00;
-  outline-offset: 3px;
-  background-color: #ffcc00;
-  color: #000;
+  outline-offset: 2px;
+  background: #222;
 }
 
-.codepen-button:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.codepen-button:disabled {
+.codepen-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  background-color: #6c757d;
+  background: #666;
 }
 
-.codepen-icon {
-  font-size: 16px;
-}
-
-.codepen-text {
-  font-size: 14px;
-}
-
-/* Dark mode support for CodePen button */
-.dark-mode .codepen-button {
-  background-color: #1da1f2;
-  color: white;
-}
-
-.dark-mode .codepen-button:hover:not(:disabled) {
-  background-color: #0d8bd9;
-}
-
-.dark-mode .codepen-button:focus-visible {
-  background-color: #ffcc00;
-  color: #000;
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .codepen-btn {
+    transition: none;
+  }
 }
 
 /* High contrast mode support */
-.high-contrast .codepen-button {
-  background-color: #000;
-  color: #ffcc00;
-  border: 2px solid #ffcc00;
+.high-contrast .codepen-btn {
+  background: #000;
+  color: #fff;
+  border: 2px solid #fff;
 }
 
-.high-contrast .codepen-button:hover:not(:disabled) {
-  background-color: #ffcc00;
-  color: #000;
+.high-contrast .codepen-btn:hover:not(:disabled),
+.high-contrast .codepen-btn:focus:not(:disabled) {
+  background: #222;
+  border-color: #ffcc00;
 }
 
-.high-contrast .codepen-button:focus-visible {
+.high-contrast .codepen-btn:focus-visible {
   outline: 3px solid #ffcc00;
-  outline-offset: 3px;
-  background-color: #ffcc00;
-  color: #000;
+  outline-offset: 2px;
+  background: #222;
+  border-color: #ffcc00;
+}
+
+/* Dark mode support */
+.dark-mode .codepen-btn {
+  background: #000;
+  color: #fff;
+}
+
+.dark-mode .codepen-btn:hover:not(:disabled),
+.dark-mode .codepen-btn:focus:not(:disabled) {
+  background: #222;
+}
+
+.dark-mode .codepen-btn:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+  background: #222;
 }
 
 .codepen-announcement {

@@ -1794,6 +1794,66 @@ if (document.readyState === 'loading') {
 
 // CodePen Export Functionality
 /**
+ * Extracts HTML, CSS, and JS from a playground textarea
+ * @param {string} textareaId - The ID of the textarea containing the code
+ * @returns {Object} Object with html, css, and js properties
+ */
+function extractCodeFromPlayground(textareaId) {
+  const textarea = document.getElementById(textareaId);
+  if (!textarea) {
+    return { html: '', css: '', js: '' };
+  }
+
+  const content = textarea.value.trim();
+  if (!content) {
+    return { html: '', css: '', js: '' };
+  }
+
+  let html = '';
+  let css = '';
+  let js = '';
+
+  // Parse the content - it may contain HTML, CSS, and JS mixed together
+  // Look for <style> and <script> tags
+  const styleMatch = content.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
+  if (styleMatch) {
+    css = styleMatch[1].trim();
+  }
+
+  const scriptMatch = content.match(/<script[^>]*>([\s\S]*?)<\/script>/i);
+  if (scriptMatch) {
+    js = scriptMatch[1].trim();
+  }
+
+  // Remove style and script tags from HTML
+  let htmlContent = content
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+    .trim();
+
+  // If we have HTML content, use it
+  if (htmlContent) {
+    html = htmlContent;
+  } else {
+    // If no HTML tags found, check if it's pure CSS or JS
+    if (content.includes('{') && (content.includes('color:') || content.includes('background') || content.includes('padding') || content.includes('margin') || content.includes('@media') || content.includes('@keyframes') || content.includes('border'))) {
+      css = content;
+    } else if (content.includes('function') || content.includes('const ') || content.includes('let ') || content.includes('var ') || content.includes('=>') || content.includes('addEventListener') || content.includes('document.') || content.includes('navigator.')) {
+      js = content;
+    } else {
+      // Default to HTML
+      html = content;
+    }
+  }
+
+  return {
+    html: html || '',
+    css: css || '',
+    js: js || ''
+  };
+}
+
+/**
  * Extracts HTML, CSS, and JS from a code-example block
  * @param {HTMLElement} codeExample - The .code-example element
  * @returns {Object} Object with html, css, and js properties
@@ -1802,37 +1862,6 @@ function extractCodeFromExample(codeExample) {
   let html = '';
   let css = '';
   let js = '';
-
-  // Look for actual HTML elements (not code snippets) in the example
-  // Check if there are any rendered elements besides the header
-  const allElements = codeExample.querySelectorAll('*');
-  const hasRenderedContent = Array.from(allElements).some(el => {
-    const tagName = el.tagName.toLowerCase();
-    return tagName !== 'pre' && 
-           tagName !== 'style' && 
-           tagName !== 'script' && 
-           !el.classList.contains('code-example-header') &&
-           !el.closest('.code-example-header');
-  });
-
-  if (hasRenderedContent) {
-    // Clone and collect innerHTML of example (excluding header and code blocks)
-    const clone = codeExample.cloneNode(true);
-    const header = clone.querySelector('.code-example-header');
-    const preElements = clone.querySelectorAll('pre');
-    const styleElements = clone.querySelectorAll('style');
-    const scriptElements = clone.querySelectorAll('script');
-    
-    if (header) header.remove();
-    preElements.forEach(pre => pre.remove());
-    styleElements.forEach(style => style.remove());
-    scriptElements.forEach(script => script.remove());
-    
-    const renderedHtml = clone.innerHTML.trim();
-    if (renderedHtml) {
-      html = renderedHtml;
-    }
-  }
 
   // Extract from <pre> elements - use headings to determine type if available
   const preElements = codeExample.querySelectorAll('pre');
@@ -1891,20 +1920,6 @@ function extractCodeFromExample(codeExample) {
     }
   });
 
-  // Look for sibling <style> or <script> elements (outside the code-example)
-  const codeExampleParent = codeExample.parentElement;
-  if (codeExampleParent) {
-    let nextSibling = codeExample.nextElementSibling;
-    while (nextSibling && (nextSibling.tagName === 'STYLE' || nextSibling.tagName === 'SCRIPT')) {
-      if (nextSibling.tagName === 'STYLE') {
-        css += (css ? '\n\n' : '') + nextSibling.textContent.trim();
-      } else if (nextSibling.tagName === 'SCRIPT') {
-        js += (js ? '\n\n' : '') + nextSibling.textContent.trim();
-      }
-      nextSibling = nextSibling.nextElementSibling;
-    }
-  }
-
   // If we still don't have HTML but have code in pre, use the first pre as HTML
   if (!html && preElements.length > 0 && !css && !js) {
     html = preElements[0].textContent.trim();
@@ -1922,12 +1937,6 @@ function extractCodeFromExample(codeExample) {
  * @param {HTMLElement} button - The CodePen button that was clicked
  */
 function openInCodePen(button) {
-  const codeExample = button.closest('.code-example');
-  if (!codeExample) {
-    console.error('CodePen: Could not find code-example container');
-    return;
-  }
-
   // Announce to screen readers
   const announcement = document.getElementById('codepen-announcement');
   if (announcement) {
@@ -1935,21 +1944,72 @@ function openInCodePen(button) {
   }
 
   try {
-    const code = extractCodeFromExample(codeExample);
+    let code = { html: '', css: '', js: '' };
+    let sectionTitle = 'Code Example';
+
+    // Check if this is a playground button (has data-codepen-source)
+    const playgroundSource = button.getAttribute('data-codepen-source');
+    if (playgroundSource) {
+      code = extractCodeFromPlayground(playgroundSource);
+      const playground = button.closest('.playground');
+      const section = playground ? playground.closest('section') : null;
+      sectionTitle = section ? section.querySelector('h2, h3, h4')?.textContent || 'Playground Example' : 'Playground Example';
+    } else {
+      // This is a code-example button
+      // First try to find code-example as a parent
+      let codeExample = button.closest('.code-example');
+      
+      // If not found, look for previous sibling
+      if (!codeExample) {
+        let prevSibling = button.previousElementSibling;
+        while (prevSibling) {
+          if (prevSibling.classList && prevSibling.classList.contains('code-example')) {
+            codeExample = prevSibling;
+            break;
+          }
+          prevSibling = prevSibling.previousElementSibling;
+        }
+      }
+      
+      // If still not found, search parent and siblings
+      if (!codeExample) {
+        let parent = button.parentElement;
+        while (parent && !codeExample) {
+          // Check if parent is code-example
+          if (parent.classList && parent.classList.contains('code-example')) {
+            codeExample = parent;
+            break;
+          }
+          // Check siblings of parent
+          let sibling = parent.previousElementSibling;
+          while (sibling && !codeExample) {
+            if (sibling.classList && sibling.classList.contains('code-example')) {
+              codeExample = sibling;
+              break;
+            }
+            sibling = sibling.previousElementSibling;
+          }
+          parent = parent.parentElement;
+        }
+      }
+      
+      if (!codeExample) {
+        throw new Error('Could not find code-example container');
+      }
+      
+      code = extractCodeFromExample(codeExample);
+      const section = codeExample.closest('section');
+      sectionTitle = section ? section.querySelector('h2, h3, h4')?.textContent || 'Code Example' : 'Code Example';
+    }
     
     // Validate that we have at least some code
     if (!code.html && !code.css && !code.js) {
       throw new Error('No code found in example');
     }
 
-    // Get title from the section or use default
-    const section = codeExample.closest('section');
-    const sectionTitle = section ? section.querySelector('h2, h3, h4')?.textContent || 'Code Example' : 'Code Example';
-    const title = `${sectionTitle} - Web Accessibility Guide`;
-
     // Build CodePen data payload
     const codepenData = {
-      title: title,
+      title: `Web Accessibility Guide Example - ${sectionTitle}`,
       html: code.html,
       css: code.css,
       js: code.js,
@@ -1977,7 +2037,9 @@ function openInCodePen(button) {
 
     // Clean up form after a short delay
     setTimeout(() => {
-      document.body.removeChild(form);
+      if (form.parentNode) {
+        document.body.removeChild(form);
+      }
     }, 1000);
 
   } catch (error) {
@@ -1996,47 +2058,21 @@ function openInCodePen(button) {
 }
 
 /**
- * Initializes CodePen buttons for all code-example blocks
+ * Initializes CodePen buttons for all interactive examples
  */
 function initCodePenButtons() {
-  const codeExamples = document.querySelectorAll('.code-example');
+  // Initialize event listeners for all CodePen buttons
+  const codepenButtons = document.querySelectorAll('.codepen-btn');
   
-  codeExamples.forEach(codeExample => {
-    const header = codeExample.querySelector('.code-example-header');
-    if (!header) return;
-
-    // Check if button already exists
-    if (header.querySelector('.codepen-button')) return;
-
-    // Create CodePen button
-    const codepenButton = document.createElement('button');
-    codepenButton.className = 'codepen-button';
-    codepenButton.setAttribute('aria-label', 'Open this example on CodePen');
-    codepenButton.type = 'button';
-    codepenButton.onclick = function() { openInCodePen(this); };
-
-    const icon = document.createElement('span');
-    icon.className = 'codepen-icon';
-    icon.setAttribute('aria-hidden', 'true');
-    icon.textContent = '✏️'; // Pen icon
-
-    const text = document.createElement('span');
-    text.className = 'codepen-text';
-    text.textContent = 'Open in CodePen';
+  codepenButtons.forEach(button => {
+    // Remove any existing listeners to avoid duplicates
+    const newButton = button.cloneNode(true);
+    button.parentNode.replaceChild(newButton, button);
     
-    // Add title attribute for tooltip
-    codepenButton.title = 'Open this example on CodePen';
-
-    codepenButton.appendChild(icon);
-    codepenButton.appendChild(text);
-
-    // Insert before the copy button (so CodePen appears first)
-    const copyButton = header.querySelector('.copy-button');
-    if (copyButton) {
-      header.insertBefore(codepenButton, copyButton);
-    } else {
-      header.appendChild(codepenButton);
-    }
+    // Add click event listener
+    newButton.addEventListener('click', function() {
+      openInCodePen(this);
+    });
   });
 }
 
