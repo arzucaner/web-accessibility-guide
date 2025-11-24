@@ -107,13 +107,21 @@
   </style>
 </head>
 <body>
-  <main role="main" class="offline-container">
-    <h1 id="offline-heading">You're Offline</h1>
-    <p>It looks like you're not connected to the internet. Please check your connection and try again.</p>
-    <button class="retry-button" onclick="window.location.reload()" aria-describedby="offline-heading">
+  <main role="main" aria-labelledby="offline-heading" class="offline-container">
+    <h1 id="offline-heading" tabindex="-1">You're Offline</h1>
+    <p id="offline-instructions">It looks like you're not connected to the internet. Please check your connection, then select the button below to try loading the page again.</p>
+    <button class="retry-button" type="button" onclick="window.location.reload()" aria-describedby="offline-instructions">
       Retry
     </button>
   </main>
+  <script>
+    (function focusOfflineHeading() {
+      const heading = document.getElementById('offline-heading');
+      if (heading) {
+        heading.focus();
+      }
+    })();
+  </script>
 </body>
 </html>
 

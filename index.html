@@ -882,9 +882,10 @@ document.addEventListener("DOMContentLoaded", () => {
           // Create update toast
           const toast = document.createElement('div');
           toast.id = 'sw-update-toast';
-          toast.setAttribute('role', 'alert');
+          toast.setAttribute('role', 'status');
           toast.setAttribute('aria-live', 'polite');
           toast.setAttribute('aria-atomic', 'true');
+          toast.setAttribute('tabindex', '-1');
           toast.style.cssText = `
             position: fixed;
             bottom: 20px;
@@ -916,9 +917,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
           document.body.appendChild(toast);
 
-          // Focus the button for keyboard users
           const updateButton = document.getElementById('sw-update-button');
-          updateButton.focus();
+          toast.focus();
 
           // Handle update button click
           updateButton.addEventListener('click', () => {

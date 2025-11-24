@@ -64,6 +64,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
+  const acceptHeader = request.headers.get('accept') || '';
 
   // Skip cross-origin requests
   if (url.origin !== location.origin) {
@@ -71,7 +72,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   // HTML: network-first with offline fallback
-  if (request.headers.get('accept').includes('text/html')) {
+  if (request.mode === 'navigate' || acceptHeader.includes('text/html')) {
     event.respondWith(
       fetch(request)
         .then((response) => {
