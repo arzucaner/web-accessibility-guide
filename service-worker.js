@@ -24,6 +24,7 @@ const PRECACHE_ASSETS = [
   `${BASE_PATH}lang/fr.json`,
   `${BASE_PATH}lang/ja.json`,
   `${BASE_PATH}lang/tr.json`,
+  `${BASE_PATH}wcag/map.json`,
   `${BASE_PATH}icons/icon-192x192.png`,
   `${BASE_PATH}icons/icon-512x512.png`,
   OFFLINE_URL

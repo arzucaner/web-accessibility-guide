@@ -973,6 +973,7 @@ async function initLanguage() {
 // Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', async () => {
   await initLanguage();
+  await initWcagTags();
   generateTableOfContents();
   setupTocIntersectionObserver();
   initBackToTopButton();
@@ -1221,6 +1222,111 @@ function resetPlayground(textareaId, iframeId) {
   announceToScreenReader('Playground reset');
 }
 
+const WCAG_DETAILS = {
+  '1.3.1': { slug: 'info-and-relationships', label: 'Info and Relationships' },
+  '2.4.1': { slug: 'bypass-blocks', label: 'Bypass Blocks' },
+  '1.4.3': { slug: 'contrast-minimum', label: 'Contrast (Minimum)' },
+  '1.4.11': { slug: 'non-text-contrast', label: 'Non-text Contrast' },
+  '2.1.1': { slug: 'keyboard', label: 'Keyboard' },
+  '2.1.2': { slug: 'no-keyboard-trap', label: 'No Keyboard Trap' },
+  '2.4.7': { slug: 'focus-visible', label: 'Focus Visible' },
+  '3.3.1': { slug: 'error-identification', label: 'Error Identification' },
+  '3.3.2': { slug: 'labels-or-instructions', label: 'Labels or Instructions' },
+  '4.1.3': { slug: 'status-messages', label: 'Status Messages' },
+  '4.1.2': { slug: 'name-role-value', label: 'Name, Role, Value' }
+};
+
+const DEFAULT_WCAG_URL = 'https://www.w3.org/TR/WCAG21/';
+let wcagCriteriaBySection = {};
+
+async function initWcagTags() {
+  try {
+    const response = await fetch('wcag/map.json', { cache: 'no-store' });
+    if (!response.ok) {
+      throw new Error(`Failed to load WCAG map: ${response.status}`);
+    }
+    const map = await response.json();
+    renderWcagTags(map);
+  } catch (error) {
+    console.warn('Unable to load WCAG mapping.', error);
+  }
+}
+
+function renderWcagTags(map) {
+  const sections = document.querySelectorAll('main section');
+  sections.forEach((section) => {
+    const wcagKey = section.dataset.wcagId || section.id;
+    const criteria = map[wcagKey];
+    const heading = section.querySelector('h2');
+
+    if (!criteria || !criteria.length || !heading) {
+      return;
+    }
+
+    wcagCriteriaBySection[section.id] = criteria.slice();
+    section.dataset.wcagCriteria = criteria.join(',');
+
+    const existingList = section.querySelector('.wcag-tags');
+    if (existingList) {
+      existingList.remove();
+    }
+
+    const list = document.createElement('ul');
+    list.className = 'wcag-tags';
+    list.setAttribute('aria-label', 'WCAG success criteria');
+
+    criteria.forEach((criterion) => {
+      const { href, label } = getWcagLinkMeta(criterion);
+      const item = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = href;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.dataset.wcag = criterion;
+      link.textContent = `WCAG ${criterion}`;
+      link.title = label;
+      link.setAttribute('aria-label', label);
+      item.appendChild(link);
+      list.appendChild(item);
+    });
+
+    heading.insertAdjacentElement('afterend', list);
+  });
+}
+
+function getWcagLinkMeta(code) {
+  const details = WCAG_DETAILS[code] || {};
+  const slug = details.slug ? `#${details.slug}` : '';
+  const href = `${DEFAULT_WCAG_URL}${slug}`;
+  const label = details.label ? `${details.label} (${code})` : `WCAG ${code}`;
+  return { href, label };
+}
+
+function getSectionWcagCriteria(section) {
+  if (!section) return [];
+  if (wcagCriteriaBySection[section.id]) {
+    return wcagCriteriaBySection[section.id];
+  }
+  const datasetValue = section.dataset?.wcagCriteria;
+  if (!datasetValue) {
+    return [];
+  }
+  const criteria = datasetValue.split(',').map((criterion) => criterion.trim()).filter(Boolean);
+  wcagCriteriaBySection[section.id] = criteria;
+  return criteria;
+}
+
+function sectionMatchesWcagFilters(section, filters) {
+  if (!filters.length) {
+    return true;
+  }
+  const criteria = getSectionWcagCriteria(section);
+  if (!criteria.length) {
+    return false;
+  }
+  return filters.every((filter) => criteria.includes(filter));
+}
+
 // Search Functionality
 function initSearch() {
   const searchInput = document.getElementById('guide-search');
@@ -1231,34 +1337,45 @@ function initSearch() {
   let searchTimeout;
   
   // Debounced search function
-  function performSearch(searchTerm) {
+  function performSearch(rawTerm) {
     const sections = document.querySelectorAll('main section');
     const tocLinks = document.querySelectorAll('.toc-link');
     let visibleCount = 0;
+    const trimmedTerm = rawTerm.trim();
     
-    if (!searchTerm.trim()) {
-      // Show all sections and TOC items
-      sections.forEach(section => {
-        section.classList.remove('hidden');
+    if (!trimmedTerm) {
+      sections.forEach((section) => section.classList.remove('hidden'));
+      tocLinks.forEach((link) => {
+        const tocItem = link.closest('li');
+        if (tocItem) {
+          tocItem.style.display = '';
+        }
       });
-      tocLinks.forEach(link => {
-        link.closest('li').style.display = '';
-      });
-      announceSearchResults(sections.length, 'All sections visible');
+      announceSearchResults(sections.length, { wcagFilters: [], hasTextQuery: false });
       return;
     }
     
-    const searchTermLower = searchTerm.toLowerCase();
+    const tokens = trimmedTerm.toLowerCase().split(/\s+/).filter(Boolean);
+    const wcagFilters = [];
+    const plainTokens = [];
     
-    sections.forEach(section => {
-      const heading = section.querySelector('h2');
-      const content = section.textContent.toLowerCase();
+    tokens.forEach((token) => {
+      const match = token.match(/^wcag:(\d\.\d\.\d)$/);
+      if (match) {
+        wcagFilters.push(match[1]);
+      } else {
+        plainTokens.push(token);
+      }
+    });
+    
+    const hasTextQuery = plainTokens.length > 0;
+    
+    sections.forEach((section) => {
+      const sectionText = section.textContent.toLowerCase();
+      const matchesText = !hasTextQuery || plainTokens.every((token) => sectionText.includes(token));
+      const matchesWcag = sectionMatchesWcagFilters(section, wcagFilters);
       
-      // Check if search term matches heading or content
-      const matchesHeading = heading && heading.textContent.toLowerCase().includes(searchTermLower);
-      const matchesContent = content.includes(searchTermLower);
-      
-      if (matchesHeading || matchesContent) {
+      if (matchesText && matchesWcag) {
         section.classList.remove('hidden');
         visibleCount++;
       } else {
@@ -1266,28 +1383,39 @@ function initSearch() {
       }
     });
     
-    // Filter TOC items based on visible sections
-    tocLinks.forEach(link => {
-      const sectionId = link.getAttribute('href').substring(1);
-      const correspondingSection = document.getElementById(sectionId);
+    tocLinks.forEach((link) => {
+      const sectionId = link.getAttribute('href')?.substring(1);
+      const correspondingSection = sectionId ? document.getElementById(sectionId) : null;
+      const tocItem = link.closest('li');
+      if (!tocItem) {
+        return;
+      }
       
       if (correspondingSection && !correspondingSection.classList.contains('hidden')) {
-        link.closest('li').style.display = '';
+        tocItem.style.display = '';
       } else {
-        link.closest('li').style.display = 'none';
+        tocItem.style.display = 'none';
       }
     });
     
-    // Announce results to screen readers
-    const resultText = visibleCount === 1 ? '1 section found' : `${visibleCount} sections found`;
-    announceSearchResults(visibleCount, resultText);
+    announceSearchResults(visibleCount, { wcagFilters, hasTextQuery });
   }
   
-  // Announce search results to screen readers
-  function announceSearchResults(count, message) {
-    if (searchResultsAnnouncement) {
-      searchResultsAnnouncement.textContent = message;
+  function announceSearchResults(count, { wcagFilters = [], hasTextQuery = false } = {}) {
+    if (!searchResultsAnnouncement) return;
+    
+    let message = '';
+    if (wcagFilters.length) {
+      const filtersText = wcagFilters.map((code) => `WCAG ${code}`).join(', ');
+      const countText = count === 1 ? '1 section matches' : `${count} sections match`;
+      message = `${countText} ${filtersText}`;
+    } else if (hasTextQuery) {
+      message = count === 1 ? '1 section found' : `${count} sections found`;
+    } else {
+      message = 'All sections visible';
     }
+    
+    searchResultsAnnouncement.textContent = message;
   }
   
   // Handle search input
