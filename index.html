@@ -97,8 +97,11 @@
       </aside>
 
       <main id="main" class="content" tabindex="-1">
-      <section id="accessibility-overview">
+      <section id="accessibility-overview" data-wcag-id="accessibility-overview">
         <h2>What is Accessibility? <a href="#accessibility-overview" class="section-link" aria-label="Copy link to What is Accessibility">#</a></h2>
+        <div class="wcag-tags" aria-label="WCAG criteria" data-wcag-placeholder>
+          <span class="visually-hidden">Related WCAG criteria load dynamically.</span>
+        </div>
         <p>
           Accessibility ensures inclusivity by making web content usable for
           everyone, including people with disabilities.
@@ -115,8 +118,11 @@
         </ul>
       </section>
 
-      <section id="screen-readers" class="hidden">
+      <section id="screen-readers" class="hidden" data-wcag-id="screen-readers">
         <h2>Screen Reader Optimization <a href="#screen-readers" class="section-link" aria-label="Copy link to Screen Reader Optimization">#</a></h2>
+        <div class="wcag-tags" aria-label="WCAG criteria" data-wcag-placeholder>
+          <span class="visually-hidden">Related WCAG criteria load dynamically.</span>
+        </div>
         <p>
           Screen readers help visually impaired users navigate websites.
           Semantic HTML and ARIA attributes improve compatibility.
@@ -148,8 +154,11 @@
         </div>
       </section>
 
-      <section id="contrast" class="hidden" data-wcag-id="contrast-and-colors">
+      <section id="contrast" class="hidden" data-wcag-id="contrast-colors">
         <h2>Contrast & Colors <a href="#contrast" class="section-link" aria-label="Copy link to Contrast & Colors">#</a></h2>
+        <div class="wcag-tags" aria-label="WCAG criteria" data-wcag-placeholder>
+          <span class="visually-hidden">Related WCAG criteria load dynamically.</span>
+        </div>
         <p>
           Ensure text is readable with sufficient contrast ratios. Use WCAG
           standards for guidance.
@@ -225,6 +234,9 @@
 
       <section id="keyboard" class="hidden" data-wcag-id="keyboard-navigation">
         <h2>Keyboard Navigation <a href="#keyboard" class="section-link" aria-label="Copy link to Keyboard Navigation">#</a></h2>
+        <div class="wcag-tags" aria-label="WCAG criteria" data-wcag-placeholder>
+          <span class="visually-hidden">Related WCAG criteria load dynamically.</span>
+        </div>
         <p>
           Keyboard accessibility is essential for users who cannot use a mouse.
           Ensure proper focus management.
@@ -290,8 +302,11 @@ button:focus {
         </section>
       </section>
 
-      <section id="dynamic-content" class="hidden">
+      <section id="dynamic-content" class="hidden" data-wcag-id="dynamic-content">
         <h2>Dynamic Content <a href="#dynamic-content" class="section-link" aria-label="Copy link to Dynamic Content">#</a></h2>
+        <div class="wcag-tags" aria-label="WCAG criteria" data-wcag-placeholder>
+          <span class="visually-hidden">Related WCAG criteria load dynamically.</span>
+        </div>
         <p>
           Use ARIA live regions to announce dynamic changes to screen readers.
         </p>
@@ -363,6 +378,9 @@ function updateLiveRegion(id, message) {
 
       <section id="form-validation" class="hidden" data-wcag-id="forms">
         <h2>Form Validation <a href="#form-validation" class="section-link" aria-label="Copy link to Form Validation">#</a></h2>
+        <div class="wcag-tags" aria-label="WCAG criteria" data-wcag-placeholder>
+          <span class="visually-hidden">Related WCAG criteria load dynamically.</span>
+        </div>
         <p>
           Use accessible error messages for invalid inputs. ARIA attributes help
           convey errors to screen readers.
@@ -484,8 +502,11 @@ function validateForm(event) {
         </section>
       </section>
 
-      <section id="animations" class="hidden">
+      <section id="animations" class="hidden" data-wcag-id="animations">
         <h2>Accessible Animations <a href="#animations" class="section-link" aria-label="Copy link to Accessible Animations">#</a></h2>
+        <div class="wcag-tags" aria-label="WCAG criteria" data-wcag-placeholder>
+          <span class="visually-hidden">Related WCAG criteria load dynamically.</span>
+        </div>
         <p>
           Animations can enhance user experience but should be designed
           carefully to ensure they do not cause discomfort or confusion,
@@ -523,8 +544,11 @@ function validateForm(event) {
           <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
         </div>
       </section>
-<section id="multilingual-support" class="hidden">
+<section id="multilingual-support" class="hidden" data-wcag-id="multilingual-support">
   <h2>Multilingual Support <a href="#multilingual-support" class="section-link" aria-label="Copy link to Multilingual Support">#</a></h2>
+  <div class="wcag-tags" aria-label="WCAG criteria" data-wcag-placeholder>
+    <span class="visually-hidden">Related WCAG criteria load dynamically.</span>
+  </div>
   <p>
     Providing multilingual support ensures inclusivity for users who speak
     different languages.
@@ -589,8 +613,11 @@ navigator.language || navigator.userLanguage;
 </section>
 
 
-<section id="dark-mode" class="hidden">
+<section id="dark-mode" class="hidden" data-wcag-id="dark-mode">
   <h2>Dark Mode <a href="#dark-mode" class="section-link" aria-label="Copy link to Dark Mode">#</a></h2>
+  <div class="wcag-tags" aria-label="WCAG criteria" data-wcag-placeholder>
+    <span class="visually-hidden">Related WCAG criteria load dynamically.</span>
+  </div>
   <p>
     Dark mode helps reduce eye strain and provides better readability in low-light environments.
   </p>
@@ -648,8 +675,11 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
 </section>
 
-<section id="interactive-widgets" class="hidden">
+<section id="interactive-widgets" class="hidden" data-wcag-id="interactive-widgets">
   <h2>Interactive Widgets <a href="#interactive-widgets" class="section-link" aria-label="Copy link to Interactive Widgets">#</a></h2>
+  <div class="wcag-tags" aria-label="WCAG criteria" data-wcag-placeholder>
+    <span class="visually-hidden">Related WCAG criteria load dynamically.</span>
+  </div>
   <p>Accessible sliders, date pickers, and other custom UI components.</p>
 
   <!-- Accessible Slider -->
@@ -706,8 +736,11 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
 </section>
 
-<section id="notifications" class="hidden">
+<section id="notifications" class="hidden" data-wcag-id="notifications">
   <h2>Accessible Notifications <a href="#notifications" class="section-link" aria-label="Copy link to Accessible Notifications">#</a></h2>
+  <div class="wcag-tags" aria-label="WCAG criteria" data-wcag-placeholder>
+    <span class="visually-hidden">Related WCAG criteria load dynamically.</span>
+  </div>
   <p>
     Notifications should be accessible to all users, including those using screen readers. Use ARIA live regions to ensure important updates are announced.
   </p>

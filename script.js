@@ -973,7 +973,7 @@ async function initLanguage() {
 // Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', async () => {
   await initLanguage();
-  await initWcagTags();
+  initWcagTags();
   generateTableOfContents();
   setupTocIntersectionObserver();
   initBackToTopButton();
@@ -1222,84 +1222,130 @@ function resetPlayground(textareaId, iframeId) {
   announceToScreenReader('Playground reset');
 }
 
-const WCAG_DETAILS = {
-  '1.3.1': { slug: 'info-and-relationships', label: 'Info and Relationships' },
-  '2.4.1': { slug: 'bypass-blocks', label: 'Bypass Blocks' },
-  '1.4.3': { slug: 'contrast-minimum', label: 'Contrast (Minimum)' },
-  '1.4.11': { slug: 'non-text-contrast', label: 'Non-text Contrast' },
-  '2.1.1': { slug: 'keyboard', label: 'Keyboard' },
-  '2.1.2': { slug: 'no-keyboard-trap', label: 'No Keyboard Trap' },
-  '2.4.7': { slug: 'focus-visible', label: 'Focus Visible' },
-  '3.3.1': { slug: 'error-identification', label: 'Error Identification' },
-  '3.3.2': { slug: 'labels-or-instructions', label: 'Labels or Instructions' },
-  '4.1.3': { slug: 'status-messages', label: 'Status Messages' },
-  '4.1.2': { slug: 'name-role-value', label: 'Name, Role, Value' }
+const WCAG_CRITERIA_DETAILS = {
+  '1.3.1': { title: 'Info and Relationships', level: 'A', slug: 'info-and-relationships' },
+  '2.4.1': { title: 'Bypass Blocks', level: 'A', slug: 'bypass-blocks' },
+  '1.4.3': { title: 'Contrast (Minimum)', level: 'AA', slug: 'contrast-minimum' },
+  '1.4.11': { title: 'Non-text Contrast', level: 'AA', slug: 'non-text-contrast' },
+  '2.1.1': { title: 'Keyboard', level: 'A', slug: 'keyboard' },
+  '2.4.3': { title: 'Focus Order', level: 'A', slug: 'focus-order' },
+  '3.3.1': { title: 'Error Identification', level: 'A', slug: 'error-identification' },
+  '3.3.3': { title: 'Error Suggestion', level: 'AA', slug: 'error-suggestion' },
+  '4.1.2': { title: 'Name, Role, Value', level: 'A', slug: 'name-role-value' },
+  '4.1.3': { title: 'Status Messages', level: 'AA', slug: 'status-messages' },
+  '2.3.3': { title: 'Animation from Interactions', level: 'AAA', slug: 'animation-from-interactions' },
+  '2.2.2': { title: 'Pause, Stop, Hide', level: 'A', slug: 'pause-stop-hide' },
+  '3.1.1': { title: 'Language of Page', level: 'A', slug: 'language-of-page' },
+  '3.1.2': { title: 'Language of Parts', level: 'AA', slug: 'language-of-parts' },
+  '2.5.3': { title: 'Label in Name', level: 'A', slug: 'label-in-name' },
+  '3.2.4': { title: 'Consistent Identification', level: 'AA', slug: 'consistent-identification' }
 };
 
-const DEFAULT_WCAG_URL = 'https://www.w3.org/TR/WCAG21/';
+const WCAG_SECTION_MAP = {
+  'accessibility-overview': ['1.3.1 Info and Relationships', '2.4.1 Bypass Blocks'],
+  'screen-readers': ['1.3.1 Info and Relationships', '4.1.2 Name, Role, Value'],
+  'contrast-colors': ['1.4.3 Contrast (Minimum)', '1.4.11 Non-text Contrast'],
+  'keyboard-navigation': ['2.1.1 Keyboard', '2.4.3 Focus Order'],
+  'forms': ['3.3.1 Error Identification', '3.3.3 Error Suggestion'],
+  'dynamic-content': ['4.1.3 Status Messages', '4.1.2 Name, Role, Value'],
+  'animations': ['2.3.3 Animation from Interactions', '2.2.2 Pause, Stop, Hide'],
+  'multilingual-support': ['3.1.1 Language of Page', '3.1.2 Language of Parts'],
+  'dark-mode': ['1.4.3 Contrast (Minimum)', '1.4.11 Non-text Contrast'],
+  'interactive-widgets': ['4.1.2 Name, Role, Value', '2.5.3 Label in Name'],
+  'notifications': ['4.1.3 Status Messages', '3.2.4 Consistent Identification']
+};
+
+const WCAG_DOC_BASE_URL = 'https://www.w3.org/WAI/WCAG22/Understanding/';
 let wcagCriteriaBySection = {};
 
-async function initWcagTags() {
-  try {
-    const response = await fetch('wcag/map.json', { cache: 'no-store' });
-    if (!response.ok) {
-      throw new Error(`Failed to load WCAG map: ${response.status}`);
-    }
-    const map = await response.json();
-    renderWcagTags(map);
-  } catch (error) {
-    console.warn('Unable to load WCAG mapping.', error);
+function normalizeWcagCriteriaList(criteriaList) {
+  if (!Array.isArray(criteriaList)) {
+    return [];
   }
+
+  const codes = criteriaList
+    .map((entry) => {
+      if (!entry) {
+        return null;
+      }
+      if (typeof entry === 'string') {
+        const trimmed = entry.trim();
+        const match = trimmed.match(/^(\d\.\d\.\d)/);
+        return match ? match[1] : trimmed;
+      }
+      if (typeof entry === 'object' && entry.code) {
+        return entry.code;
+      }
+      return null;
+    })
+    .filter(Boolean);
+
+  return [...new Set(codes)];
 }
 
-function renderWcagTags(map) {
-  const sections = document.querySelectorAll('main section');
+function initWcagTags() {
+  const sections = document.querySelectorAll('main > section');
+
   sections.forEach((section) => {
-    const wcagKey = section.dataset.wcagId || section.id;
-    const criteria = map[wcagKey];
+    const mapKey = section.dataset.wcagId || section.id;
+    const rawCriteria = WCAG_SECTION_MAP[mapKey] || [];
+    const criteria = normalizeWcagCriteriaList(rawCriteria).filter((code) => WCAG_CRITERIA_DETAILS[code]);
     const heading = section.querySelector('h2');
 
-    if (!criteria || !criteria.length || !heading) {
+    if (!criteria.length || !heading) {
       return;
     }
 
     wcagCriteriaBySection[section.id] = criteria.slice();
     section.dataset.wcagCriteria = criteria.join(',');
 
-    const existingList = section.querySelector('.wcag-tags');
-    if (existingList) {
-      existingList.remove();
+    const existingGroup = section.querySelector('.wcag-tags');
+    const group = buildWcagTagGroup(criteria, section.id, existingGroup);
+
+    if (!existingGroup) {
+      heading.insertAdjacentElement('afterend', group);
     }
-
-    const list = document.createElement('ul');
-    list.className = 'wcag-tags';
-    list.setAttribute('aria-label', 'WCAG success criteria');
-
-    criteria.forEach((criterion) => {
-      const { href, label } = getWcagLinkMeta(criterion);
-      const item = document.createElement('li');
-      const link = document.createElement('a');
-      link.href = href;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.dataset.wcag = criterion;
-      link.textContent = `WCAG ${criterion}`;
-      link.title = label;
-      link.setAttribute('aria-label', label);
-      item.appendChild(link);
-      list.appendChild(item);
-    });
-
-    heading.insertAdjacentElement('afterend', list);
   });
 }
 
-function getWcagLinkMeta(code) {
-  const details = WCAG_DETAILS[code] || {};
-  const slug = details.slug ? `#${details.slug}` : '';
-  const href = `${DEFAULT_WCAG_URL}${slug}`;
-  const label = details.label ? `${details.label} (${code})` : `WCAG ${code}`;
-  return { href, label };
+function buildWcagTagGroup(criteria, sectionId, existingWrapper) {
+  const wrapper = existingWrapper || document.createElement('div');
+  wrapper.classList.add('wcag-tags');
+  wrapper.setAttribute('aria-label', 'WCAG criteria');
+  if (wrapper.hasAttribute('data-wcag-placeholder')) {
+    wrapper.removeAttribute('data-wcag-placeholder');
+  }
+  wrapper.innerHTML = '';
+
+  criteria.forEach((code, index) => {
+    const details = WCAG_CRITERIA_DETAILS[code];
+    if (!details) {
+      return;
+    }
+
+    const link = document.createElement('a');
+    link.className = 'wcag-tag';
+    link.href = `${WCAG_DOC_BASE_URL}${details.slug}.html`;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.dataset.level = details.level;
+    link.dataset.tooltip = `WCAG ${code} ${details.title} (Level ${details.level})`;
+    link.textContent = `WCAG ${code} ${details.title}`;
+    link.setAttribute('tabindex', '0');
+
+    const tooltipId = `wcag-tip-${sectionId}-${index}`;
+    link.setAttribute('aria-describedby', tooltipId);
+
+    const tooltip = document.createElement('span');
+    tooltip.id = tooltipId;
+    tooltip.className = 'visually-hidden';
+    tooltip.textContent = `${details.title} success criterion, Level ${details.level}`;
+
+    link.appendChild(tooltip);
+    wrapper.appendChild(link);
+  });
+
+  return wrapper;
 }
 
 function getSectionWcagCriteria(section) {
