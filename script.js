@@ -985,6 +985,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initFontSizeControls();
   initFeedbackWidget();
   initKnowledgeChecks();
+  initMonthlyChallenge();
 });
 
 // Handle hash changes and initial hash
@@ -1550,6 +1551,46 @@ function initFontSizeControls() {
   resetBtn.addEventListener('click', () => {
     applySize(100);
     localStorage.removeItem(storageKey);
+  });
+}
+
+// Monthly Challenge Functionality
+function initMonthlyChallenge() {
+  const joinBtn = document.getElementById('challenge-join-btn');
+  const statusDiv = document.getElementById('challenge-status');
+  
+  if (!joinBtn || !statusDiv) return;
+  
+  // Check if user has already joined this month's challenge
+  function getCurrentMonthKey() {
+    const now = new Date();
+    return `challenge-${now.getFullYear()}-${now.getMonth()}`;
+  }
+  
+  function hasJoinedThisMonth() {
+    const monthKey = getCurrentMonthKey();
+    return localStorage.getItem(monthKey) === 'joined';
+  }
+  
+  function showStatusMessage() {
+    if (hasJoinedThisMonth()) {
+      statusDiv.textContent = 'You joined this month\'s challenge ✅';
+      statusDiv.classList.remove('visually-hidden');
+      statusDiv.classList.add('show');
+    }
+  }
+  
+  // Show status on page load if already joined
+  showStatusMessage();
+  
+  // Track when user clicks "Join the challenge"
+  joinBtn.addEventListener('click', () => {
+    const monthKey = getCurrentMonthKey();
+    localStorage.setItem(monthKey, 'joined');
+    showStatusMessage();
+    
+    // Announce to screen readers
+    announceToScreenReader('You joined this month\'s challenge');
   });
 }
 

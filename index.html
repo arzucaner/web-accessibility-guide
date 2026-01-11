@@ -51,6 +51,7 @@
 
     <nav>
       <a href="#" onclick="showSection('accessibility-overview')" data-i18n="nav.accessibility">Accessibility</a>
+      <a href="#" onclick="showSection('monthly-challenge')">Monthly Challenge</a>
       <a href="#" onclick="showSection('screen-readers')" data-i18n="nav.screenReaders">Screen Readers</a>
       <a href="#" onclick="showSection('contrast')" data-i18n="nav.contrast">Contrast & Colors</a>
       <a href="#" onclick="showSection('keyboard')" data-i18n="nav.keyboard">Keyboard Navigation</a>
@@ -116,6 +117,50 @@
           </li>
           <li>Enhances SEO and broadens audience reach.</li>
         </ul>
+      </section>
+
+      <section id="monthly-challenge" class="hidden">
+        <h2>Monthly Accessibility Challenge <a href="#monthly-challenge" class="section-link" aria-label="Copy link to Monthly Accessibility Challenge">#</a></h2>
+        <p>Small, practical tasks to improve accessibility—one challenge at a time.</p>
+
+        <article class="challenge-card" aria-labelledby="challenge-title" aria-describedby="challenge-desc">
+          <h3 id="challenge-title">Challenge: Fix an inaccessible form</h3>
+          <p id="challenge-desc">
+            The form below has common accessibility issues. Identify and fix them:
+            labels, error messages, focus order, and keyboard support.
+          </p>
+
+          <div class="challenge-actions">
+            <a class="btn primary" target="_blank" rel="noopener"
+               href="https://github.com/arzucaner/web-accessibility-guide/issues/new?template=feature_request.yml&title=Monthly%20Challenge%3A%20Fix%20an%20inaccessible%20form"
+               id="challenge-join-btn">
+              Join the challenge (open issue)
+            </a>
+            <a class="btn" target="_blank" rel="noopener"
+               href="https://github.com/arzucaner/web-accessibility-guide/compare">
+              Submit a PR
+            </a>
+          </div>
+
+          <div id="challenge-status" aria-live="polite" aria-atomic="true" class="challenge-status visually-hidden"></div>
+
+          <details class="challenge-details">
+            <summary>Show the broken example</summary>
+            <div class="challenge-warning">
+              <p><strong>⚠️ Warning:</strong> This form is intentionally broken for demonstration purposes. It contains multiple accessibility issues that need to be fixed.</p>
+            </div>
+            <form class="challenge-form" novalidate>
+              <input type="text" placeholder="Name">
+              <input type="email" placeholder="Email">
+              <button type="submit">Send</button>
+              <p class="hint">Try submitting without filling fields.</p>
+            </form>
+
+            <div class="challenge-hints" aria-live="polite">
+              <p><strong>Hint:</strong> Check labels, focus states, and error feedback.</p>
+            </div>
+          </details>
+        </article>
       </section>
 
       <section id="screen-readers" class="hidden" data-wcag-id="screen-readers">
