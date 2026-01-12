@@ -1,0 +1,75 @@
+name: "🧩 Monthly Challenge"
+description: "Join the monthly accessibility challenge"
+title: "Monthly Challenge: <short title>"
+labels: ["challenge", "good first issue"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Challenge Summary
+        
+        Please provide a brief summary of the accessibility challenge you're working on.
+        
+  - type: textarea
+    id: challenge-summary
+    attributes:
+      label: Challenge Summary
+      description: Describe the accessibility challenge you're addressing (markdown supported)
+      placeholder: "Example: Fixing form accessibility issues including missing labels, error handling, and keyboard navigation"
+    validations:
+      required: false
+      
+  - type: textarea
+    id: improvement-plan
+    attributes:
+      label: What you plan to improve
+      description: Describe what specific accessibility improvements you plan to make
+      placeholder: "Example: Add proper labels to form inputs, implement accessible error messages, ensure keyboard navigation works correctly"
+    validations:
+      required: true
+      
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps you will take
+      description: Outline the steps you plan to follow to complete this challenge
+      placeholder: |
+        1. Identify accessibility issues
+        2. Add proper labels and ARIA attributes
+        3. Test with keyboard navigation
+        4. Verify with screen reader
+    validations:
+      required: false
+      
+  - type: input
+    id: links
+    attributes:
+      label: Links / References
+      description: Share any relevant links, documentation, or references that helped you with this challenge
+      placeholder: "https://www.w3.org/WAI/WCAG21/quickref/"
+    validations:
+      required: false
+      
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Accessibility Checklist
+      description: Please verify that you've completed these accessibility checks
+      options:
+        - label: I tested with keyboard only
+          required: false
+        - label: I checked focus states
+          required: false
+        - label: I verified labels/ARIA where needed
+          required: false
+        - label: I respected prefers-reduced-motion
+          required: false
+          
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / GIF (Optional)
+      description: If applicable, add screenshots or GIFs to help explain your challenge or solution
+      placeholder: "You can drag and drop images here or paste image URLs"
+    validations:
+      required: false
