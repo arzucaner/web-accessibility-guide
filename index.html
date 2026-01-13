@@ -52,6 +52,7 @@
     <nav>
       <a href="#" onclick="showSection('accessibility-overview')" data-i18n="nav.accessibility">Accessibility</a>
       <a href="#" onclick="showSection('monthly-challenge')">Monthly Challenge</a>
+      <a href="#" onclick="showSection('challenge-archive')">Challenge Archive</a>
       <a href="#" onclick="showSection('screen-readers')" data-i18n="nav.screenReaders">Screen Readers</a>
       <a href="#" onclick="showSection('contrast')" data-i18n="nav.contrast">Contrast & Colors</a>
       <a href="#" onclick="showSection('keyboard')" data-i18n="nav.keyboard">Keyboard Navigation</a>
@@ -161,6 +162,12 @@
             </div>
           </details>
         </article>
+      </section>
+
+      <section id="challenge-archive" class="hidden">
+        <h2>Challenge Archive <a href="#challenge-archive" class="section-link" aria-label="Copy link to Challenge Archive">#</a></h2>
+        <p>Previous challenges and community submissions.</p>
+        <div id="challenge-archive-list" role="list" aria-live="polite" aria-atomic="true"></div>
       </section>
 
       <section id="screen-readers" class="hidden" data-wcag-id="screen-readers">

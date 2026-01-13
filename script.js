@@ -986,6 +986,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initFeedbackWidget();
   initKnowledgeChecks();
   initMonthlyChallenge();
+  initChallengeArchive();
 });
 
 // Handle hash changes and initial hash
@@ -2296,4 +2297,135 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initCodePenButtons);
 } else {
   initCodePenButtons();
+}
+
+/**
+ * Initialize Challenge Archive
+ * Fetches challenges.json and renders challenge cards
+ */
+async function initChallengeArchive() {
+  const archiveList = document.getElementById('challenge-archive-list');
+  if (!archiveList) return;
+
+  try {
+    const response = await fetch('/challenges.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const challenges = await response.json();
+
+    if (!Array.isArray(challenges) || challenges.length === 0) {
+      archiveList.innerHTML = '<p>No challenges available yet. Check back soon!</p>';
+      return;
+    }
+
+    // Clear any existing content
+    archiveList.innerHTML = '';
+
+    // Render each challenge as a card
+    challenges.forEach((challenge) => {
+      const card = createChallengeCard(challenge);
+      archiveList.appendChild(card);
+    });
+  } catch (error) {
+    console.error('Failed to load challenge archive:', error);
+    const errorMessage = document.createElement('p');
+    errorMessage.textContent = 'Archive is unavailable right now.';
+    errorMessage.setAttribute('role', 'status');
+    errorMessage.setAttribute('aria-live', 'polite');
+    errorMessage.setAttribute('aria-atomic', 'true');
+    archiveList.innerHTML = '';
+    archiveList.appendChild(errorMessage);
+  }
+}
+
+/**
+ * Create a challenge card element
+ */
+function createChallengeCard(challenge) {
+  const listItem = document.createElement('div');
+  listItem.className = 'challenge-archive-card';
+  listItem.setAttribute('role', 'listitem');
+
+  // Format month (e.g., "2026-01" -> "January 2026")
+  const monthLabel = formatMonth(challenge.month);
+
+  // Title
+  const title = document.createElement('h3');
+  title.textContent = challenge.title;
+  listItem.appendChild(title);
+
+  // Month label
+  const month = document.createElement('span');
+  month.className = 'challenge-month';
+  month.textContent = monthLabel;
+  listItem.appendChild(month);
+
+  // Description
+  const description = document.createElement('p');
+  description.className = 'challenge-description';
+  description.textContent = challenge.description;
+  listItem.appendChild(description);
+
+  // Links container
+  const linksContainer = document.createElement('div');
+  linksContainer.className = 'challenge-archive-links';
+
+  // View Issues link
+  const issuesLink = document.createElement('a');
+  issuesLink.href = challenge.issueUrl;
+  issuesLink.textContent = 'View Issues';
+  issuesLink.className = 'btn';
+  issuesLink.target = '_blank';
+  issuesLink.rel = 'noopener noreferrer';
+  issuesLink.setAttribute('aria-label', `View issues for ${challenge.title}`);
+  linksContainer.appendChild(issuesLink);
+
+  // View PRs link
+  const prLink = document.createElement('a');
+  prLink.href = challenge.prUrl;
+  prLink.textContent = 'View PRs';
+  prLink.className = 'btn';
+  prLink.target = '_blank';
+  prLink.rel = 'noopener noreferrer';
+  prLink.setAttribute('aria-label', `View pull requests for ${challenge.title}`);
+  linksContainer.appendChild(prLink);
+
+  listItem.appendChild(linksContainer);
+
+  // Tags container
+  if (challenge.tags && challenge.tags.length > 0) {
+    const tagsContainer = document.createElement('div');
+    tagsContainer.className = 'challenge-tags';
+    tagsContainer.setAttribute('aria-label', 'Challenge tags');
+
+    challenge.tags.forEach((tag) => {
+      const tagChip = document.createElement('span');
+      tagChip.className = 'challenge-tag';
+      tagChip.textContent = tag;
+      tagsContainer.appendChild(tagChip);
+    });
+
+    listItem.appendChild(tagsContainer);
+  }
+
+  return listItem;
+}
+
+/**
+ * Format month string (e.g., "2026-01" -> "January 2026")
+ */
+function formatMonth(monthString) {
+  if (!monthString || !monthString.match(/^\d{4}-\d{2}$/)) {
+    return monthString;
+  }
+
+  const [year, month] = monthString.split('-');
+  const monthIndex = parseInt(month, 10) - 1;
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  return `${monthNames[monthIndex]} ${year}`;
 }

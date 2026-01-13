@@ -1,0 +1,10 @@
+[
+  {
+    "month": "2026-01",
+    "title": "Fix an inaccessible form",
+    "description": "Improve labels, error messages, focus order, and keyboard support.",
+    "issueUrl": "https://github.com/arzucaner/web-accessibility-guide/issues?q=label%3Achallenge",
+    "prUrl": "https://github.com/arzucaner/web-accessibility-guide/pulls?q=label%3Achallenge",
+    "tags": ["forms", "keyboard", "errors"]
+  }
+]
