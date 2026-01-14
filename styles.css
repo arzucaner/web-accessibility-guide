@@ -3882,3 +3882,197 @@ h2:focus-within .section-link,
     transition: none;
   }
 }
+
+/* Hall of Fame Styles */
+#hall-of-fame {
+  margin-top: 2rem;
+}
+
+#hof-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.hof-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hof-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.hof-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.hof-badge {
+  font-size: 2em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.hof-name-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hof-card h3 {
+  margin: 0;
+  color: #007bff;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.hof-role {
+  font-size: 0.9em;
+  color: #666;
+  font-style: italic;
+}
+
+.hof-contribution {
+  margin: 12px 0;
+  line-height: 1.6;
+  color: #333;
+}
+
+.hof-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.hof-links .btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px 18px;
+  font-size: 16px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hof-links .btn:hover {
+  background-color: #e0e0e0;
+  border-color: #999;
+}
+
+.hof-links .btn:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+  background-color: #e0e0e0;
+}
+
+/* Dark mode styles for Hall of Fame */
+.dark-mode .hof-card {
+  background-color: #1f1f1f;
+  border-color: #444;
+  color: #f4f4f4;
+}
+
+.dark-mode .hof-card h3 {
+  color: #63b3ed;
+}
+
+.dark-mode .hof-role {
+  color: #aaa;
+}
+
+.dark-mode .hof-contribution {
+  color: #e0e0e0;
+}
+
+.dark-mode .hof-links .btn {
+  background-color: #3d3d3d;
+  color: #e0e0e0;
+  border-color: #555;
+}
+
+.dark-mode .hof-links .btn:hover {
+  background-color: #4d4d4d;
+  border-color: #666;
+}
+
+.dark-mode .hof-links .btn:focus-visible {
+  background-color: #4d4d4d;
+  border-color: #ffcc00;
+}
+
+/* High contrast mode styles for Hall of Fame */
+.high-contrast .hof-card {
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  color: #000000;
+}
+
+.high-contrast .hof-card h3 {
+  color: #0000ff;
+}
+
+.high-contrast .hof-role {
+  color: #000000;
+  font-weight: bold;
+}
+
+.high-contrast .hof-contribution {
+  color: #000000;
+}
+
+.high-contrast .hof-links .btn {
+  background-color: #ffffff;
+  color: #000000;
+  border: 3px solid #000000;
+  font-weight: bold;
+}
+
+.high-contrast .hof-links .btn:hover,
+.high-contrast .hof-links .btn:focus-visible {
+  background-color: #ffff00;
+  border-color: #000000;
+  color: #000000;
+}
+
+.high-contrast .hof-links .btn:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+}
+
+/* Responsive styles for Hall of Fame */
+@media (max-width: 768px) {
+  #hof-list {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .hof-card {
+    padding: 20px;
+  }
+
+  .hof-links {
+    flex-direction: column;
+  }
+
+  .hof-links .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Respect prefers-reduced-motion for Hall of Fame */
+@media (prefers-reduced-motion: reduce) {
+  .hof-card {
+    transition: none;
+  }
+}

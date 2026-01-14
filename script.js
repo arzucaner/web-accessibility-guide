@@ -987,6 +987,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initKnowledgeChecks();
   initMonthlyChallenge();
   initChallengeArchive();
+  initHallOfFame();
 });
 
 // Handle hash changes and initial hash
@@ -2428,4 +2429,125 @@ function formatMonth(monthString) {
   ];
 
   return `${monthNames[monthIndex]} ${year}`;
+}
+
+/**
+ * Initialize Hall of Fame
+ * Fetches hall-of-fame.json and renders contributor cards
+ */
+async function initHallOfFame() {
+  const hofList = document.getElementById('hof-list');
+  const hofStatus = document.getElementById('hof-status');
+  if (!hofList || !hofStatus) return;
+
+  try {
+    const response = await fetch('/hall-of-fame.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const contributors = await response.json();
+
+    if (!Array.isArray(contributors) || contributors.length === 0) {
+      hofList.innerHTML = '<p>No contributors yet. Be the first to contribute!</p>';
+      hofStatus.textContent = 'Hall of Fame loaded with no contributors.';
+      return;
+    }
+
+    // Clear any existing content
+    hofList.innerHTML = '';
+
+    // Render each contributor as a card
+    contributors.forEach((contributor) => {
+      const card = createHallOfFameCard(contributor);
+      hofList.appendChild(card);
+    });
+
+    hofStatus.textContent = `Hall of Fame loaded with ${contributors.length} contributor${contributors.length === 1 ? '' : 's'}.`;
+  } catch (error) {
+    console.error('Failed to load Hall of Fame:', error);
+    const errorMessage = document.createElement('p');
+    errorMessage.textContent = 'Hall of Fame is unavailable right now. Please try again later.';
+    errorMessage.setAttribute('role', 'status');
+    errorMessage.setAttribute('aria-live', 'polite');
+    errorMessage.setAttribute('aria-atomic', 'true');
+    hofList.innerHTML = '';
+    hofList.appendChild(errorMessage);
+    hofStatus.textContent = 'Failed to load Hall of Fame.';
+  }
+}
+
+/**
+ * Create a Hall of Fame card element
+ */
+function createHallOfFameCard(contributor) {
+  const listItem = document.createElement('div');
+  listItem.className = 'hof-card';
+  listItem.setAttribute('role', 'listitem');
+
+  // Badge and name header
+  const header = document.createElement('div');
+  header.className = 'hof-header';
+
+  const badge = document.createElement('span');
+  badge.className = 'hof-badge';
+  badge.textContent = contributor.badge || '🏅';
+  badge.setAttribute('aria-hidden', 'true');
+  header.appendChild(badge);
+
+  const nameContainer = document.createElement('div');
+  nameContainer.className = 'hof-name-container';
+
+  const name = document.createElement('h3');
+  name.textContent = contributor.name;
+  nameContainer.appendChild(name);
+
+  if (contributor.role) {
+    const role = document.createElement('span');
+    role.className = 'hof-role';
+    role.textContent = contributor.role;
+    nameContainer.appendChild(role);
+  }
+
+  header.appendChild(nameContainer);
+  listItem.appendChild(header);
+
+  // Contribution text
+  const contribution = document.createElement('p');
+  contribution.className = 'hof-contribution';
+  contribution.textContent = contributor.contribution;
+  listItem.appendChild(contribution);
+
+  // Links container
+  if (contributor.links && (contributor.links.github || contributor.links.pr)) {
+    const linksContainer = document.createElement('div');
+    linksContainer.className = 'hof-links';
+
+    // GitHub profile link
+    if (contributor.links.github) {
+      const githubLink = document.createElement('a');
+      githubLink.href = contributor.links.github;
+      githubLink.textContent = 'GitHub';
+      githubLink.className = 'btn';
+      githubLink.target = '_blank';
+      githubLink.rel = 'noopener noreferrer';
+      githubLink.setAttribute('aria-label', `GitHub profile of ${contributor.name}`);
+      linksContainer.appendChild(githubLink);
+    }
+
+    // PR/Issue link
+    if (contributor.links.pr) {
+      const prLink = document.createElement('a');
+      prLink.href = contributor.links.pr;
+      prLink.textContent = 'View Contribution';
+      prLink.className = 'btn';
+      prLink.target = '_blank';
+      prLink.rel = 'noopener noreferrer';
+      prLink.setAttribute('aria-label', `View contribution by ${contributor.name}`);
+      linksContainer.appendChild(prLink);
+    }
+
+    listItem.appendChild(linksContainer);
+  }
+
+  return listItem;
 }

@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Arzu Caner",
+    "role": "Maintainer",
+    "contribution": "Built the guide + new UI/UX improvements",
+    "links": {
+      "github": "https://github.com/arzucaner",
+      "pr": "https://github.com/arzucaner/web-accessibility-guide/pull/1"
+    },
+    "badge": "🏅"
+  }
+]

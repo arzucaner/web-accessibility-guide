@@ -63,6 +63,7 @@
       <a href="#" onclick="showSection('dark-mode')" data-i18n="nav.darkMode">Dark Mode</a>
       <a href="#" onclick="showSection('interactive-widgets')" data-i18n="nav.interactiveWidgets">Interactive Widgets</a>
       <a href="#" onclick="showSection('notifications')" data-i18n="nav.notifications">Accessible Notifications</a>
+      <a href="#" onclick="showSection('hall-of-fame')">Hall of Fame</a>
 
     </nav>
 
@@ -833,6 +834,13 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
     <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
   </div>
+</section>
+
+<section id="hall-of-fame" class="hidden">
+  <h2>Hall of Fame <a href="#hall-of-fame" class="section-link" aria-label="Copy link to Hall of Fame">#</a></h2>
+  <p>Thanks to everyone improving accessibility—one contribution at a time.</p>
+  <div id="hof-list" role="list"></div>
+  <div id="hof-status" class="sr-only" aria-live="polite"></div>
 </section>
       </main>
     </div>
