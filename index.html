@@ -64,6 +64,7 @@
       <a href="#" onclick="showSection('interactive-widgets')" data-i18n="nav.interactiveWidgets">Interactive Widgets</a>
       <a href="#" onclick="showSection('notifications')" data-i18n="nav.notifications">Accessible Notifications</a>
       <a href="#" onclick="showSection('hall-of-fame')">Hall of Fame</a>
+      <a href="#" onclick="showSection('contribute')">Contribute</a>
 
     </nav>
 
@@ -841,6 +842,50 @@ document.addEventListener("DOMContentLoaded", () => {
   <p>Thanks to everyone improving accessibility—one contribution at a time.</p>
   <div id="hof-list" role="list"></div>
   <div id="hof-status" class="sr-only" aria-live="polite"></div>
+</section>
+
+<section id="contribute" class="hidden">
+  <h2>Contribute <a href="#contribute" class="section-link" aria-label="Copy link to Contribute">#</a></h2>
+  <p>Want to help make the web more inclusive? Here are easy ways to contribute.</p>
+
+  <div class="contribute-grid">
+    <article class="contribute-card" aria-labelledby="contrib-issues">
+      <h3 id="contrib-issues">Open an Issue</h3>
+      <p>Report a bug, suggest a feature, or improve documentation.</p>
+      <a class="btn primary" target="_blank" rel="noopener"
+         href="https://github.com/arzucaner/web-accessibility-guide/issues/new/choose">
+        Choose an issue template
+      </a>
+    </article>
+
+    <article class="contribute-card" aria-labelledby="contrib-first">
+      <h3 id="contrib-first">Good First Issues</h3>
+      <p>New to open source? Start here—small, friendly tasks.</p>
+      <a class="btn" target="_blank" rel="noopener"
+         href="https://github.com/arzucaner/web-accessibility-guide/issues?q=label%3A%22good%20first%20issue%22">
+        View good first issues
+      </a>
+    </article>
+
+    <article class="contribute-card" aria-labelledby="contrib-challenge">
+      <h3 id="contrib-challenge">Monthly Challenge</h3>
+      <p>Join the monthly accessibility challenge and learn by doing.</p>
+      <a class="btn" href="#monthly-challenge" onclick="showSection('monthly-challenge'); return false;">Go to challenge</a>
+    </article>
+
+    <article class="contribute-card" aria-labelledby="contrib-pr">
+      <h3 id="contrib-pr">Submit a Pull Request</h3>
+      <p>Small improvements are welcome—typos, examples, translations, UI polish.</p>
+      <a class="btn" target="_blank" rel="noopener"
+         href="https://github.com/arzucaner/web-accessibility-guide/compare">
+        Start a PR
+      </a>
+    </article>
+  </div>
+
+  <p class="contribute-note">
+    First time contributing? I'll help you through it—open an issue and say hi 👋
+  </p>
 </section>
       </main>
     </div>

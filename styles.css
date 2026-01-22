@@ -4076,3 +4076,228 @@ h2:focus-within .section-link,
     transition: none;
   }
 }
+
+/* Contribute Section Styles */
+#contribute {
+  margin-top: 2rem;
+}
+
+.contribute-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.contribute-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contribute-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contribute-card h3 {
+  margin-top: 0;
+  color: #007bff;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.contribute-card p {
+  margin: 12px 0 20px 0;
+  line-height: 1.6;
+  color: #333;
+}
+
+.contribute-card .btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 12px 20px;
+  font-size: 16px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contribute-card .btn.primary {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.contribute-card .btn.primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.contribute-card .btn.primary:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+  background-color: #0056b3;
+}
+
+.contribute-card .btn:not(.primary) {
+  background-color: #fff;
+  color: #007bff;
+  border: 2px solid #007bff;
+}
+
+.contribute-card .btn:not(.primary):hover {
+  background-color: #e0e0e0;
+  border-color: #999;
+}
+
+.contribute-card .btn:not(.primary):focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+  background-color: #e0e0e0;
+}
+
+.contribute-note {
+  margin-top: 32px;
+  padding: 16px;
+  background-color: #f0f8ff;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+  font-style: italic;
+  color: #333;
+}
+
+/* Dark mode styles for Contribute section */
+.dark-mode .contribute-card {
+  background-color: #1f1f1f;
+  border-color: #444;
+  color: #f4f4f4;
+}
+
+.dark-mode .contribute-card h3 {
+  color: #63b3ed;
+}
+
+.dark-mode .contribute-card p {
+  color: #e0e0e0;
+}
+
+.dark-mode .contribute-card .btn:not(.primary) {
+  background-color: #3d3d3d;
+  color: #e0e0e0;
+  border-color: #555;
+}
+
+.dark-mode .contribute-card .btn:not(.primary):hover {
+  background-color: #4d4d4d;
+  border-color: #666;
+}
+
+.dark-mode .contribute-card .btn:not(.primary):focus-visible {
+  background-color: #4d4d4d;
+  border-color: #ffcc00;
+}
+
+.dark-mode .contribute-card .btn.primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.dark-mode .contribute-card .btn.primary:hover {
+  background-color: #0056b3;
+}
+
+.dark-mode .contribute-note {
+  background-color: #1a2332;
+  border-left-color: #63b3ed;
+  color: #e0e0e0;
+}
+
+/* High contrast mode styles for Contribute section */
+.high-contrast .contribute-card {
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  color: #000000;
+}
+
+.high-contrast .contribute-card h3 {
+  color: #0000ff;
+}
+
+.high-contrast .contribute-card p {
+  color: #000000;
+}
+
+.high-contrast .contribute-card .btn {
+  border-width: 3px;
+  font-weight: bold;
+}
+
+.high-contrast .contribute-card .btn.primary {
+  background-color: #0000ff;
+  color: #ffffff;
+  border-color: #000000;
+}
+
+.high-contrast .contribute-card .btn.primary:hover,
+.high-contrast .contribute-card .btn.primary:focus-visible {
+  background-color: #000080;
+  border-color: #ffcc00;
+}
+
+.high-contrast .contribute-card .btn.primary:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+}
+
+.high-contrast .contribute-card .btn:not(.primary) {
+  background-color: #ffffff;
+  color: #000000;
+  border-color: #000000;
+}
+
+.high-contrast .contribute-card .btn:not(.primary):hover,
+.high-contrast .contribute-card .btn:not(.primary):focus-visible {
+  background-color: #ffff00;
+  border-color: #000000;
+  color: #000000;
+}
+
+.high-contrast .contribute-card .btn:not(.primary):focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+}
+
+.high-contrast .contribute-note {
+  background-color: #ffffff;
+  border-left: 4px solid #0000ff;
+  color: #000000;
+  border: 3px solid #000000;
+}
+
+/* Responsive styles for Contribute section */
+@media (max-width: 768px) {
+  .contribute-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .contribute-card {
+    padding: 20px;
+  }
+
+  .contribute-card .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Respect prefers-reduced-motion for Contribute section */
+@media (prefers-reduced-motion: reduce) {
+  .contribute-card {
+    transition: none;
+  }
+}
