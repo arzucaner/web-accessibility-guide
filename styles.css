@@ -4301,3 +4301,77 @@ h2:focus-within .section-link,
     transition: none;
   }
 }
+
+/* Translate Section Styles */
+#translate {
+  margin-top: 2rem;
+}
+
+#translate ol {
+  margin: 1em 0 1.5em;
+  padding-left: 1.5em;
+  line-height: 1.6;
+}
+
+#translate ol code {
+  font-family: monospace;
+  font-size: 0.95em;
+}
+
+#translate .btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 12px 20px;
+  font-size: 16px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#translate .btn.primary {
+  background-color: #007bff;
+  color: white;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+}
+
+#translate .btn.primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+#translate .btn.primary:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+  background-color: #0056b3;
+}
+
+.dark-mode #translate .btn.primary {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.dark-mode #translate .btn.primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.high-contrast #translate .btn.primary {
+  background-color: #0000ff;
+  color: #ffffff;
+  border: 3px solid #000000;
+  font-weight: bold;
+}
+
+.high-contrast #translate .btn.primary:hover,
+.high-contrast #translate .btn.primary:focus-visible {
+  background-color: #000080;
+  border-color: #ffcc00;
+}
+
+.high-contrast #translate .btn.primary:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+}

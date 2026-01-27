@@ -65,6 +65,7 @@
       <a href="#" onclick="showSection('notifications')" data-i18n="nav.notifications">Accessible Notifications</a>
       <a href="#" onclick="showSection('hall-of-fame')">Hall of Fame</a>
       <a href="#" onclick="showSection('contribute')">Contribute</a>
+      <a href="#" onclick="showSection('translate')">Translate</a>
 
     </nav>
 
@@ -881,10 +882,32 @@ document.addEventListener("DOMContentLoaded", () => {
         Start a PR
       </a>
     </article>
+
+    <article class="contribute-card" aria-labelledby="contrib-translate">
+      <h3 id="contrib-translate">Translate the Guide</h3>
+      <p>Help translate UI and section titles. Add or improve a language file under <code>/lang</code>.</p>
+      <a class="btn" href="#" onclick="showSection('translate'); return false;">Translation guide</a>
+    </article>
   </div>
 
   <p class="contribute-note">
     First time contributing? I'll help you through it—open an issue and say hi 👋
+  </p>
+</section>
+
+<section id="translate" class="hidden">
+  <h2>Translate the Guide <a href="#translate" class="section-link" aria-label="Copy link to Translate the Guide">#</a></h2>
+  <p>Translations are community-driven. You can start small—just the UI and section headings.</p>
+  <ol>
+    <li>Pick a language file under <code>/lang</code> (e.g., <code>es.json</code>).</li>
+    <li>Copy <code>en.json</code> as a base and translate values.</li>
+    <li>Keep keys unchanged; translate only the text.</li>
+    <li>Test locally and open a PR.</li>
+  </ol>
+  <p>
+    <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/arzucaner/web-accessibility-guide/blob/main/CONTRIBUTING.md">
+      Open CONTRIBUTING.md
+    </a>
   </p>
 </section>
       </main>

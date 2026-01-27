@@ -142,6 +142,36 @@ The easiest way to test this project is to open it directly in your browser:
 - Verify touch targets are at least 44px
 - Test with mobile screen readers (TalkBack, VoiceOver)
 
+## Translations
+
+Translations are community-driven. You can start small—just the UI and section headings.
+
+### How to translate
+
+1. **Pick a language file** under `/lang` (e.g., `es.json`, `fr.json`). To add a new language, create a new file like `lang/xx.json` where `xx` is the [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) code.
+2. **Use `en.json` as a base.** Copy `lang/en.json`, rename it to your language code, and translate the string values only.
+3. **Keep keys unchanged.** Translate only the text; do not rename or remove keys. The app uses these keys to find each string.
+4. **Test locally.** Switch the language in the site’s language switcher and click through all sections to ensure nothing is broken or missing.
+5. **Open a PR** with your new or updated language file.
+
+### Translation guidelines
+
+- **Use plain language.** Prefer short, clear phrases so the guide stays easy to understand.
+- **Avoid changing meaning.** Stay close to the original intent; do not add opinions or change technical meaning.
+- **Keep accessibility terms consistent.** Use the same translation for terms like “screen reader,” “focus,” “aria-label,” etc., across the file. If your language has a standard (e.g. from W3C or local accessibility bodies), follow that when possible.
+- **Missing keys fall back to English.** If a key is absent in your language file, the site shows the English text. When you see English in a translated locale, add that key to your language file to complete the translation. There is no need to change the i18n code—just add the missing key and translation.
+
+### Adding a new language to the switcher
+
+After your language file is merged:
+
+1. In `index.html`, find the `<select id="language-switcher">` and add an `<option>`:
+   ```html
+   <option value="xx" lang="xx">Your Language (XX)</option>
+   ```
+2. Replace `xx` with the ISO 639-1 code and set `lang="xx"` for the option.
+3. Submit a follow-up PR or ask a maintainer to add the option when your language file is merged.
+
 ## Good First Issues
 
 Looking for ideas? Check out our [Good First Issues](https://github.com/arzucaner/web-accessibility-guide/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) for beginner-friendly tasks!
