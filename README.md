@@ -7,6 +7,8 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/arzucaner/web-accessibility-guide)](https://github.com/arzucaner/web-accessibility-guide/commits/main)
 [![GitHub contributors](https://img.shields.io/github/contributors/arzucaner/web-accessibility-guide)](https://github.com/arzucaner/web-accessibility-guide/graphs/contributors)
 
+Questions or ideas? [Start a Discussion](https://github.com/arzucaner/web-accessibility-guide/discussions).
+
 "Making the web accessible for everyone!"
 
 ![Accessibility Guide Screenshot](images/accessibility_guide.png)
