@@ -208,6 +208,44 @@
           </div>
           <p class="quiz-feedback" aria-live="polite" aria-atomic="true"></p>
         </div>
+
+        <div class="ba-demo" data-demo>
+          <h3>Before / After: Descriptive Links</h3>
+          <div class="ba-toggle" role="group" aria-label="Demo view">
+            <button type="button" class="btn ba-btn" data-view="before" aria-pressed="true">Before</button>
+            <button type="button" class="btn ba-btn" data-view="after" aria-pressed="false">After</button>
+          </div>
+          <div class="ba-panels">
+            <div class="ba-panel" data-panel="before">
+              <div class="ba-code-block">
+                <pre><code>&lt;p&gt;To learn more about WCAG, &lt;a href="/wcag"&gt;click here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;button onclick="save()"&gt;Click here&lt;/button&gt;
+
+&lt;a href="/report.pdf"&gt;Download&lt;/a&gt;</code></pre>
+              </div>
+              <p class="ba-explanation"><strong>Issues:</strong> "Click here" and "Download" are meaningless when read out of context. Screen readers often list all links on a page — every one of these would sound identical.</p>
+            </div>
+            <div class="ba-panel hidden" data-panel="after">
+              <div class="ba-code-block">
+                <pre><code>&lt;p&gt;Learn more about
+  &lt;a href="/wcag"&gt;WCAG accessibility guidelines&lt;/a&gt;.
+&lt;/p&gt;
+
+&lt;button type="button" onclick="save()"&gt;
+  Save your progress
+&lt;/button&gt;
+
+&lt;a href="/report.pdf"
+   aria-label="Download accessibility audit report (PDF)"&gt;
+  Download report
+&lt;/a&gt;</code></pre>
+              </div>
+              <p class="ba-explanation"><strong>Fixed:</strong> Each link and button describes its purpose. The PDF link uses <code>aria-label</code> to provide extra context (file type). Screen reader users can scan links and immediately understand where each one leads.</p>
+            </div>
+          </div>
+          <p class="sr-only" aria-live="polite" data-ba-status></p>
+        </div>
       </section>
 
       <section id="contrast" class="hidden" data-wcag-id="contrast-colors">
@@ -556,6 +594,48 @@ function validateForm(event) {
           </ul>
           <p id="forms-quiz-feedback" class="quiz-feedback" aria-live="polite"></p>
         </section>
+
+        <div class="ba-demo" data-demo>
+          <h3>Before / After: Form Labels &amp; Errors</h3>
+          <div class="ba-toggle" role="group" aria-label="Demo view">
+            <button type="button" class="btn ba-btn" data-view="before" aria-pressed="true">Before</button>
+            <button type="button" class="btn ba-btn" data-view="after" aria-pressed="false">After</button>
+          </div>
+          <div class="ba-panels">
+            <div class="ba-panel" data-panel="before">
+              <div class="ba-code-block">
+                <pre><code>&lt;form&gt;
+  &lt;input type="text" placeholder="Name"&gt;
+  &lt;input type="email" placeholder="Email"&gt;
+  &lt;div style="color:red"&gt;Wrong!&lt;/div&gt;
+  &lt;button type="submit"&gt;Send&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+              </div>
+              <p class="ba-explanation"><strong>Issues:</strong> No <code>&lt;label&gt;</code> elements — screen readers cannot identify fields. Error text is vague and not linked to any input. Placeholder text disappears on focus, leaving no visible label.</p>
+            </div>
+            <div class="ba-panel hidden" data-panel="after">
+              <div class="ba-code-block">
+                <pre><code>&lt;form novalidate&gt;
+  &lt;label for="name"&gt;Name (required):&lt;/label&gt;
+  &lt;input id="name" type="text" required
+         aria-describedby="name-error"&gt;
+  &lt;div id="name-error" role="alert"
+       aria-live="assertive"&gt;&lt;/div&gt;
+
+  &lt;label for="signup-email"&gt;Email:&lt;/label&gt;
+  &lt;input id="signup-email" type="email"
+         aria-describedby="email-error"&gt;
+  &lt;div id="email-error" role="alert"
+       aria-live="assertive"&gt;&lt;/div&gt;
+
+  &lt;button type="submit"&gt;Send&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+              </div>
+              <p class="ba-explanation"><strong>Fixed:</strong> Every field has a visible <code>&lt;label&gt;</code> linked via <code>for</code>/<code>id</code>. Errors use <code>aria-describedby</code> so screen readers announce them. <code>role="alert"</code> with <code>aria-live="assertive"</code> ensures errors are announced immediately.</p>
+            </div>
+          </div>
+          <p class="sr-only" aria-live="polite" data-ba-status></p>
+        </div>
       </section>
 
       <section id="animations" class="hidden" data-wcag-id="animations">

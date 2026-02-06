@@ -988,6 +988,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initMonthlyChallenge();
   initChallengeArchive();
   initHallOfFame();
+  initBeforeAfterDemos();
 });
 
 // Handle hash changes and initial hash
@@ -2550,4 +2551,41 @@ function createHallOfFameCard(contributor) {
   }
 
   return listItem;
+}
+
+/**
+ * Initialize Before / After demo toggles
+ */
+function initBeforeAfterDemos() {
+  const demos = document.querySelectorAll('[data-demo]');
+  demos.forEach((demo) => {
+    const buttons = demo.querySelectorAll('.ba-btn');
+    const panels = demo.querySelectorAll('.ba-panel');
+    const status = demo.querySelector('[data-ba-status]');
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const view = btn.getAttribute('data-view');
+
+        // Update aria-pressed
+        buttons.forEach((b) => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+
+        // Show the matching panel, hide the other
+        panels.forEach((panel) => {
+          if (panel.getAttribute('data-panel') === view) {
+            panel.classList.remove('hidden');
+          } else {
+            panel.classList.add('hidden');
+          }
+        });
+
+        // Announce to screen readers
+        if (status) {
+          const label = view === 'before' ? 'Before' : 'After';
+          status.textContent = `Showing ${label} example.`;
+        }
+      });
+    });
+  });
 }

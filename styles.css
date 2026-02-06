@@ -4532,3 +4532,238 @@ h2:focus-within .section-link,
     text-align: center;
   }
 }
+
+/* Before / After Demo Styles */
+.ba-demo {
+  margin-top: 32px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.ba-demo h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #007bff;
+  font-size: 1.3em;
+}
+
+.ba-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.ba-btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.ba-btn[aria-pressed="true"] {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.ba-btn:hover {
+  background-color: #e8f4ff;
+  border-color: #0056b3;
+}
+
+.ba-btn[aria-pressed="true"]:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.ba-btn:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+}
+
+.ba-panels {
+  margin-bottom: 8px;
+}
+
+.ba-panel {
+  animation: ba-fade-in 0.2s ease;
+}
+
+@keyframes ba-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.ba-code-block {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  border-radius: 6px;
+  padding: 16px;
+  overflow-x: auto;
+  margin-bottom: 12px;
+}
+
+.ba-code-block pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.ba-code-block code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+
+.ba-explanation {
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+}
+
+.ba-explanation code {
+  background-color: #eee;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+/* Dark mode — Before / After */
+.dark-mode .ba-demo {
+  background-color: #1f1f1f;
+  border-color: #444;
+}
+
+.dark-mode .ba-demo h3 {
+  color: #63b3ed;
+}
+
+.dark-mode .ba-btn {
+  background-color: #2d2d2d;
+  color: #63b3ed;
+  border-color: #555;
+}
+
+.dark-mode .ba-btn[aria-pressed="true"] {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.dark-mode .ba-btn:hover {
+  background-color: #3d3d3d;
+  border-color: #63b3ed;
+}
+
+.dark-mode .ba-btn[aria-pressed="true"]:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.dark-mode .ba-code-block {
+  background-color: #0d0d0d;
+}
+
+.dark-mode .ba-explanation {
+  color: #e0e0e0;
+}
+
+.dark-mode .ba-explanation code {
+  background-color: #333;
+  color: #e0e0e0;
+}
+
+/* High contrast — Before / After */
+.high-contrast .ba-demo {
+  background-color: #fff;
+  border: 3px solid #000;
+}
+
+.high-contrast .ba-demo h3 {
+  color: #0000ff;
+}
+
+.high-contrast .ba-btn {
+  background-color: #fff;
+  color: #000;
+  border: 3px solid #000;
+  font-weight: bold;
+}
+
+.high-contrast .ba-btn[aria-pressed="true"] {
+  background-color: #0000ff;
+  color: #fff;
+  border-color: #000;
+}
+
+.high-contrast .ba-btn:hover,
+.high-contrast .ba-btn:focus-visible {
+  background-color: #ffff00;
+  color: #000;
+  border-color: #000;
+}
+
+.high-contrast .ba-btn[aria-pressed="true"]:hover {
+  background-color: #000080;
+  color: #fff;
+}
+
+.high-contrast .ba-btn:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+}
+
+.high-contrast .ba-code-block {
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #000;
+}
+
+.high-contrast .ba-explanation {
+  color: #000;
+}
+
+.high-contrast .ba-explanation code {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+}
+
+/* Responsive — Before / After */
+@media (max-width: 768px) {
+  .ba-demo {
+    padding: 16px;
+  }
+
+  .ba-toggle {
+    flex-direction: column;
+  }
+
+  .ba-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .ba-code-block {
+    padding: 12px;
+  }
+}
+
+/* prefers-reduced-motion — Before / After */
+@media (prefers-reduced-motion: reduce) {
+  .ba-panel {
+    animation: none;
+  }
+
+  .ba-btn {
+    transition: none;
+  }
+}
