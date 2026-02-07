@@ -4767,3 +4767,47 @@ h2:focus-within .section-link,
     transition: none;
   }
 }
+
+/* Screen Reader Transcript Blocks */
+.sr-transcript {
+  margin: 20px 0;
+  padding: 16px 20px;
+  background-color: #f0f4f8;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+  font-style: italic;
+  color: #333;
+  line-height: 1.6;
+}
+
+.sr-transcript p {
+  margin: 0;
+}
+
+.sr-transcript strong {
+  font-style: normal;
+  color: #007bff;
+}
+
+/* Dark mode — Screen Reader Transcript */
+.dark-mode .sr-transcript {
+  background-color: #1a2332;
+  border-left-color: #63b3ed;
+  color: #e0e0e0;
+}
+
+.dark-mode .sr-transcript strong {
+  color: #63b3ed;
+}
+
+/* High contrast — Screen Reader Transcript */
+.high-contrast .sr-transcript {
+  background-color: #fff;
+  border: 3px solid #000;
+  border-left: 6px solid #0000ff;
+  color: #000;
+}
+
+.high-contrast .sr-transcript strong {
+  color: #0000ff;
+}

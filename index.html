@@ -378,6 +378,11 @@ button:focus {
           <div class="pg-status" aria-live="polite" id="pg-status-keyboard"></div>
           <button class="btn codepen-btn" aria-label="Open example on CodePen" data-codepen-source="pg-code-keyboard">Try on CodePen</button>
         </details>
+
+        <blockquote class="sr-transcript">
+          <p><strong>Screen reader says:</strong> "Button 1, button. — Button 2, button. — Close, button."</p>
+        </blockquote>
+
         <section class="quiz" aria-labelledby="keyboard-quick-check">
           <h3 id="keyboard-quick-check">Quick Check</h3>
           <p class="quiz-question">What keeps a modal keyboard-friendly for everyone?</p>
@@ -406,6 +411,10 @@ button:focus {
         </p>
         <div aria-live="polite" id="live-region">Welcome to our site!</div>
         <button onclick="updateLiveRegion()">Update Message</button>
+
+        <blockquote class="sr-transcript">
+          <p><strong>Screen reader says:</strong> "The content has been updated!"</p>
+        </blockquote>
         
         <details class="playground">
           <summary>Live Playground</summary>
@@ -490,6 +499,10 @@ function updateLiveRegion(id, message) {
           <div id="error-message" class="error" aria-live="assertive"></div>
           <button type="submit">Submit</button>
         </form>
+
+        <blockquote class="sr-transcript">
+          <p><strong>Screen reader says:</strong> "Email, edit text. Please enter a valid email address."</p>
+        </blockquote>
         
         <details class="playground">
           <summary>Live Playground</summary>
