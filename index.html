@@ -67,6 +67,7 @@
       <a href="#" onclick="showSection('contribute')">Contribute</a>
       <a href="#" onclick="showSection('translate')">Translate</a>
       <a href="#" onclick="showSection('community')">Community</a>
+      <a href="#" onclick="showSection('personas')">Personas</a>
 
     </nav>
 
@@ -1025,6 +1026,73 @@ document.addEventListener("DOMContentLoaded", () => {
     <li><strong>Monthly Challenge</strong> — Join and share progress</li>
     <li><strong>Show &amp; Tell</strong> — Share PRs, demos, and learnings</li>
   </ul>
+</section>
+
+<section id="personas" class="hidden">
+  <h2>Accessibility Personas <a href="#personas" class="section-link" aria-label="Copy link to Accessibility Personas">#</a></h2>
+  <p>Real people use the web in different ways. These personas help you design with empathy.</p>
+
+  <div class="persona-grid">
+    <article class="persona-card" aria-labelledby="persona-sr">
+      <div class="persona-header">
+        <span class="persona-icon" aria-hidden="true">🗣️</span>
+        <h3 id="persona-sr">Amara — Screen Reader User</h3>
+      </div>
+      <dl class="persona-details">
+        <dt>Goals</dt>
+        <dd>Navigate pages, fill out forms, and read content independently using a screen reader.</dd>
+        <dt>Pain points</dt>
+        <dd>Unlabelled buttons, missing alt text, dynamic content that updates silently, poor heading structure.</dd>
+        <dt>What helps</dt>
+        <dd>Semantic HTML, descriptive <code>aria-label</code> attributes, proper heading hierarchy, and <code>aria-live</code> regions for dynamic updates. See <a href="#screen-readers" onclick="showSection('screen-readers'); return false;">Screen Readers</a> and <a href="#dynamic-content" onclick="showSection('dynamic-content'); return false;">Dynamic Content</a>.</dd>
+      </dl>
+    </article>
+
+    <article class="persona-card" aria-labelledby="persona-kb">
+      <div class="persona-header">
+        <span class="persona-icon" aria-hidden="true">⌨️</span>
+        <h3 id="persona-kb">Leo — Keyboard-Only User</h3>
+      </div>
+      <dl class="persona-details">
+        <dt>Goals</dt>
+        <dd>Complete every task — menus, forms, modals — without a mouse or trackpad.</dd>
+        <dt>Pain points</dt>
+        <dd>Focus traps with no escape, invisible focus indicators, interactive elements unreachable by Tab.</dd>
+        <dt>What helps</dt>
+        <dd>Visible <code>:focus-visible</code> outlines, logical tab order, skip links, and proper focus management in modals. See <a href="#keyboard" onclick="showSection('keyboard'); return false;">Keyboard Navigation</a>.</dd>
+      </dl>
+    </article>
+
+    <article class="persona-card" aria-labelledby="persona-lv">
+      <div class="persona-header">
+        <span class="persona-icon" aria-hidden="true">🔍</span>
+        <h3 id="persona-lv">Priya — Low Vision / Zoom User</h3>
+      </div>
+      <dl class="persona-details">
+        <dt>Goals</dt>
+        <dd>Read all content comfortably at 200–400% zoom or with custom font sizes.</dd>
+        <dt>Pain points</dt>
+        <dd>Fixed-width layouts that break at high zoom, low contrast text, text embedded in images.</dd>
+        <dt>What helps</dt>
+        <dd>Responsive layouts, sufficient contrast ratios (AA minimum), resizable text, and real text instead of images. See <a href="#contrast" onclick="showSection('contrast'); return false;">Contrast &amp; Colors</a> and <a href="#dark-mode" onclick="showSection('dark-mode'); return false;">Dark Mode</a>.</dd>
+      </dl>
+    </article>
+
+    <article class="persona-card" aria-labelledby="persona-cog">
+      <div class="persona-header">
+        <span class="persona-icon" aria-hidden="true">🧠</span>
+        <h3 id="persona-cog">Sam — Cognitive Load Sensitivity</h3>
+      </div>
+      <dl class="persona-details">
+        <dt>Goals</dt>
+        <dd>Understand content quickly without being overwhelmed by motion, clutter, or complex language.</dd>
+        <dt>Pain points</dt>
+        <dd>Auto-playing animations, walls of text, unclear error messages, unexpected layout shifts.</dd>
+        <dt>What helps</dt>
+        <dd>Respecting <code>prefers-reduced-motion</code>, clear form error messages, simple language, and consistent navigation. See <a href="#animations" onclick="showSection('animations'); return false;">Accessible Animations</a> and <a href="#form-validation" onclick="showSection('form-validation'); return false;">Form Validation</a>.</dd>
+      </dl>
+    </article>
+  </div>
 </section>
       </main>
     </div>

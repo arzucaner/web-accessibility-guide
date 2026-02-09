@@ -4811,3 +4811,181 @@ h2:focus-within .section-link,
 .high-contrast .sr-transcript strong {
   color: #0000ff;
 }
+
+/* Accessibility Personas Section */
+#personas {
+  margin-top: 2rem;
+}
+
+.persona-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.persona-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.persona-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.persona-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.persona-icon {
+  font-size: 2em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.persona-card h3 {
+  margin: 0;
+  font-size: 1.25em;
+  font-weight: 600;
+  color: #007bff;
+}
+
+.persona-details {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.persona-details dt {
+  font-weight: 700;
+  color: #333;
+  margin-top: 12px;
+}
+
+.persona-details dt:first-of-type {
+  margin-top: 0;
+}
+
+.persona-details dd {
+  margin: 4px 0 0;
+  padding: 0;
+  color: #444;
+}
+
+.persona-details code {
+  background-color: #eee;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.persona-details a {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.persona-details a:hover {
+  color: #0056b3;
+}
+
+.persona-details a:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Dark mode — Personas */
+.dark-mode .persona-card {
+  background-color: #1f1f1f;
+  border-color: #444;
+}
+
+.dark-mode .persona-card h3 {
+  color: #63b3ed;
+}
+
+.dark-mode .persona-details dt {
+  color: #e0e0e0;
+}
+
+.dark-mode .persona-details dd {
+  color: #ccc;
+}
+
+.dark-mode .persona-details code {
+  background-color: #333;
+  color: #e0e0e0;
+}
+
+.dark-mode .persona-details a {
+  color: #63b3ed;
+}
+
+.dark-mode .persona-details a:hover {
+  color: #90cdf4;
+}
+
+/* High contrast — Personas */
+.high-contrast .persona-card {
+  background-color: #fff;
+  border: 3px solid #000;
+}
+
+.high-contrast .persona-card h3 {
+  color: #0000ff;
+}
+
+.high-contrast .persona-details dt {
+  color: #000;
+}
+
+.high-contrast .persona-details dd {
+  color: #000;
+}
+
+.high-contrast .persona-details code {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+}
+
+.high-contrast .persona-details a {
+  color: #0000ff;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.high-contrast .persona-details a:hover {
+  background-color: #ffff00;
+  color: #000;
+}
+
+.high-contrast .persona-details a:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+}
+
+/* Responsive — Personas */
+@media (max-width: 768px) {
+  .persona-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .persona-card {
+    padding: 20px;
+  }
+}
+
+/* prefers-reduced-motion — Personas */
+@media (prefers-reduced-motion: reduce) {
+  .persona-card {
+    transition: none;
+  }
+}
