@@ -4989,3 +4989,193 @@ h2:focus-within .section-link,
     transition: none;
   }
 }
+
+/* Contributor Spotlight Section */
+#spotlight {
+  margin-top: 2rem;
+}
+
+.spotlight-content {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 28px;
+  margin-top: 24px;
+  max-width: 640px;
+}
+
+.spotlight-month {
+  display: inline-block;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #fff;
+  background-color: #007bff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.spotlight-content h3 {
+  margin: 0 0 8px;
+  font-size: 1.5em;
+  font-weight: 700;
+  color: #007bff;
+}
+
+.spotlight-highlight {
+  margin: 0 0 16px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.spotlight-quote {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border-left: 4px solid #007bff;
+  background-color: #f0f4f8;
+  border-radius: 4px;
+  font-style: italic;
+  color: #444;
+  line-height: 1.6;
+}
+
+.spotlight-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.spotlight-links .btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px 18px;
+  font-size: 16px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spotlight-links .btn:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+}
+
+.spotlight-placeholder {
+  margin-top: 24px;
+  padding: 20px;
+  background-color: #f0f4f8;
+  border-radius: 8px;
+  color: #555;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Dark mode — Spotlight */
+.dark-mode .spotlight-content {
+  background-color: #1f1f1f;
+  border-color: #444;
+}
+
+.dark-mode .spotlight-month {
+  background-color: #3182ce;
+}
+
+.dark-mode .spotlight-content h3 {
+  color: #63b3ed;
+}
+
+.dark-mode .spotlight-highlight {
+  color: #e0e0e0;
+}
+
+.dark-mode .spotlight-quote {
+  background-color: #1a2332;
+  border-left-color: #63b3ed;
+  color: #ccc;
+}
+
+.dark-mode .spotlight-links .btn {
+  background-color: #3d3d3d;
+  color: #e0e0e0;
+  border-color: #555;
+}
+
+.dark-mode .spotlight-links .btn:hover {
+  background-color: #4d4d4d;
+  border-color: #666;
+}
+
+.dark-mode .spotlight-placeholder {
+  background-color: #1a2332;
+  color: #aaa;
+}
+
+/* High contrast — Spotlight */
+.high-contrast .spotlight-content {
+  background-color: #fff;
+  border: 3px solid #000;
+}
+
+.high-contrast .spotlight-month {
+  background-color: #0000ff;
+  color: #fff;
+  font-weight: bold;
+}
+
+.high-contrast .spotlight-content h3 {
+  color: #0000ff;
+}
+
+.high-contrast .spotlight-highlight {
+  color: #000;
+}
+
+.high-contrast .spotlight-quote {
+  background-color: #fff;
+  border: 3px solid #000;
+  border-left: 6px solid #0000ff;
+  color: #000;
+}
+
+.high-contrast .spotlight-links .btn {
+  background-color: #fff;
+  color: #000;
+  border: 3px solid #000;
+  font-weight: bold;
+}
+
+.high-contrast .spotlight-links .btn:hover,
+.high-contrast .spotlight-links .btn:focus-visible {
+  background-color: #ffff00;
+  color: #000;
+  border-color: #000;
+}
+
+.high-contrast .spotlight-links .btn:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+}
+
+.high-contrast .spotlight-placeholder {
+  background-color: #fff;
+  border: 3px solid #000;
+  color: #000;
+}
+
+/* Responsive — Spotlight */
+@media (max-width: 768px) {
+  .spotlight-content {
+    padding: 20px;
+    max-width: none;
+  }
+
+  .spotlight-links {
+    flex-direction: column;
+  }
+
+  .spotlight-links .btn {
+    width: 100%;
+    text-align: center;
+  }
+}

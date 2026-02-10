@@ -989,6 +989,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initChallengeArchive();
   initHallOfFame();
   initBeforeAfterDemos();
+  initSpotlight();
 });
 
 // Handle hash changes and initial hash
@@ -2551,6 +2552,112 @@ function createHallOfFameCard(contributor) {
   }
 
   return listItem;
+}
+
+/**
+ * Initialize Contributor Spotlight
+ * Fetches spotlight.json and renders the monthly spotlight card
+ */
+async function initSpotlight() {
+  const container = document.getElementById('spotlight-card');
+  const status = document.getElementById('spotlight-status');
+  if (!container) return;
+
+  try {
+    const response = await fetch('/spotlight.json');
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+
+    // If required fields are empty, show "coming soon"
+    if (!data.name || !data.highlight) {
+      container.innerHTML = '<p class="spotlight-placeholder">Spotlight coming soon — stay tuned!</p>';
+      if (status) status.textContent = 'Contributor spotlight coming soon.';
+      return;
+    }
+
+    // Format month
+    const monthLabel = formatSpotlightMonth(data.month);
+
+    const card = document.createElement('article');
+    card.className = 'spotlight-content';
+    card.setAttribute('aria-label', `Contributor spotlight: ${data.name}`);
+
+    // Month badge
+    if (monthLabel) {
+      const month = document.createElement('span');
+      month.className = 'spotlight-month';
+      month.textContent = monthLabel;
+      card.appendChild(month);
+    }
+
+    // Name
+    const name = document.createElement('h3');
+    name.textContent = data.name;
+    card.appendChild(name);
+
+    // Highlight
+    const highlight = document.createElement('p');
+    highlight.className = 'spotlight-highlight';
+    highlight.textContent = data.highlight;
+    card.appendChild(highlight);
+
+    // Quote
+    if (data.quote) {
+      const quote = document.createElement('blockquote');
+      quote.className = 'spotlight-quote';
+      quote.textContent = `"${data.quote}"`;
+      card.appendChild(quote);
+    }
+
+    // Links
+    if (data.github || data.pr) {
+      const links = document.createElement('div');
+      links.className = 'spotlight-links';
+
+      if (data.github) {
+        const gh = document.createElement('a');
+        gh.href = data.github;
+        gh.textContent = 'GitHub Profile';
+        gh.className = 'btn';
+        gh.target = '_blank';
+        gh.rel = 'noopener noreferrer';
+        gh.setAttribute('aria-label', `GitHub profile of ${data.name}`);
+        links.appendChild(gh);
+      }
+
+      if (data.pr) {
+        const pr = document.createElement('a');
+        pr.href = data.pr;
+        pr.textContent = 'View Contribution';
+        pr.className = 'btn';
+        pr.target = '_blank';
+        pr.rel = 'noopener noreferrer';
+        pr.setAttribute('aria-label', `View contribution by ${data.name}`);
+        links.appendChild(pr);
+      }
+
+      card.appendChild(links);
+    }
+
+    container.innerHTML = '';
+    container.appendChild(card);
+    if (status) status.textContent = `Contributor spotlight loaded for ${data.name}.`;
+  } catch (error) {
+    console.error('Failed to load spotlight:', error);
+    container.innerHTML = '<p class="spotlight-placeholder">Spotlight coming soon — stay tuned!</p>';
+    if (status) status.textContent = 'Contributor spotlight is unavailable right now.';
+  }
+}
+
+/**
+ * Format spotlight month (e.g. "2026-02" -> "February 2026")
+ */
+function formatSpotlightMonth(monthStr) {
+  if (!monthStr || !monthStr.match(/^\d{4}-\d{2}$/)) return '';
+  const [year, month] = monthStr.split('-');
+  const names = ['January','February','March','April','May','June',
+                 'July','August','September','October','November','December'];
+  return `${names[parseInt(month, 10) - 1]} ${year}`;
 }
 
 /**
