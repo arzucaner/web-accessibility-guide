@@ -5179,3 +5179,274 @@ h2:focus-within .section-link,
     text-align: center;
   }
 }
+
+/* Accessibility Stories Section */
+#stories {
+  margin-top: 2rem;
+}
+
+.stories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.story-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.story-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.story-card h3 {
+  margin: 0 0 12px;
+  font-size: 1.25em;
+  font-weight: 700;
+  color: #007bff;
+}
+
+.story-card p {
+  margin: 0 0 12px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.story-card code {
+  background-color: #eee;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.story-lesson {
+  padding: 10px 14px;
+  background-color: #f0f4f8;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+  color: #333;
+}
+
+.story-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.story-tag {
+  display: inline-block;
+  font-size: 0.8em;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background-color: #e0ecff;
+  color: #0056b3;
+}
+
+/* Dark mode — Stories */
+.dark-mode .story-card {
+  background-color: #1f1f1f;
+  border-color: #444;
+}
+
+.dark-mode .story-card h3 {
+  color: #63b3ed;
+}
+
+.dark-mode .story-card p {
+  color: #e0e0e0;
+}
+
+.dark-mode .story-card code {
+  background-color: #333;
+  color: #e0e0e0;
+}
+
+.dark-mode .story-lesson {
+  background-color: #1a2332;
+  border-left-color: #63b3ed;
+  color: #e0e0e0;
+}
+
+.dark-mode .story-tag {
+  background-color: #2a3a50;
+  color: #90cdf4;
+}
+
+/* High contrast — Stories */
+.high-contrast .story-card {
+  background-color: #fff;
+  border: 3px solid #000;
+}
+
+.high-contrast .story-card h3 {
+  color: #0000ff;
+}
+
+.high-contrast .story-card p {
+  color: #000;
+}
+
+.high-contrast .story-card code {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+}
+
+.high-contrast .story-lesson {
+  background-color: #fff;
+  border: 3px solid #000;
+  border-left: 6px solid #0000ff;
+  color: #000;
+}
+
+.high-contrast .story-tag {
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000;
+  font-weight: bold;
+}
+
+/* Responsive — Stories */
+@media (max-width: 768px) {
+  .stories-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .story-card {
+    padding: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-card {
+    transition: none;
+  }
+}
+
+/* Share this tip Styles */
+.share-tip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  padding: 14px 18px;
+  background-color: #f0f4f8;
+  border: 1px solid #d0dce8;
+  border-radius: 8px;
+}
+
+.share-text {
+  flex: 1 1 auto;
+  margin: 0;
+  min-width: 200px;
+  font-style: italic;
+  line-height: 1.5;
+  color: #333;
+}
+
+.share-copy {
+  flex-shrink: 0;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.share-copy:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.share-copy:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+}
+
+/* Dark mode — Share tip */
+.dark-mode .share-tip {
+  background-color: #1a2332;
+  border-color: #3a4a5a;
+}
+
+.dark-mode .share-text {
+  color: #e0e0e0;
+}
+
+.dark-mode .share-copy {
+  background-color: #3182ce;
+  border-color: #3182ce;
+  color: #fff;
+}
+
+.dark-mode .share-copy:hover {
+  background-color: #2c5282;
+  border-color: #2c5282;
+}
+
+/* High contrast — Share tip */
+.high-contrast .share-tip {
+  background-color: #fff;
+  border: 3px solid #000;
+}
+
+.high-contrast .share-text {
+  color: #000;
+}
+
+.high-contrast .share-copy {
+  background-color: #0000ff;
+  color: #fff;
+  border: 3px solid #000;
+  font-weight: bold;
+}
+
+.high-contrast .share-copy:hover,
+.high-contrast .share-copy:focus-visible {
+  background-color: #000080;
+  border-color: #ffcc00;
+}
+
+.high-contrast .share-copy:focus-visible {
+  outline: 3px solid #ffcc00;
+  outline-offset: 2px;
+}
+
+/* Responsive — Share tip */
+@media (max-width: 768px) {
+  .share-tip {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .share-text {
+    min-width: 0;
+  }
+
+  .share-copy {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .share-copy {
+    transition: none;
+  }
+}

@@ -990,6 +990,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initHallOfFame();
   initBeforeAfterDemos();
   initSpotlight();
+  initShareTips();
 });
 
 // Handle hash changes and initial hash
@@ -2693,6 +2694,39 @@ function initBeforeAfterDemos() {
           status.textContent = `Showing ${label} example.`;
         }
       });
+    });
+  });
+}
+
+/**
+ * Initialize "Share this tip" copy buttons
+ */
+function initShareTips() {
+  const tips = document.querySelectorAll('.share-tip');
+  tips.forEach((tip) => {
+    const btn = tip.querySelector('.share-copy');
+    const textEl = tip.querySelector('.share-text');
+    const status = tip.querySelector('[data-share-status]');
+    if (!btn || !textEl) return;
+
+    btn.addEventListener('click', async () => {
+      const section = tip.getAttribute('data-share-section') || '';
+      const baseUrl = window.location.origin + window.location.pathname;
+      const url = section ? `${baseUrl}#${section}` : baseUrl;
+      const shareText = `${textEl.textContent.trim()}\n${url}\n#a11y #webdev`;
+
+      try {
+        await navigator.clipboard.writeText(shareText);
+        if (status) status.textContent = 'Copied!';
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.textContent = 'Copy tip';
+          if (status) status.textContent = '';
+        }, 2000);
+      } catch (err) {
+        console.error('Share tip copy failed:', err);
+        if (status) status.textContent = 'Copy failed. Try selecting the text manually.';
+      }
     });
   });
 }

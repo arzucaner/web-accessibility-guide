@@ -69,6 +69,7 @@
       <a href="#" onclick="showSection('community')">Community</a>
       <a href="#" onclick="showSection('personas')">Personas</a>
       <a href="#" onclick="showSection('spotlight')">Spotlight</a>
+      <a href="#" onclick="showSection('stories')">Stories</a>
 
     </nav>
 
@@ -124,6 +125,12 @@
           </li>
           <li>Enhances SEO and broadens audience reach.</li>
         </ul>
+
+        <div class="share-tip" data-share-section="accessibility-overview">
+          <p class="share-text">Accessibility isn't a feature — it's a baseline. Build for everyone from the start.</p>
+          <button class="btn share-copy" type="button">Copy tip</button>
+          <span class="sr-only" aria-live="polite" data-share-status></span>
+        </div>
       </section>
 
       <section id="monthly-challenge" class="hidden">
@@ -326,6 +333,12 @@
           </ul>
           <p id="contrast-quiz-feedback" class="quiz-feedback" aria-live="polite"></p>
         </section>
+
+        <div class="share-tip" data-share-section="contrast">
+          <p class="share-text">Always check your contrast ratio — WCAG AA requires at least 4.5:1 for normal text.</p>
+          <button class="btn share-copy" type="button">Copy tip</button>
+          <span class="sr-only" aria-live="polite" data-share-status></span>
+        </div>
       </section>
 
       <section id="keyboard" class="hidden" data-wcag-id="keyboard-navigation">
@@ -401,6 +414,12 @@ button:focus {
           </ul>
           <p id="keyboard-quiz-feedback" class="quiz-feedback" aria-live="polite"></p>
         </section>
+
+        <div class="share-tip" data-share-section="keyboard">
+          <p class="share-text">If you can't reach it with Tab and activate it with Enter, it's not accessible.</p>
+          <button class="btn share-copy" type="button">Copy tip</button>
+          <span class="sr-only" aria-live="polite" data-share-status></span>
+        </div>
       </section>
 
       <section id="dynamic-content" class="hidden" data-wcag-id="dynamic-content">
@@ -1101,6 +1120,43 @@ document.addEventListener("DOMContentLoaded", () => {
   <p>Each month we highlight a community member who's making the web more accessible.</p>
   <div id="spotlight-card"></div>
   <div id="spotlight-status" class="sr-only" aria-live="polite"></div>
+</section>
+
+<section id="stories" class="hidden">
+  <h2>Accessibility Stories <a href="#stories" class="section-link" aria-label="Copy link to Accessibility Stories">#</a></h2>
+  <p>Real-world moments that show why accessibility matters — and what we can learn from them.</p>
+
+  <div class="stories-grid">
+    <article class="story-card" aria-labelledby="story-1-title">
+      <h3 id="story-1-title">The Form That Locked Everyone Out</h3>
+      <p>A checkout form relied entirely on placeholder text — no visible labels, no error messages. A screen reader user couldn't tell which field was which, and keyboard users had no idea what went wrong after pressing Submit. The team added proper <code>&lt;label&gt;</code> elements and <code>aria-describedby</code> error links, and support tickets dropped by 40% in a week.</p>
+      <p class="story-lesson"><strong>Lesson learned:</strong> Labels aren't optional — they're the first thing assistive tech looks for.</p>
+      <div class="story-tags" aria-label="Related topics">
+        <span class="story-tag">Forms</span>
+        <span class="story-tag">Screen readers</span>
+      </div>
+    </article>
+
+    <article class="story-card" aria-labelledby="story-2-title">
+      <h3 id="story-2-title">Trapped Inside a Modal</h3>
+      <p>A marketing site launched a newsletter popup that couldn't be closed by keyboard. Pressing Escape did nothing, and Tab cycled through the page behind the overlay instead of staying inside the modal. After a user complaint went viral, the team added focus trapping, an Escape handler, and returned focus to the trigger button on close.</p>
+      <p class="story-lesson"><strong>Lesson learned:</strong> Every modal needs a focus trap, an Escape exit, and a plan for where focus goes when it closes.</p>
+      <div class="story-tags" aria-label="Related topics">
+        <span class="story-tag">Keyboard</span>
+        <span class="story-tag">Focus management</span>
+      </div>
+    </article>
+
+    <article class="story-card" aria-labelledby="story-3-title">
+      <h3 id="story-3-title">The Dashboard Nobody Could Read</h3>
+      <p>An analytics dashboard used light-gray text on a white background for secondary stats. It looked "clean" in mockups, but users with low vision couldn't read the numbers, and everyone struggled in bright sunlight on laptops. Bumping the text to a 4.5:1 contrast ratio fixed readability without changing the design's feel.</p>
+      <p class="story-lesson"><strong>Lesson learned:</strong> Contrast isn't just an accessibility rule — it's a readability baseline for every user, in every environment.</p>
+      <div class="story-tags" aria-label="Related topics">
+        <span class="story-tag">Contrast</span>
+        <span class="story-tag">Low vision</span>
+      </div>
+    </article>
+  </div>
 </section>
       </main>
     </div>
