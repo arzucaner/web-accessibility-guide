@@ -105,11 +105,17 @@ git push origin feature/
 
 ---
 
+## Standards baseline
+
+This guide follows **WCAG 2.2 (Level AA)** as its primary standard, with **WAI-ARIA 1.2** for rich-widget patterns. See **[docs/standards.md](docs/standards.md)** for the full standards baseline, ARIA guidance, evaluation methodology, and reference links.
+
+---
+
 ## Contribution Tips
 
-* Follow [WCAG (Web Content Accessibility Guidelines)](https://www.w3.org/WAI/standards-guidelines/wcag/) standards.
+* Follow [WCAG 2.2](https://www.w3.org/TR/WCAG22/) — our accessibility baseline. See [docs/standards.md](docs/standards.md) for details.
 * Test your contributions with screen readers or accessibility tools.
-* Use the [Conventional Commits]() format for your commit messages.
+* Use the [Conventional Commits](https://www.conventionalcommits.org/) format for your commit messages.
 
 ---
 
