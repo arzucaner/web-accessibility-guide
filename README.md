@@ -111,6 +111,12 @@ This guide follows **WCAG 2.2 (Level AA)** as its primary standard, with **WAI-A
 
 ---
 
+## Quick checklist
+
+A one-page, copy-and-paste accessibility checklist for developers and QA — covers keyboard, forms, headings, images, contrast, zoom, motion, and live regions. See **[docs/quick-checklist.md](docs/quick-checklist.md)**.
+
+---
+
 ## Contribution Tips
 
 * Follow [WCAG 2.2](https://www.w3.org/TR/WCAG22/) — our accessibility baseline. See [docs/standards.md](docs/standards.md) for details.
