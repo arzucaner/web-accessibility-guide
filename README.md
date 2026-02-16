@@ -117,6 +117,12 @@ A one-page, copy-and-paste accessibility checklist for developers and QA — cov
 
 ---
 
+## Troubleshooting
+
+Running into a specific accessibility issue? See **[docs/common-bugs.md](docs/common-bugs.md)** — 12 common bugs with symptoms, fixes, and code examples.
+
+---
+
 ## Contribution Tips
 
 * Follow [WCAG 2.2](https://www.w3.org/TR/WCAG22/) — our accessibility baseline. See [docs/standards.md](docs/standards.md) for details.
