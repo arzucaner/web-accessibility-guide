@@ -123,6 +123,15 @@ Running into a specific accessibility issue? See **[docs/common-bugs.md](docs/co
 
 ---
 
+## UI patterns
+
+Detailed, copy-ready patterns with HTML examples, screen reader notes, and quick tests:
+
+- **[Navigation & Landmarks](docs/patterns/navigation-landmarks.md)** — skip links, landmark structure, labelling, keyboard flow
+- **[Accessible Tables](docs/patterns/tables.md)** — captions, headers/scope, responsive approaches, sorting
+
+---
+
 ## Contribution Tips
 
 * Follow [WCAG 2.2](https://www.w3.org/TR/WCAG22/) — our accessibility baseline. See [docs/standards.md](docs/standards.md) for details.
