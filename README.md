@@ -129,6 +129,7 @@ Detailed, copy-ready patterns with HTML examples, screen reader notes, and quick
 
 - **[Navigation & Landmarks](docs/patterns/navigation-landmarks.md)** — skip links, landmark structure, labelling, keyboard flow
 - **[Accessible Tables](docs/patterns/tables.md)** — captions, headers/scope, responsive approaches, sorting
+- **[Alerts, Toasts & Live Regions](docs/patterns/alerts-toasts-live-regions.md)** — `role="alert"` vs `aria-live`, toast patterns, async updates
 
 ---
 
