@@ -133,6 +133,14 @@ Detailed, copy-ready patterns with HTML examples, screen reader notes, and quick
 
 ---
 
+## Framework notes
+
+Accessibility patterns for specific frameworks and libraries:
+
+- **[React & Next.js](docs/frameworks/react-next.md)** — `useId`, icon buttons, SPA focus management, headless component pitfalls, testing with jsx-a11y and axe
+
+---
+
 ## Contribution Tips
 
 * Follow [WCAG 2.2](https://www.w3.org/TR/WCAG22/) — our accessibility baseline. See [docs/standards.md](docs/standards.md) for details.
