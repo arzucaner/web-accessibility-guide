@@ -141,6 +141,12 @@ Accessibility patterns for specific frameworks and libraries:
 
 ---
 
+## Tooling
+
+Lint rules and editor plugins that catch accessibility issues before they ship. See **[docs/tooling.md](docs/tooling.md)** for setup, config snippets, and what each tool catches.
+
+---
+
 ## Contribution Tips
 
 * Follow [WCAG 2.2](https://www.w3.org/TR/WCAG22/) — our accessibility baseline. See [docs/standards.md](docs/standards.md) for details.
