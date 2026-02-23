@@ -61,47 +61,17 @@ cd web-accessibility-guide
 
 ---
 
+## Docs hub
+
+Start from **[docs/README.md](docs/README.md)** for a map of standards, checklists, troubleshooting, patterns, framework notes, tooling, and testing guidance.
+
+---
+
 ## Contribution Guidelines
 
-We welcome contributions from the community! Here's how you can get involved:
+Contributions are welcome. For the full workflow (branch naming, commit format, translation notes, and help channels), see **[CONTRIBUTING.md](CONTRIBUTING.md)**.
 
-1. **Report Issues** : If you notice any bugs or have suggestions for improvement, please [open an issue](https://github.com/arzucaner/web-accessibility-guide/issues).
-2. **Fork the Repository** : Create your own copy of this repository by clicking the "Fork" button.
-3. **Clone Your Fork** :
-
-```
-git clone https://github.com/arzucaner/web-accessibility-guide.git
-```
-
-1. **Create a Feature Branch** :
-
-```
-git checkout -b feature/
-```
-
-1. **Make Your Changes** :
-
-* Ensure your changes align with accessibility best practices.
-* Test your changes thoroughly to confirm they work as intended.
-
-1. **Commit Your Changes** :
-
-```
-git add .
-git commit -m "feat: Add 
-```
-
-1. **Push Your Changes** :
-
-```
-git push origin feature/
-```
-
-1. **Submit a Pull Request** :
-
-* Navigate to the original repository on GitHub.
-* Go to the "Pull Requests" tab and click "New Pull Request."
-* Provide a clear description of your changes and submit the pull request.
+Before opening a PR, run the accessibility test flow in **[docs/testing.md](docs/testing.md)**.
 
 ---
 
@@ -144,6 +114,12 @@ Accessibility patterns for specific frameworks and libraries:
 ## Tooling
 
 Lint rules and editor plugins that catch accessibility issues before they ship. See **[docs/tooling.md](docs/tooling.md)** for setup, config snippets, and what each tool catches.
+
+---
+
+## Testing guide
+
+Use **[docs/testing.md](docs/testing.md)** as the default pre-PR workflow (keyboard, screen reader, zoom/reflow, motion, and automated checks).
 
 ---
 

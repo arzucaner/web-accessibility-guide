@@ -98,49 +98,22 @@ Then create a Pull Request on GitHub with:
 
 ## Testing Your Changes Locally
 
-The easiest way to test this project is to open it directly in your browser:
+Use **[docs/testing.md](docs/testing.md)** as the source of truth for QA before opening a PR.
 
-1. Open `index.html` in your web browser
-2. Navigate through different sections
-3. Test interactive features:
-   - Font size slider
-   - Theme toggle
-   - Search functionality
-   - Contrast checker
-   - Live playgrounds
-4. Test keyboard navigation (Tab, Enter, Escape, arrow keys)
-5. Try with browser accessibility tools or screen readers
+Minimum expectation for this repo:
 
-### Accessibility Testing Tips
+1. Keyboard-only pass (Tab/Shift+Tab/Enter/Space/Escape)
+2. Screen reader sanity check (NVDA or VoiceOver at minimum)
+3. Zoom/reflow check at 200%
+4. Automated checks where possible (`pa11y-ci` + link check)
 
-**Screen Reader Testing:**
-- Test with NVDA (Windows, free)
-- Test with JAWS (Windows, paid)
-- Test with VoiceOver (macOS, built-in)
-- Test with Orca (Linux, free)
+Quick local start:
 
-**Keyboard-Only Testing:**
-- Navigate using only Tab, Shift+Tab, Enter, Space, and arrow keys
-- Ensure all interactive elements are reachable
-- Verify focus indicators are visible
-- Test escape key functionality for modals/overlays
+```bash
+npx http-server -p 8080 -c-1 .
+```
 
-**Color and Contrast Testing:**
-- Use the built-in contrast checker
-- Test with Windows High Contrast mode
-- Test with browser zoom up to 200%
-- Verify color is not the only way to convey information
-
-**Browser Testing:**
-- Chrome/Chromium (with Lighthouse accessibility audit)
-- Firefox (with accessibility inspector)
-- Safari (with Web Inspector accessibility tab)
-- Edge (with accessibility insights)
-
-**Mobile Testing:**
-- Test on actual mobile devices
-- Verify touch targets are at least 44px
-- Test with mobile screen readers (TalkBack, VoiceOver)
+Then open `http://127.0.0.1:8080/index.html` and run the checklist in `docs/testing.md`.
 
 ## Translations
 
