@@ -97,7 +97,7 @@ Running into a specific accessibility issue? See **[docs/common-bugs.md](docs/co
 
 Detailed, copy-ready patterns with HTML examples, screen reader notes, and quick tests:
 
-- **[Navigation & Landmarks](docs/patterns/navigation-landmarks.md)** — skip links, landmark structure, labelling, keyboard flow
+- **[Navigation & Landmarks](docs/patterns/navigation-landmarks.md)** — skip links, semantic regions, nav labeling
 - **[Accessible Tables](docs/patterns/tables.md)** — captions, headers/scope, responsive approaches, sorting
 - **[Alerts, Toasts & Live Regions](docs/patterns/alerts-toasts-live-regions.md)** — `role="alert"` vs `aria-live`, toast patterns, async updates
 

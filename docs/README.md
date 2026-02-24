@@ -19,9 +19,9 @@ Use this page to find the right doc quickly.
 
 ## Pattern docs
 
-- `docs/patterns/navigation-landmarks.md`
-- `docs/patterns/tables.md`
-- `docs/patterns/alerts-toasts-live-regions.md`
+- [Navigation & Landmarks](patterns/navigation-landmarks.md)
+- [Accessible Tables](patterns/tables.md)
+- [Alerts, Toasts & Live Regions](patterns/alerts-toasts-live-regions.md)
 
 ## Framework docs
 

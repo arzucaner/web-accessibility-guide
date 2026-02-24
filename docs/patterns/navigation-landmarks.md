@@ -2,91 +2,89 @@
 
 > **Last reviewed:** 2026-02-16
 
-Landmarks and skip links give keyboard and screen reader users a fast way to move around a page. Get these right and every other accessibility pattern becomes easier to use.
+## Intro
 
----
+This page shows a practical pattern for skip links and semantic landmarks. It helps keyboard and screen reader users move through pages faster and with less guesswork. Use it as a quick implementation and QA reference.
 
-## Skip to content
+## Skip link pattern
 
-A skip link is the first focusable element on the page. It lets keyboard users jump past repeated navigation straight to the main content.
+A skip link is a "skip to main content" link near the top of the page. It should be visually hidden by default, then become visible when focused so keyboard users can find it.
+
+This helps keyboard users skip repeated navigation, and gives screen reader users an early, reliable jump point.
 
 ```html
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <header>…</header>
-  <nav>…</nav>
+  <header>
+    <nav aria-label="Primary navigation">
+      <a href="/">Home</a>
+      <a href="/guides">Guides</a>
+      <a href="/about">About</a>
+    </nav>
+  </header>
 
-  <main id="main" tabindex="-1">
-    <!-- page content -->
+  <main id="main-content" tabindex="-1">
+    <h1>Page title</h1>
+    <p>Main page content...</p>
   </main>
 
-  <footer>…</footer>
+  <footer>...</footer>
 </body>
 ```
-
-Key points:
-
-- The link **must** be visible on focus (it can be visually hidden off-screen until focused).
-- The `href` target (`#main`) must match the `id` of the main content container.
-- Add `tabindex="-1"` to the target so it receives focus programmatically in all browsers.
 
 ```css
 .skip-link {
   position: absolute;
   left: -9999px;
-  top: auto;
-  z-index: 1000;
+  top: 0;
 }
 
 .skip-link:focus {
-  position: fixed;
-  top: 8px;
   left: 8px;
-  padding: 12px 16px;
+  top: 8px;
+  padding: 8px 12px;
   background: #000;
   color: #fff;
-  font-size: 16px;
-  z-index: 10000;
+  z-index: 1000;
 }
 ```
 
----
+The target must exist (`href="#main-content"` and `id="main-content"` must match), and in practice the target should be focusable or landable (for example with `tabindex="-1"`).
 
-## Landmarks
+## Landmarks and page structure
 
-Use semantic HTML elements so assistive tech can expose the page structure automatically — no extra ARIA needed.
+Use semantic regions so assistive tech can expose page structure without extra ARIA:
 
-### Good structure example
+- `<header>` for site/page banner content
+- `<nav>` for navigation blocks
+- `<main>` for the page's primary content (normally one `<main>` per page)
+- `<footer>` for page/site footer content
+- `<aside>` for secondary or complementary content (optional)
 
 ```html
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <header>
-    <p>Site tagline</p>
-    <nav aria-label="Main">
-      <a href="/about">About</a>
-      <a href="/guides">Guides</a>
-      <a href="/contact">Contact</a>
+    <h1>Accessibility Guide</h1>
+    <nav aria-label="Primary navigation">
+      <a href="/patterns">Patterns</a>
+      <a href="/testing">Testing</a>
     </nav>
   </header>
 
-  <div class="layout">
-    <aside aria-label="Sidebar">
-      <h2>Quick links</h2>
-      <!-- sidebar content -->
-    </aside>
+  <main id="main-content" tabindex="-1">
+    <h2>Navigation and landmarks</h2>
+    <p>...</p>
+  </main>
 
-    <main id="main" tabindex="-1">
-      <h1>Page title</h1>
-      <!-- primary content -->
-    </main>
-  </div>
+  <aside aria-label="Related resources">
+    <a href="/checklist">Quick checklist</a>
+  </aside>
 
   <footer>
-    <p>&copy; 2026 Example. All rights reserved.</p>
-    <nav aria-label="Footer">
+    <nav aria-label="Footer navigation">
       <a href="/privacy">Privacy</a>
       <a href="/terms">Terms</a>
     </nav>
@@ -94,111 +92,33 @@ Use semantic HTML elements so assistive tech can expose the page structure autom
 </body>
 ```
 
-### Landmark mapping
-
-| HTML element | Implicit ARIA role | Notes |
-|---|---|---|
-| `<header>` (top-level) | `banner` | One per page (top-level only) |
-| `<nav>` | `navigation` | Label each if there are multiple |
-| `<main>` | `main` | Exactly one per page |
-| `<aside>` | `complementary` | Label if more than one |
-| `<footer>` (top-level) | `contentinfo` | One per page (top-level only) |
-| `<section>` with label | `region` | Only becomes a landmark when labelled |
-
-### Labelling multiple landmarks
-
-When a page has more than one `<nav>` or `<aside>`, give each a unique label so screen reader users can tell them apart.
-
-```html
-<nav aria-label="Main">…</nav>
-<nav aria-label="Footer">…</nav>
-```
-
----
+If you have multiple navigation landmarks, label each one clearly (for example `aria-label="Primary navigation"` and `aria-label="Footer navigation"`).
 
 ## Keyboard behavior
 
-- **Tab** moves between focusable elements in DOM order.
-- The skip link is the **first** Tab stop. Pressing Enter jumps focus to `<main>`.
-- After that, Tab moves through nav links, then into the main content.
-- Within `<main>`, Tab follows the DOM order of interactive elements.
-- Landmark navigation is primarily a **screen reader** feature (keyboard shortcut), not Tab-based.
-
-Expected tab order for the example above:
-
-1. Skip link
-2. About (nav)
-3. Guides (nav)
-4. Contact (nav)
-5. Sidebar links (aside)
-6. Main content interactive elements
-7. Footer links
-
----
+- Skip link should be the first or one of the earliest Tab stops.
+- Focus states must stay visible for links, buttons, and menu controls.
+- Navigation menus must not create keyboard traps.
+- If a menu collapses/expands, users must still be able to open, move through, and close it using the keyboard.
 
 ## Screen reader notes
 
-### Landmarks list
-
-Screen readers let users list all landmarks on a page:
-
-- **NVDA:** Insert + F7 → Elements list → Landmarks
-- **VoiceOver (macOS):** Rotor → Landmarks (VO + U, then arrow to Landmarks)
-- **JAWS:** Insert + Ctrl + ; (semicolon) — or Insert + F3
-
-If landmarks are correctly labelled, the list looks like:
-
-```
-banner
-navigation "Main"
-complementary "Sidebar"
-main
-contentinfo
-navigation "Footer"
-```
-
-### Headings
-
-Landmarks and headings work together. Screen reader users often navigate by headings **within** a landmark. Make sure:
-
-- `<main>` starts with the page `<h1>`.
-- Each landmark section has an appropriate heading if it has significant content.
-
----
+- Landmarks let users jump quickly between page regions.
+- Headings and landmarks should complement each other, not compete.
+- If there are multiple navigation regions, each should have a clear unique label.
 
 ## Common pitfalls
 
-### Multiple `<main>` elements
+- Missing skip link target `id` (link points nowhere).
+- Skip link is hidden and never becomes visible on focus.
+- Multiple `<main>` elements on one page.
+- Generic `div` containers used instead of semantic regions.
+- Focus outline removed (`outline: none`) with no equivalent visible style.
+- Multiple unlabeled `<nav>` landmarks.
 
-Only one `<main>` should be visible at a time. If you use `showSection()`-style toggling, every section lives inside a single `<main>` — don't wrap each section in its own `<main>`.
+## Quick test steps
 
-### Missing skip link target
-
-If the `href="#main"` points to an `id` that doesn't exist, the skip link does nothing. Always verify the `id` matches.
-
-### Target not focusable
-
-Some browsers don't move focus to a non-focusable element on hash navigation. Add `tabindex="-1"` to the skip link target so focus actually moves there.
-
-### Skip link hidden permanently
-
-The skip link must become **visible on focus**. Using `display: none` or `visibility: hidden` removes it from the focus order entirely — use off-screen positioning instead.
-
-### No landmark labels on duplicates
-
-Two `<nav>` elements without labels both appear as "navigation" in the landmarks list. Users can't tell them apart.
-
-### Focus styles removed
-
-Landmarks are navigated by screen readers, but skip links are navigated by keyboard. If `outline: none` is applied globally, the skip link becomes invisible when focused.
-
----
-
-## Quick test
-
-1. **Tab from the top of the page.** Is the skip link the first thing focused? Is it visible on focus?
-2. **Press Enter on the skip link.** Does focus move to the main content area?
-3. **Open the screen reader landmarks list.** Are all landmarks present? Are duplicate landmarks labelled uniquely?
-4. **Tab through the full page.** Does focus order follow a logical reading sequence?
-5. **Check for exactly one `<main>`.** Inspect the DOM — only one should be present (or visible).
-6. **Verify headings inside landmarks.** Does `<main>` start with `<h1>`? Do other landmark sections have headings?
+1. **Keyboard-only test:** Press Tab from the top of the page. Confirm skip link appears early, activates with Enter, and moves to main content.
+2. **Focus visibility test:** Tab through header/nav/main/footer controls and verify a clear visible focus indicator at each step.
+3. **Screen reader landmarks sanity check:** Open landmarks list and confirm regions are present and multiple nav landmarks are uniquely labeled.
+4. **Zoom/reflow quick check:** At 200% zoom (and narrow viewport), confirm skip link and navigation remain usable without hidden or unreachable controls.
