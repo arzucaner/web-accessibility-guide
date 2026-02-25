@@ -20,7 +20,7 @@ Use this page to find the right doc quickly.
 ## Pattern docs
 
 - [Navigation & Landmarks](patterns/navigation-landmarks.md)
-- [Accessible Tables](patterns/tables.md)
+- [Tables](patterns/tables.md)
 - [Alerts, Toasts & Live Regions](patterns/alerts-toasts-live-regions.md)
 
 ## Framework docs
