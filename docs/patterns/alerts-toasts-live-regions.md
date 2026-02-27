@@ -2,225 +2,87 @@
 
 > **Last reviewed:** 2026-02-16
 
-Live regions tell screen readers about content that changes without a page reload — status messages, success confirmations, loading indicators, and toast notifications. Get the politeness level wrong and you'll either interrupt users or leave them in the dark.
+## Intro
 
----
+Use this page to choose the right announcement pattern when UI content changes without moving focus.
+The goal is simple: users should hear important updates once, clearly, and at the right urgency level.
+Keep messages short, specific, and tied to the action that triggered them.
 
 ## When to use what
 
-| Scenario | Technique | Why |
-|---|---|---|
-| Urgent error that needs immediate attention | `role="alert"` or `aria-live="assertive"` | Interrupts the current announcement so the user hears it right away |
-| Status update, success message, progress | `aria-live="polite"` or `role="status"` | Waits for the screen reader to finish its current sentence, then announces |
-| Content that updates continuously (stock ticker, timer) | `aria-live="polite"` with `aria-atomic="true"` | Reads the whole region each time so the update makes sense in context |
-| Decorative or redundant update | No live region | Don't announce it — not every DOM change needs to be spoken |
+- Use `role="alert"` for urgent errors that need immediate attention (for example, "Payment failed").
+- Use `aria-live="polite"` for non-urgent updates (for example, "Draft saved").
+- Avoid `aria-live` on huge containers (`<main>`, full lists, large panels); it causes noisy announcements.
+- Avoid announcing purely decorative or redundant visual changes.
+- Prefer one small, dedicated live region per message type.
 
-### Rules of thumb
+## Minimal examples
 
-- **Default to `polite`.** Most updates are not emergencies.
-- **Reserve `assertive` for errors** that block the user or require immediate action.
-- `role="alert"` is shorthand for `aria-live="assertive" aria-atomic="true"` — don't combine them or you'll get double announcements in some screen readers.
-- `role="status"` is shorthand for `aria-live="polite" aria-atomic="true"`.
-
----
-
-## Avoid spammy announcements
-
-Screen readers read live region content every time it changes. If you update the region too often, users hear a stream of interruptions that drowns out everything else.
-
-**Do:**
-
-- Batch updates — wait until a process finishes before announcing the result.
-- Keep messages short (one sentence).
-- Clear the region between messages if you reuse it (set `textContent = ''`, then set the new message after a short delay so the screen reader registers the change).
-
-**Don't:**
-
-- Put `aria-live` on a large container like `<main>` or a long list — every inner text change triggers an announcement.
-- Announce every keystroke in a search-as-you-type field. Debounce and announce the result count instead.
-- Stack multiple toasts that all announce simultaneously.
-
----
-
-## Examples
-
-### Form submit success
-
-The live region exists in the DOM on page load, empty. JavaScript fills it after the form is submitted.
+### A) Inline form error (`aria-invalid` + `aria-describedby`)
 
 ```html
-<form id="contact-form">
-  <label for="msg">Message</label>
-  <textarea id="msg" required></textarea>
-  <button type="submit">Send</button>
+<form novalidate>
+  <label for="email">Email</label>
+  <input
+    id="email"
+    name="email"
+    type="email"
+    aria-invalid="true"
+    aria-describedby="email-error"
+  />
+  <p id="email-error" role="alert">Enter a valid email address.</p>
+
+  <button type="submit">Submit</button>
 </form>
-
-<div id="form-status" role="status" aria-live="polite"
-     aria-atomic="true"></div>
 ```
 
-```js
-document.getElementById('contact-form')
-  .addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const status = document.getElementById('form-status');
-    status.textContent = '';
+- Keep error text near the field.
+- Use `aria-describedby` so the field and error are read together.
+- Optional: on submit, move focus to the first invalid field.
 
-    try {
-      await sendForm();
-      status.textContent = 'Message sent successfully.';
-    } catch {
-      status.textContent = 'Failed to send. Please try again.';
-    }
-  });
-```
-
-Screen reader hears (after the current sentence finishes):
-
-> "Message sent successfully."
-
-### Async loading completed
-
-Show a loading indicator, then announce when data arrives.
+### B) Polite status region (`aria-live="polite"`)
 
 ```html
-<button type="button" id="load-btn">Load results</button>
+<button type="button">Save settings</button>
 
-<div id="results-region" aria-live="polite" aria-atomic="true"></div>
-<div id="results-container"></div>
+<div id="save-status" aria-live="polite" aria-atomic="true">
+  Settings saved.
+</div>
 ```
 
-```js
-document.getElementById('load-btn')
-  .addEventListener('click', async () => {
-    const region = document.getElementById('results-region');
-    const container = document.getElementById('results-container');
-    region.textContent = 'Loading results…';
+- Keep the status region small and specific.
+- Inject short, plain messages (for example, "Saved", "Upload complete").
 
-    const data = await fetchResults();
-    container.innerHTML = renderResults(data);
-    region.textContent = `${data.length} results loaded.`;
-  });
-```
-
-Screen reader hears:
-
-> "Loading results…"
-
-Then, when data arrives:
-
-> "5 results loaded."
-
-### Toast notification
-
-A toast appears briefly, then auto-dismisses. The live region ensures the message is announced even if it disappears before the user sees it.
+### C) Toast with dismiss button (no focus stealing)
 
 ```html
-<!-- In the DOM on page load, always present -->
-<div id="toast-live" aria-live="polite" aria-atomic="true"
-     class="sr-only"></div>
-
-<!-- Visual toast container (toasts are injected here) -->
-<div id="toast-container"></div>
+<div aria-live="polite" aria-atomic="true">
+  <div role="status">
+    <p>Profile updated.</p>
+    <button type="button" aria-label="Dismiss notification">Dismiss</button>
+  </div>
+</div>
 ```
 
-```js
-function showToast(message, duration = 5000) {
-  const live = document.getElementById('toast-live');
-  const container = document.getElementById('toast-container');
-
-  // Visual toast
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.textContent = message;
-  container.appendChild(toast);
-
-  // Screen reader announcement
-  live.textContent = '';
-  requestAnimationFrame(() => {
-    live.textContent = message;
-  });
-
-  // Auto-dismiss
-  setTimeout(() => {
-    toast.remove();
-  }, duration);
-}
-```
-
-Key points:
-
-- The visual toast and the live region are **separate elements**. The toast can be animated, removed, or styled freely without affecting announcements.
-- Clearing `textContent` first and setting it in the next frame ensures the screen reader treats it as a new announcement — even if the same text is repeated.
-- Use `polite` for toasts. They're informational, not urgent.
-
----
+- Toasts should not take focus automatically in most cases.
+- If actions exist in a toast, they must be reachable by keyboard in normal tab order.
+- Do not auto-dismiss too quickly; users need enough time to read and dismiss.
 
 ## Common pitfalls
 
-### `aria-live` on large containers
+- `aria-live` placed on large containers, causing announcement spam.
+- `role="alert"` used for non-urgent status updates.
+- Multiple live regions firing at the same time.
+- Toast disappears too fast or cannot be dismissed.
+- Icon-only dismiss button with no accessible name.
+- Re-announcing the same message repeatedly with no user value.
+- Replacing/remounting the live region element too aggressively, so updates are not announced.
+- Announcing changes that are already obvious and create noise.
 
-Putting `aria-live` on a `<div>` that wraps lots of content means **every** text change inside it triggers an announcement. Keep live regions small and dedicated.
+## Quick test steps
 
-```html
-<!-- Bad: entire results list is a live region -->
-<ul aria-live="polite" id="search-results">
-  <li>Result 1</li>
-  <li>Result 2</li>
-  <!-- 50 more items... -->
-</ul>
-
-<!-- Good: separate small status region -->
-<div aria-live="polite" id="search-status"></div>
-<ul id="search-results">…</ul>
-```
-
-### Repeated identical messages
-
-If you set the same text twice without clearing the region, some screen readers won't announce it the second time (they see no change). Clear the region first.
-
-```js
-// Ensures re-announcement of identical text
-status.textContent = '';
-requestAnimationFrame(() => {
-  status.textContent = 'Saved.';
-});
-```
-
-### Injecting the live region dynamically
-
-Live regions must exist in the DOM **before** content is added. If you create the element and set its text in the same operation, screen readers may not pick it up.
-
-```html
-<!-- Do this: region present on page load, empty -->
-<div id="status" aria-live="polite"></div>
-```
-
-### Using assertive for everything
-
-`assertive` interrupts the user mid-sentence. Reserve it for critical errors. For success messages, progress indicators, and toasts, use `polite`.
-
-### Announcing on every keystroke
-
-Search-as-you-type should **not** announce every intermediate result. Debounce the announcement (300–500ms after the user stops typing) and announce the count, not the full list.
-
-```js
-let debounceTimer;
-input.addEventListener('input', () => {
-  clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(() => {
-    status.textContent = `${results.length} results found.`;
-  }, 400);
-});
-```
-
----
-
-## Quick tests
-
-1. **Trigger each notification type with a screen reader running.** Is the message announced? Does it interrupt (`assertive`) or wait (`polite`)?
-2. **Check timing.** Does the announcement happen when expected — not too early (before the action completes) or too late (after the toast is gone)?
-3. **Inspect the DOM on page load.** Are live regions present and empty before any content is injected?
-4. **Repeat the same action twice.** Is the same message announced both times? (If not, the region may not be clearing between announcements.)
-5. **Check for noise.** Navigate the page normally while live regions are active. Are you getting unexpected or excessive announcements?
-6. **Verify visual and audible parity.** If a sighted user sees a toast, does the screen reader user hear the same message?
+1. Trigger success and error flows; confirm announcements happen with the right urgency.
+2. Keyboard test: tab to toast actions and dismiss control; verify visible focus.
+3. Screen reader sanity check: each message is announced once and is understandable.
+4. Repeat the same action twice; confirm it still announces predictably.
+5. Zoom/reflow check: toast does not block critical UI or become unreachable.
