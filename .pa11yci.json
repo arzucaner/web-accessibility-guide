@@ -8,7 +8,9 @@
     "viewport": { "width": 1280, "height": 800 }
   },
   "urls": [
-    "http://127.0.0.1:8080/index.html"
+    "http://127.0.0.1:8080/index.html",
+    "http://127.0.0.1:8080/offline.html",
+    "http://127.0.0.1:8080/generate-icons.html"
   ]
 }
 

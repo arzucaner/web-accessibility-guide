@@ -88,11 +88,16 @@ This repo already runs:
 - **pa11y-ci** (`.pa11yci.json` + `.github/workflows/a11y-ci.yml`)
 - **linkinator** for broken-link checks
 
+Current pa11y-ci coverage includes:
+- `http://127.0.0.1:8080/index.html`
+- `http://127.0.0.1:8080/offline.html`
+- `http://127.0.0.1:8080/generate-icons.html`
+
 Run locally when possible:
 
 ```bash
 npx http-server -p 8080 -c-1 .
-npx pa11y-ci http://127.0.0.1:8080/index.html
+npx pa11y-ci
 npx linkinator http://127.0.0.1:8080 --recurse --silent --timeout=10000
 ```
 
