@@ -100,6 +100,7 @@ Detailed, copy-ready patterns with HTML examples, screen reader notes, and quick
 - **[Navigation & Landmarks](docs/patterns/navigation-landmarks.md)** — skip links, semantic regions, nav labeling
 - **[Tables](docs/patterns/tables.md)** — semantics, captions, sorting state, responsive handling
 - **[Alerts, Toasts & Live Regions](docs/patterns/alerts-toasts-live-regions.md)** — `role="alert"` vs `aria-live`, toast patterns, async updates
+- **[Dialogs & Modals](docs/patterns/dialogs-modals.md)** — required semantics, focus behavior, minimal trap example
 
 ---
 

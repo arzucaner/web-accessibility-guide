@@ -22,6 +22,7 @@ Use this page to find the right doc quickly.
 - [Navigation & Landmarks](patterns/navigation-landmarks.md)
 - [Tables](patterns/tables.md)
 - [Alerts, Toasts & Live Regions](patterns/alerts-toasts-live-regions.md)
+- [Dialogs & Modals](patterns/dialogs-modals.md)
 
 ## Framework docs
 
