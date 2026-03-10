@@ -23,6 +23,7 @@ Use this page to find the right doc quickly.
 - [Tables](patterns/tables.md)
 - [Alerts, Toasts & Live Regions](patterns/alerts-toasts-live-regions.md)
 - [Dialogs & Modals](patterns/dialogs-modals.md)
+- [Buttons, Links & Icon Controls](patterns/buttons-links-icon-controls.md)
 
 ## Framework docs
 
