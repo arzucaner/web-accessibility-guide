@@ -24,6 +24,7 @@ Use this page to find the right doc quickly.
 - [Alerts, Toasts & Live Regions](patterns/alerts-toasts-live-regions.md)
 - [Dialogs & Modals](patterns/dialogs-modals.md)
 - [Buttons, Links & Icon Controls](patterns/buttons-links-icon-controls.md)
+- [Images & Media: Text Alternatives](patterns/images-media.md)
 
 ## Framework docs
 
