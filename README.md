@@ -103,6 +103,7 @@ Detailed, copy-ready patterns with HTML examples, screen reader notes, and quick
 - **[Dialogs & Modals](docs/patterns/dialogs-modals.md)** — required semantics, focus behavior, minimal trap example
 - **[Buttons, Links & Icon Controls](docs/patterns/buttons-links-icon-controls.md)** — choose link vs button, icon names, toggle state
 - **[Images & Media: Text Alternatives](docs/patterns/images-media.md)** — alt decisions, captions, transcripts, media controls
+- **[Accordion & Disclosure](docs/patterns/accordion-disclosure.md)** — button semantics, aria-expanded, keyboard toggle behavior
 
 ---
 
