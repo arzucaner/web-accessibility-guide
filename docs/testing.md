@@ -116,13 +116,15 @@ See `docs/tooling.md` and `docs/frameworks/react-next.md`.
 
 Copy this into PRs:
 
-- [ ] Keyboard-only navigation tested
-- [ ] Screen reader sanity check completed
-- [ ] Focus states verified (`:focus-visible`)
-- [ ] Form labels/errors verified
-- [ ] Live region announcements verified
-- [ ] Zoom/reflow checked at 200%
-- [ ] Automated checks passed (pa11y-ci/linkinator)
+- [ ] Keyboard pass complete (Tab order logical, no traps, Enter/Space work)
+- [ ] Focus is visible (no `outline: none` without replacement)
+- [ ] Screen reader sanity check complete (names, roles, states make sense)
+- [ ] Forms checked (labels + errors connected) if applicable
+- [ ] Modals/menus/disclosure checked (open/close, focus trap/return, Escape) if applicable
+- [ ] Zoom/reflow checked at 200% for changed UI
+- [ ] Color contrast checked for new/changed UI
+- [ ] Live regions/notifications considered for async updates if applicable
+- [ ] Automated checks run (`pa11y-ci` / link check) if available
 
 ---
 
