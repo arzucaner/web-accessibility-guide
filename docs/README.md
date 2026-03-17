@@ -19,13 +19,18 @@ Use this page to find the right doc quickly.
 
 ## Pattern docs
 
-- [Navigation & Landmarks](patterns/navigation-landmarks.md)
-- [Tables](patterns/tables.md)
-- [Alerts, Toasts & Live Regions](patterns/alerts-toasts-live-regions.md)
-- [Dialogs & Modals](patterns/dialogs-modals.md)
-- [Buttons, Links & Icon Controls](patterns/buttons-links-icon-controls.md)
-- [Images & Media: Text Alternatives](patterns/images-media.md)
-- [Accordion & Disclosure](patterns/accordion-disclosure.md)
+- **Foundations**
+  - [Navigation & Landmarks](patterns/navigation-landmarks.md)
+- **Components**
+  - [Buttons, Links & Icon Controls](patterns/buttons-links-icon-controls.md)
+  - [Accordion & Disclosure](patterns/accordion-disclosure.md)
+  - [Dialogs & Modals](patterns/dialogs-modals.md)
+- **Data display**
+  - [Tables](patterns/tables.md)
+- **Messaging**
+  - [Alerts, Toasts & Live Regions](patterns/alerts-toasts-live-regions.md)
+- **Content**
+  - [Images & Media: Text Alternatives](patterns/images-media.md)
 
 ## Framework docs
 
