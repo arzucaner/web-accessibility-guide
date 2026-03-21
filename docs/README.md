@@ -8,6 +8,7 @@ Use this page to find the right doc quickly.
 - Continue with the **[Testing playbook](testing.md)** for the full validation flow.
 - Use **[Common bugs](common-bugs.md)** to diagnose and fix recurring issues.
 - Review **[Standards baseline](standards.md)** for WCAG/ARIA references.
+- Browse **[Glossary](glossary.md)** for common accessibility terms.
 - Explore **[UI patterns](#pattern-docs)** for practical implementation examples.
 - Contributing? See **[CONTRIBUTING.md](../CONTRIBUTING.md)**.
 
