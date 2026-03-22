@@ -21,6 +21,11 @@ Use this page to find the right doc quickly.
 - **I need standards references** -> `docs/standards.md`
 - **I need a testing workflow** -> `docs/testing.md`
 
+## Testing & audit
+
+- **[Testing playbook](testing.md)** — keyboard, screen reader, zoom, automated checks
+- **[Accessibility audit template](audit-template.md)** — compact report structure for audits
+
 ## Pattern docs
 
 - **Foundations**
