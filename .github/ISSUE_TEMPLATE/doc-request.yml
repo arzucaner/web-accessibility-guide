@@ -1,0 +1,45 @@
+name: "Documentation request"
+description: "Request a new doc/pattern or improvement"
+title: "Docs: <request summary>"
+labels: ["documentation"]
+body:
+  - type: textarea
+    id: request
+    attributes:
+      label: What do you want added/changed?
+      description: Describe the documentation change you need.
+      placeholder: "Please add/update..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-needed
+    attributes:
+      label: Why is it needed?
+      description: Explain the problem this change would solve.
+      placeholder: "This is needed because..."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: location
+    attributes:
+      label: Suggested location
+      options:
+        - Standards
+        - Testing
+        - Patterns
+        - Tooling
+        - Frameworks
+        - Other
+    validations:
+      required: false
+
+  - type: textarea
+    id: references
+    attributes:
+      label: References (links) (optional)
+      description: Share any relevant links or examples.
+      placeholder: "https://..."
+    validations:
+      required: false

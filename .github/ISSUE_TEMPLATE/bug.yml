@@ -1,0 +1,61 @@
+name: "Bug report"
+description: "Report a problem with the docs/site"
+title: "Bug: <short summary>"
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the problem you observed.
+      placeholder: "The page/document shows..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+      placeholder: "I expected..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Share clear reproduction steps.
+      placeholder: |
+        1. Go to ...
+        2. Click ...
+        3. Observe ...
+    validations:
+      required: false
+
+  - type: input
+    id: affected-page
+    attributes:
+      label: Affected page/doc link
+      description: Paste the URL or path to the affected page/doc.
+      placeholder: "https://... or docs/..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots-logs
+    attributes:
+      label: Screenshots/logs (optional)
+      description: Add screenshots, console output, or logs if helpful.
+      placeholder: "Drag and drop images or paste logs."
+    validations:
+      required: false
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment (browser/OS) (optional)
+      description: Browser and OS where you saw the issue.
+      placeholder: "Chrome 122 on Windows 11"
+    validations:
+      required: false
